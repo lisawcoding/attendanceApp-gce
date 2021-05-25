@@ -1,0 +1,19 @@
+img {
+    width: 500px;
+}
+#img-upload {
+    z-index: 999;
+    background: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.video-box img {
+    position: unset !important;
+}
+
+.canvasTop {
+    top:0;
+    left: 0
+}
