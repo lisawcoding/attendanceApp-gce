@@ -7,14 +7,14 @@ import {
 
 import './App.scss';
 import { InitContext } from './contexts/InitContext';
-import AllEmployees from './hooks/AllEmployees';
-import EachEmployee from './hooks/EachEmployee';
-import CreateEmployee from './hooks/CreateEmployee';
-import FaceCamera from './hooks/FaceCamera';
-import Nav from './hooks/Nav';
-import Home from './hooks/Home';
-import Punch from './hooks/Punch';
-import FaceFind from './hooks/FaceFind';
+import AllEmployees from './components/AllEmployees';
+import EachEmployee from './components/EachEmployee';
+import CreateEmployee from './components/CreateEmployee';
+import FaceCamera from './components/FaceCamera';
+import Nav from './components/Nav';
+import Home from "./components/Home/Home"
+import Punch from './components/Punch';
+import FaceFind from './components/FaceFind';
 
 
 function App() {

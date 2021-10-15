@@ -6,7 +6,9 @@ const lisaImg = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4QAiRXhpZgAA
 export const InitContext=createContext()
 
 export function InitProvider (props) {
-    const [url, setUrl] = useState("http://localhost:9001/employees")
+    const [url, setUrl] = useState("http://localhost:9001/employees");
+    const [mailUrl] = useState("http://localhost:9001/mail") 
+    const [usersUrl] = useState("http://localhost:9001/users") 
     const [loading, setLoading] = useState(true)
     const [initEmployees, setInitEmployees] = useState ([
         {
@@ -51,6 +53,8 @@ export function InitProvider (props) {
     return(
         <InitContext.Provider value={{
             url, setUrl,
+            mailUrl,
+            usersUrl,
             initEmployees, setInitEmployees,
             employeeObj, setEmployeeObj,
             loading, setLoading,

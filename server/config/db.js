@@ -1,5 +1,15 @@
 const mongoose = require("mongoose");
-const db="mongodb+srv://tolisacoding:tlc89751345@cluster0.gsnhn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+const express = require("express");
+// const mongoose = require("mongoose");
+const dotenv = require("dotenv")
+// var cors = require("cors");
+
+const app = express();
+
+dotenv.config()
+// const db="mongodb+srv://lisa:yD3nbWsCUe0zt3XM@cluster0.p5rms.mongodb.net/employees?retryWrites=true&w=majority";
+const db=process.env.MONGODB
 
 const connectDB = async () => {
     try {
@@ -9,8 +19,7 @@ const connectDB = async () => {
         })
         console.log("MongoDB is Conntected");
     } catch(err) {
-        console.error(err.messsage)
-    //     process.exit(1);
+        console.log("connectDB ERR: ", err)
     }
 }
 

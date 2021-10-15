@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { InitProvider } from './contexts/InitContext';
 import reportWebVitals from './reportWebVitals';
+import "./i18n"
 
 ReactDOM.render(
   <React.StrictMode>

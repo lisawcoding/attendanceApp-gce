@@ -7,6 +7,7 @@ const Employee = require("../models/Employee");
 router.get('/', (req, res)=> {
     Employee.find()
     .then(data => res.json(data))
+    .catch(err=> res.json(err))
     .catch(err => res.status(404).json({error: "no Employee found"}));
 })
 

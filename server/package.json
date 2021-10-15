@@ -4,16 +4,21 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "startAuth": "nodemon authApp.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "googleapis": "^88.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
     "multer": "^1.4.2",
-    "nodemon": "^2.0.7",
+    "nodemailer": "^6.7.0",
+    "nodemon": "^2.0.13",
     "react-scripts": "^4.0.3"
   }
 }

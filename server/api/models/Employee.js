@@ -3,18 +3,18 @@ const mongoose = require("mongoose");
 const EmployeeSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        // required: true
     },
     image: {
         type: String
     },    
     id: {
         type: String,
-        require: true
+        // require: true
     },
     password: {
         type: String,
-        required: true,
+        // required: true,
     }, 
     tel: {
         type: String
@@ -31,7 +31,7 @@ const EmployeeSchema = new mongoose.Schema({
     update_date: {
         type: Date,
         default: Date.now,
-        required: true,
+        // required: true,
     }
 })
 
