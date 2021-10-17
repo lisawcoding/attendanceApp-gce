@@ -23,7 +23,7 @@ router.post("/", async(req, res)=> {
     
     const accessToken = await oAuth2Client.getAccessToken();
 
-    const jwtToken = jwt.sign({email: req.body.email}, process.env.ACCESS_TOKEN_SECRET)
+    const jwtToken = jwt.sign({email: req.body.email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m"})
     console.log(jwtToken)
 
     const transporter = nodemailer.createTransport({
@@ -59,13 +59,15 @@ router.post("/", async(req, res)=> {
 
     
 function authenticateToken(req, res, next) {
-    const authHeader = req.headers["authorization"]
+    // const authHeader = req.headers["authorization"]
+    const authHeader = req.headers.authorization
     const token = authHeader && authHeader.split(" ")[1]
 
     if(token==null) return res.json({status: "no token"})
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, email)=>{
-        if(err) return res.json({status: "token is not valid"})
+        // if(err) return res.json({status: err.JsonWebTokenError})
+        if(err) return res.json({status: "err", info: err})
         return res.json({status: "verify successfully", email: email})
         next()
     })

@@ -4,12 +4,19 @@ import App from './App';
 import { InitProvider } from './contexts/InitContext';
 import reportWebVitals from './reportWebVitals';
 import "./i18n"
+import {URLProvider} from "./contexts/URLContext"
+import { FunctionProvider } from './contexts/FunctionContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <InitProvider>
-      <App />
-    </InitProvider>
+    <URLProvider>
+      <FunctionProvider>
+        <InitProvider>
+          <App />
+        </InitProvider>           
+      </FunctionProvider>
+  
+    </URLProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
