@@ -1,0 +1,32 @@
+#Card_model {
+    background: #fff;
+    border-radius: 12px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    h1 {
+        text-transform: capitalize;
+        justify-content: center;
+        padding: .5em;
+    }
+    p, h1 {
+        margin: 0;
+        display: flex;
+        svg {
+            margin-right: .5em;
+        }
+    }
+    .info-div {
+        padding: .5em 1em;
+    }
+    input {
+        width: 100%;
+        border: none;
+        background: transparent;
+        outline: none;
+        pointer-events: none;
+    } 
+    img[src*="fox"] {
+        width: 50%;
+    }
+}

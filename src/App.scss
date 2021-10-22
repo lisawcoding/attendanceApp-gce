@@ -1,148 +1,218 @@
-:root{
-  --light-grey: #f9f9f9;
-  --m-grey: #e0e0e0;
-  --dark-grey: #909090;
-  --blue: #a5bfb8;
-  --pink: #D6B6A4;
-  --red: #cc0000;
-  --black: #050505;
-  --l-width: "1200px";
-  --m-width: "900px";
-  --box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+:root {
+     --light-grey: #f9f9f9;
+     --m-grey: #e0e0e0;
+     --dark-grey: #909090;
+     --blue: #a5bfb8;
+     --pink: #d6b6a4;
+     --red: #cc0000;
+     --black: #050505;
+     --l-width: "1200px";
+     --m-width: "900px";
+     --box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+     --dashboard_navHeight: 2.5em;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--light-grey);
-  // background: var(--blue);
-  padding-top: 43px;
+html,
+body {
+     margin: 0;
+     padding: 0;
+     background: var(--light-grey);
+     // background: var(--blue);
+     // padding-top: 43px;
 }
 
 a {
-  text-decoration: navy;
-  color: unset;
-    &:active {
-    color: unset
-  }
+     text-decoration: navy;
+     color: unset;
+     &:active {
+          color: unset;
+     }
 }
 
 [id] {
-  // background: olivedrab !important;
-  margin: 0 auto;
-  text-align: center;
+     // background: olivedrab !important;
+     margin: 0 auto;
+     text-align: center;
 }
 
 * {
-  font-family: sans-serif;
-  font-size: 1em;
-  font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
-  color: var(--black);
-  box-sizing: border-box;
+     font-family: sans-serif;
+     font-size: 1em;
+     font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+     color: var(--black);
+     box-sizing: border-box;
 }
 
 h1 {
-  text-transform: uppercase;
-  color: var(--dark-grey);
+     text-transform: uppercase;
+     color: var(--dark-grey);
 }
 
 nav * {
-  margin: 0 .5em;
+     margin: 0 0.5em;
 }
 
 .img-wrapper {
-  width: 100%;
-  padding-top: 100%;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--light-grey);
-    img {
-      width: 100%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-  }
+     width: 100%;
+     padding-top: 100%;
+     position: relative;
+     overflow: hidden;
+     border: 1px solid var(--light-grey);
+     img {
+          width: 100%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+     }
 }
 
 .App {
-  // max-width: 1200px;
-  // margin: 0 auto;
+     // max-width: 1200px;
+     // margin: 0 auto;
 }
 
 // classList
 .input-active-div {
-  input {
-    background: #fff !important;
-    pointer-events: all !important;    
-  }
+     input {
+          background: #fff !important;
+          pointer-events: all !important;
+     }
 }
 
-.nav-active svg{
-  fill: var(--pink);
+.nav-active {
+     svg {
+          fill: var(--pink);
+          // color: var(--pink);
+     }
 }
 
 .overlay {
-  content: "image recognizing...";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid orchid;
+     content: "image recognizing...";
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     border: 1px solid orchid;
 }
 
 .red {
-  fill: var(--red)
+     fill: var(--red);
 }
 
 .green {
-  fill: green;
+     fill: green;
 }
 
+.center {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
 
 /* loader^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 .loader-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     background: var(--pink);
+     z-index: 9;
+     width: 100%;
+     height: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin: 0;
 }
 .loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid var(--red);
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+     border: 16px solid #f3f3f3;
+     border-radius: 50%;
+     border-top: 16px solid var(--pink);
+     width: 120px;
+     height: 120px;
+     -webkit-animation: spin 2s linear infinite; /* Safari */
+     animation: spin 2s linear infinite;
 }
 
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+     0% {
+          -webkit-transform: rotate(0deg);
+     }
+     100% {
+          -webkit-transform: rotate(360deg);
+     }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+     0% {
+          transform: rotate(0deg);
+     }
+     100% {
+          transform: rotate(360deg);
+     }
 }
 /* loader^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 .overlay {
-  position: fixed; /* Sit on top of the page content */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+     position: fixed; /* Sit on top of the page content */
+     width: 100%; /* Full width (cover the whole page) */
+     height: 100%; /* Full height (cover the whole page) */
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
 
 .red-border {
-  border: 1px solid var(--red);
+     border: 1px solid var(--red);
+}
+
+img[alt*="logo"] {
+     width: 30px;
+     height: fit-content;
+}
+
+.card {
+     display: flex;
+     text-align: center;
+     flex-direction: column;
+     width: 100vw;
+     max-width: 900px;
+     background: #fff;
+     padding: 1.5vw;
+     border-radius: 15px;
+     box-shadow: var(--box-shadow);
+}
+
+.close-btn {
+     position: absolute;
+     right: 32px;
+     top: 32px;
+     width: 32px;
+     height: 32px;
+     opacity: 0.3;
+     &:hover {
+          opacity: 1;
+     }
+     &:before,
+     &:after {
+          position: absolute;
+          left: 15px;
+          content: " ";
+          height: 33px;
+          width: 2px;
+          background-color: #333;
+     }
+     &:before {
+          transform: rotate(45deg);
+     }
+     &:after {
+          transform: rotate(-45deg);
+     }
 }

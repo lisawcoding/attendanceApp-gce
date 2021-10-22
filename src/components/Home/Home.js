@@ -1,67 +1,36 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { AiFillCheckCircle } from "react-icons/ai";
+import { NavLink, withRouter } from "react-router-dom";
 
+import logo from "../../images/logo.png";
+// import "../Home/Home.scss";
+import dashboard from "../../images/dashboard.png";
+import clockIn from "../../images/clockIn.png";
 import "./Home.scss";
-import SignUp from "./SignUp";
-import LogIn from "./LogIn";
 
-function Home() {
-  const { t, i18n } = useTranslation();
-  const [isLogin, setIsLogin] = useState(false);
-  const [inputData, setInputData] = useState(null);
-
-  const clickTab = (elm) => {
-    console.log(elm);
-    setIsLogin(elm);
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    var fd = new FormData();
-    // console.log(fd)
-    const obj = {};
-    fd.forEach((value, key) => (fd[key] = value));
-    fd.forEach((value, key) => console.log(key));
-    console.log(fd);
-  };
-
-  return (
-    <main id="Home">
-      {/* <Link to="register" >register</Link>
-            <Link to="/signin" >go to dashboard</Link>
-            <Link to="/punch" >Punch In/Out</Link> */}
-      <section className="left-div">
-        <h1>{t("attandance app")}</h1>
-        <p>{t("sigin  or login")}</p>
-      </section>
-      <section className="right-div">
-        <div className="tab-div">
-          <h1
-            className={!isLogin ? "selected-tab" : undefined}
-            onClick={() => clickTab(false)}
-          >
-            {t("create an account")}
-          </h1>
-          <h1
-            className={isLogin ? "selected-tab" : undefined}
-            onClick={() => clickTab(true)}
-          >
-            {t("login")}
-          </h1>
-        </div>
-        <div className="form-div">
-          {isLogin ? (
-            <LogIn t={t} />
-          ) : (
-            <SignUp t={t} onSubmit={onSubmit} setIsLogin={setIsLogin} />
-          )}
-        </div>
-      </section>
-    </main>
-  );
+function Home(props) {
+     return (
+          <main id="Home">
+               <section className="top">
+                    <img src={logo} alt="logo" />
+               </section>
+               <section className="main">
+                    <div className="dashboard">
+                         <img src={dashboard} alt="dashboard" />
+                         <NavLink exact to="/employees" activeClassName="nav-active">
+                              go to dashboard
+                         </NavLink>
+                    </div>
+                    <div className="clockIn">
+                         <img src={clockIn} alt="clorckIn" />
+                         <NavLink exact to="/facecamera" activeClassName="nav-active">
+                              go to clockIn desk
+                         </NavLink>
+                    </div>
+               </section>
+               <section className="bottom">
+                    <p>Copyright © 2010-2021 tolisacoding All rights reserved.</p>
+               </section>
+          </main>
+     );
 }
 
 export default Home;
