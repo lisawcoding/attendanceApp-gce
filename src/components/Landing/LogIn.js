@@ -13,25 +13,31 @@ function LogIn(props) {
 
      const onSubmit = (e) => {
           e.preventDefault();
-          btnRef.current.disabled = true;
+          // btnRef.current.disabled= true
 
+          console.log("on submit");
           var fd = new FormData(formRef.current);
           fd.forEach((value, key) => (fd[key] = value));
 
-          runFetch(`${usersURL}/find`, "POST", fd, function (data) {
-               if (data == null) {
-                    return setAlert(props.t("invalid email or password"));
-               } else {
-                    runFetch(loginURL, "POST", { email: e.target.email.value }, function (data) {
-                         if (data.status.indexOf("success") !== -1) {
-                              sessionStorage.setItem("refreshToken", data.refreshToken);
-                              props.props.history.push("/home");
-                              return;
-                         }
-                    });
-               }
-               // window.location.reload();
-          });
+          fetch(loginURL, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify(fd),
+          })
+               .then((res) => res.json())
+               .then((data) => {
+                    console.log(data);
+                    if (data.error != undefined) return setAlert(data.error);
+                    if (data.success) {
+                         sessionStorage.setItem("accessToken", data.accessToken);
+                         sessionStorage.setItem("refreshToken", data.refreshToken);
+                         props.props.history.push("/home");
+                    }
+                    window.location.reload();
+               })
+               .catch((err) => console.error(err));
      };
 
      const changeInput = (e) => {
@@ -39,27 +45,39 @@ function LogIn(props) {
           btnRef.current.disabled = false;
      };
 
+     const deleteBtn = (e) => {
+          console.log("click deleteBtn");
+          fetch(`${usersURL}/delete`, {
+               method: "DELETE",
+               // headers: {
+               //      "Content-Type": "application/json"
+               // },
+               // body: JSON.stringify()
+          })
+               .then((res) => res.json())
+               .catch((err) => console.log(err));
+     };
+
      return (
-          <form ref={formRef} onSubmit={onSubmit}>
-               <input type="email" name="email" placeholder="email" onChange={changeInput} required />
-               <input type="password" name="password" placeholder="password" onChange={changeInput} required />
-               <div className="bottom-div">
-                    {/* <label>
-                                   <input type="checkbox" name="remeber" value="true" />
-                                   <p>{props.t("remember me")}</p>
-                              </label> */}
-                    <p
-                         className="link"
-                         onClick={() => {
-                              props.setIsForgotPW(true);
-                         }}
-                    >
-                         {props.t("forgot password")}
-                    </p>
-               </div>
-               {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
-               <input type="submit" value={props.t("login")} ref={btnRef} />
-          </form>
+          <>
+               <form ref={formRef} onSubmit={onSubmit}>
+                    <input type="email" name="email" placeholder="email" onChange={changeInput} required />
+                    <input type="password" name="password" placeholder="password" onChange={changeInput} required />
+                    <div className="bottom-div">
+                         <p
+                              className="link"
+                              onClick={() => {
+                                   props.setIsForgotPW(true);
+                              }}
+                         >
+                              {props.t("forgot password")}
+                         </p>
+                    </div>
+                    {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
+                    <input type="submit" value={props.t("login")} ref={btnRef} />
+               </form>
+               <button onClick={deleteBtn}>delete</button>
+          </>
      );
 }
 

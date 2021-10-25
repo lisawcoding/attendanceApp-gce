@@ -8,6 +8,9 @@ nav {
      position: fixed;
      width: 100%;
      top: 0;
+     padding: 0 1.6em;
+     box-shadow: var(--box-shadow);
+     justify-content: space-between;
      svg {
           font-size: 28px;
           fill: var(--dark-grey);
@@ -16,5 +19,47 @@ nav {
      & + *[id] {
           margin-top: calc(var(--dashboard_navHeight) + 1em);
           min-height: calc(100vh - var(--dashboard_navHeight) - 1em);
+     }
+     .link-div {
+          display: flex;
+          a {
+               margin-right: 1em;
+          }
+     }
+     .user-div {
+          position: relative;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          .user-dropdown {
+               position: absolute;
+               background: #fff;
+               padding: 1em;
+               top: calc(100% + 1em);
+               box-shadow: var(--box-shadow);
+               right: -1em;
+               &::after {
+                    content: "";
+                    width: 1em;
+                    height: 1em;
+                    background-color: #fff;
+                    position: absolute;
+                    top: -5px;
+                    // border: 1px solid var(--pink);
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, -50%) rotate(45deg);
+                    border: 1px solid var(--light-grey);
+                    // box-shadow: var(--box-shadow);
+               }
+               * {
+                    white-space: nowrap;
+               }
+          }
+     }
+     a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
      }
 }

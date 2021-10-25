@@ -5,14 +5,43 @@ import { InitContext } from "../../contexts/InitContext";
 import { BiCamera } from "react-icons/bi";
 import { URLContext } from "../../contexts/URLContext";
 import "./CreateEmployee.scss";
-import FaceCamera from "../FaceCamera/FaceCamera";
 import { DataContext } from "../../contexts/DataContext";
+import { FunctionContext } from "../../contexts/FunctionContext";
 
 function CreateEmployee(props) {
-     const { employeesURL } = useContext(URLContext);
+     const { companiesURL } = useContext(URLContext);
+     const { jwtPayload } = useContext(FunctionContext);
      const { thisEmployee, setThisEmployee } = useContext(DataContext);
      const submitBtnRef = useRef();
      const formRef = useRef();
+
+     const submitForm = (e) => {
+          e.preventDefault();
+          // submitBtnRef.current.disabled = true;
+          console.log(thisEmployee);
+
+          // var fd = new FormData(formRef.current);
+          // fd.append("image", imageBase64);
+          // fd.forEach((value, key) => (fd[key] = value));
+          jwtPayload();
+
+          // fetch(companiesURL, {
+          //      method: "POST",
+          //      headers: {
+          //           "Content-Type": "application/json",
+          //           // Authorization: sessionStorage.getItem("refreshToken"),
+          //      },
+          //      // body: JSON.stringify({ email: jwtPayload(), employees: [thisEmployee] }),
+          //      body: JSON.stringify({ employees: [thisEmployee] }),
+          // })
+          //      .then((res) => res.json())
+          //      .then((data) => {
+          //           console.log(data);
+          //           alert("employee record added successfully");
+          //           props.history.push("/employees");
+          //      })
+          //      .catch((err) => console.error(err));
+     };
 
      const changeInput = (e) => {
           setThisEmployee({ ...thisEmployee, [e.target.name]: e.target.value });
@@ -29,32 +58,6 @@ function CreateEmployee(props) {
 
      const uploadPhoto = (value) => {
           // setInputValue({ ...inputValue, image: value });
-     };
-
-     const submitForm = (e) => {
-          e.preventDefault();
-          submitBtnRef.current.disabled = true;
-          console.log(thisEmployee);
-
-          // var fd = new FormData(formRef.current);
-          // fd.append("image", imageBase64);
-          // fd.forEach((value, key) => (fd[key] = value));
-
-          fetch(employeesURL, {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-                    // Authorization: sessionStorage.getItem("refreshToken"),
-               },
-               body: JSON.stringify(thisEmployee),
-          })
-               .then((res) => res.json())
-               .then((data) => {
-                    console.log(data);
-                    alert("employee record added successfully");
-                    props.history.push("/employees");
-               })
-               .catch((err) => console.error(err));
      };
 
      return (

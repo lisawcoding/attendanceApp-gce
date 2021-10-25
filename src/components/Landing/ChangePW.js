@@ -5,61 +5,71 @@ import { URLContext } from "../../contexts/URLContext";
 import congratulations from "../../images/congratulations.jpg";
 
 function ChangePW(props) {
-     const { loginURL, usersURL, tokenURL, mailURL, userEditURL } = useContext(URLContext);
+     const { loginURL, usersURL, tokenURL, registerURL } = useContext(URLContext);
      const { runFetch } = useContext(FunctionContext);
      const btnRef = useRef();
      const [alert, setAlert] = useState([]);
      const [isSentMail, setIsSentMail] = useState(false);
-     const [inputValue, setInputValue] = useState({ password: "" });
+     const [inputValue, setInputValue] = useState({
+          // name: "",
+          // email: "",
+          // password: "",
+          // password2: "",
+     });
      const [isSuccess, setIsSuccess] = useState(false);
+     const [thisUser, setThisUser] = useState(null);
 
      const changeInput = (e) => {
           setAlert([]);
-          btnRef.current.disabled = false;
+          // btnRef.current.disabled = false;
 
-          e.target.name.indexOf("password") !== -1 && setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+          // e.target.name !== "token" && setInputValue({ ...inputValue, [e.target.name]: e.target.value });
      };
 
-     const sendEamil = (e) => {
+     const sendEmail = (e) => {
           e.preventDefault();
-          btnRef.current.disabled = true;
+          // btnRef.current.disabled = true;
 
-          runFetch(`${usersURL}/find`, "POST", { email: e.target.email.value }, function (data) {
-               //check if email already exist
-               if (!data) return setAlert([props.t("the eamil is invalid")]);
-               //send token email
-               console.log(data);
-               //    delete data.password;
-               emailToken(data);
+          fetch(`${usersURL}/find`, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ email: e.target.email.value }),
+          })
+               .then((res) => res.json())
+               .then((data) => {
+                    console.log(data);
+                    if (!data) return setAlert([props.t("the eamil is invalid")]);
+                    if (data.mailLimit > 20) return setAlert([props.t("request for too many tokens, the limit is 20 per email address")]);
 
-               return;
-          });
-     };
-
-     const emailToken = (elm) => {
-          console.log("elm: ", elm);
-          setAlert([]);
-
-          runFetch(mailURL, "POST", elm, function (data) {
-               if (data.status.toLowerCase().indexOf("success") !== -1) {
-                    setIsSentMail(true);
-                    delete elm.password;
-                    setInputValue({ ...inputValue, ...elm });
-               }
-          });
+                    //email ok and send token mail
+                    delete data.password;
+                    // setInputValue(data);
+                    setThisUser(data);
+                    runFetch(`${registerURL}/mail`, "POST", data, function (data) {
+                         if (data.status.toLowerCase().indexOf("success") !== -1) {
+                              setIsSentMail(true);
+                         } else {
+                              setAlert("mail sent failure");
+                         }
+                    });
+                    setAlert([]);
+               })
+               .catch((err) => console.error(err));
      };
 
      const submitVerifyToken = (e) => {
           e.preventDefault();
-          btnRef.current.disabled = true;
+          // btnRef.current.disabled = true;
 
           // check if passwords are indentical
           if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
 
           runFetch(
-               `${mailURL}/auth`,
+               `${registerURL}/auth`,
                "POST",
-               inputValue,
+               { email: e.target.email.value },
                function (data) {
                     if (data.status.toLowerCase().indexOf("success") === -1) {
                          if (data.result.message && data.result.message.toLowerCase().indexOf("expire") !== -1) {
@@ -68,10 +78,22 @@ function ChangePW(props) {
                               return setAlert("invalid token");
                          }
                     }
-                    // edit this user
-                    runFetch(`${usersURL}/${inputValue._id}`, "PUT", { password: inputValue.password }, function (data) {
-                         data.status.indexOf("success") !== -1 && setIsSuccess(true);
-                    });
+
+                    // update user password and mail
+                    console.log({ ...thisUser, password: e.target.password.value });
+                    fetch(`${usersURL}/mailLimit`, {
+                         method: "PUT",
+                         headers: {
+                              "Content-Type": "application/json",
+                         },
+                         body: JSON.stringify({ ...thisUser, password: e.target.password.value }),
+                    })
+                         .then((res) => res.json())
+                         .then((data) => {
+                              console.log(data);
+                              setIsSuccess(true);
+                         })
+                         .catch((err) => console.error(err));
                },
                e.target.token.value
           );
@@ -80,18 +102,18 @@ function ChangePW(props) {
      return (
           <>
                {!isSentMail ? (
-                    <form className="sendMailForm" onSubmit={sendEamil}>
+                    <form className="sendMailForm" onSubmit={sendEmail}>
                          <input type="email" name="email" placeholder="email" onChange={changeInput} required />
-                         <input type="submit" value={props.t("next")} ref={btnRef} />
+                         <button>{props.t("next")}</button>
                          {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
                     </form>
                ) : !isSuccess ? (
                     <form onSubmit={submitVerifyToken}>
                          <input type="email" name="email" placeholder={inputValue.email} disabled />
-                         <input type="text" name="password" placeholder="password" value={inputValue.password} onChange={changeInput} disabled={false} />
+                         <input type="text" name="password" placeholder="password" onChange={changeInput} />
                          <input type="text" name="password2" placeholder="confirm password" onChange={changeInput} />
                          <textarea type="text" name="token" placeholder={props.t("verify token")} required rows="5" onChange={changeInput} />
-                         <input type="submit" value={props.t("reset password")} ref={btnRef} disabled={false} />
+                         <input type="submit" value={props.t("reset password")} ref={btnRef} />
                          {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
                     </form>
                ) : (

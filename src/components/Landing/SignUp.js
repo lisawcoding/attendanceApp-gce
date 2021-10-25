@@ -5,51 +5,45 @@ import congratulations from "../../images/congratulations.jpg";
 
 function SignUp(props) {
      const formRef = useRef();
-     const { mailURL, usersURL } = useContext(URLContext);
+     const { registerURL, usersURL } = useContext(URLContext);
      const { runFetch } = useContext(FunctionContext);
      const [isSentMail, setIsSentMail] = useState(false);
      const [alert, setAlert] = useState([]);
-     const [inputValue, setInputValue] = useState({});
      const [token, setToken] = useState("");
      const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
      const btnRef = useRef();
+     const [inputValue, setInputValue] = useState({
+          name: "",
+          email: "",
+          password: "",
+          password2: "",
+     });
 
      const sendMail = (e) => {
           e.preventDefault();
 
-          btnRef.current.disabled = true;
+          // check if passwords are indentical
+          if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
 
-          runFetch(`${usersURL}/find`, "POST", { email: e.target.email.value }, function (data) {
-               //check if email already exist
+          runFetch(`${usersURL}/find`, "POST", { email: inputValue.email }, function (data) {
+               //if email already exist
                if (data) return setAlert([props.t(`the email is taken. Try another.`)]);
-               // check if passwords are indentical
-               if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
+
                //send token email
-               emailToken();
-          });
-     };
-
-     const emailToken = () => {
-          setAlert([]);
-
-          var obj = {};
-          var fd = new FormData(formRef.current);
-          fd.forEach((value, key) => (obj[key] = value));
-
-          runFetch(mailURL, "POST", obj, function (data) {
-               if (data.status.toLowerCase().indexOf("success") !== -1) {
-                    setIsSentMail(true);
-                    setInputValue(obj);
-               }
+               runFetch(`${registerURL}/mail`, "POST", inputValue, function (data) {
+                    if (data.status.toLowerCase().indexOf("success") !== -1) {
+                         setIsSentMail(true);
+                    }
+               });
+               setAlert([]);
           });
      };
 
      const createAccount = (e) => {
           e.preventDefault();
-          console.log(e.target.token.value);
 
           runFetch(
-               `${mailURL}/auth`,
+               `${registerURL}/auth`,
                "POST",
                inputValue,
                function (data) {
@@ -61,7 +55,7 @@ function SignUp(props) {
                          }
                     }
                     //add this user
-                    runFetch(usersURL, "POST", inputValue);
+                    runFetch(usersURL, "POST", inputValue, function (params) {});
                     setIsSignUpSuccess(true);
                     console.log("add user");
                },
@@ -70,7 +64,7 @@ function SignUp(props) {
      };
 
      const changeInput = (e) => {
-          console.log(e.target.value);
+          setInputValue({ ...inputValue, [e.target.name]: e.target.value });
           setAlert([]);
           if (e.target.name === "token") return setToken(e.target.value);
           btnRef.current.disabled = false;
@@ -80,10 +74,10 @@ function SignUp(props) {
           <>
                {!isSentMail ? (
                     <form onSubmit={sendMail} ref={formRef}>
-                         <input type="text" name="name" placeholder="name" required />
-                         <input type="email" name="email" placeholder="email" required onChange={changeInput} />
-                         <input type="password" name="password" placeholder="password" required onChange={changeInput} />
-                         <input type="password" name="password2" placeholder="confirm password" required onChange={changeInput} />
+                         <input type="text" name="name" placeholder="name" required onChange={changeInput} value={inputValue.name} />
+                         <input type="email" name="email" placeholder="email" required onChange={changeInput} value={inputValue.email} />
+                         <input type="password" name="password" placeholder="password" required onChange={changeInput} value={inputValue.password} />
+                         <input type="password" name="password2" placeholder="confirm password" required onChange={changeInput} value={inputValue.password2} />
                          <input type="submit" value={props.t("next")} ref={btnRef} />
                          {alert.map((alert, i) => (
                               <h1 className="alert-text" key={`singup-alert-${i}}`}>

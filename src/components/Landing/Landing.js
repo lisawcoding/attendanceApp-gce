@@ -13,10 +13,10 @@ function Landing(props) {
      const [isForgotPW, setIsForgotPW] = useState(false);
      const [isLoading, setIsLoading] = useState(false);
 
-     useEffect(() => {
-          console.log(document.readyState);
-          document.readyState === "loading" ? setIsLoading(true) : setIsLoading(false);
-     });
+     // useEffect(() => {
+     //      console.log(document.readyState);
+     //      document.readyState === "loading" ? setIsLoading(true) : setIsLoading(false);
+     // });
 
      return (
           <main id="Landing">

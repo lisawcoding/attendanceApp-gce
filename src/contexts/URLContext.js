@@ -3,22 +3,24 @@ import React, { useState, createContext } from "react";
 export const URLContext = createContext();
 
 export function URLProvider(props) {
-     const [employeesURL] = useState("http://localhost:9001/employees");
-     const [mailURL] = useState("http://localhost:9001/mail");
-     const [usersURL] = useState("http://localhost:9001/users");
-     const [userEditURL] = useState("http://localhost:9001/users/edit");
+     const [registerURL] = useState("http://localhost:9001/register");
      const [loginURL] = useState("http://localhost:9002/login");
-     const [tokenURL] = useState("http://localhost:9002/token");
+     const [logoutURL] = useState("http://localhost:9002/logout");
+     const [reIssueTokenURL] = useState("http://localhost:9002/reIssueToken");
+
+     const [usersURL] = useState("http://localhost:9001/users");
+     const [employeesURL] = useState("http://localhost:9001/employees");
+     const [companiesURL] = useState("http://localhost:9001/companies");
 
      return (
           <URLContext.Provider
                value={{
-                    employeesURL,
-                    mailURL,
+                    registerURL,
                     usersURL,
                     loginURL,
-                    tokenURL,
-                    userEditURL,
+                    reIssueTokenURL,
+                    companiesURL,
+                    logoutURL,
                }}
           >
                {props.children}

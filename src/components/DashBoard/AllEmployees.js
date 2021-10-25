@@ -7,20 +7,20 @@ import "./AllEmployees.scss";
 import { URLContext } from "../../contexts/URLContext";
 
 function AllEmployees() {
-     const { employeesURL } = useContext(URLContext);
+     const { employeesURL, companiesURL } = useContext(URLContext);
      const { initEmployees, setInitEmployees } = useContext(InitContext);
      const [allEmployees, setAllemployees] = useState(initEmployees);
      const [isLoading, setIsLoading] = useState(true);
 
      useEffect(() => {
-          fetch(employeesURL)
-               .then((res) => res.json())
-               .then((data) => {
-                    console.log(data);
-                    setAllemployees([...allEmployees, ...data.result]);
-                    setIsLoading(false);
-               })
-               .catch((err) => console.error(`fetch error: ${err}`));
+          //      fetch(employeesURL)
+          //           .then((res) => res.json())
+          //           .then((data) => {
+          //                console.log(data);
+          //                setAllemployees([...allEmployees, ...data.result]);
+          setIsLoading(false);
+          //           })
+          //           .catch((err) => console.error(`fetch error: ${err}`));
      }, []);
 
      return (

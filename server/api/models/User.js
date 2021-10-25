@@ -28,9 +28,9 @@ const UserSchema = new mongoose.Schema({
      //  accessToken: {
      //       type: String,
      //  },
-     //  refreshToken: {
-     //       type: String,
-     //  },
+     refreshToken: {
+          type: String,
+     },
      update_date: {
           type: Date,
           default: Date.now,

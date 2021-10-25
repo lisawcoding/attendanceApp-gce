@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams: true });
 
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 // const auth = require("./middleware/auth");
 
 //test route only
@@ -35,9 +36,21 @@ router.post("/", (req, res) => {
 });
 
 router.post("/find", (req, res) => {
-     User.findOne(req.body)
-          .then((data) => res.json(data))
-          .catch((err) => res.json(err));
+     const accessToken = req.headers.authorization.split(" ")[1];
+
+     if (accessToken == null) return res.status(401).json({ error: "no access token" });
+
+     // verify aceesstoken
+     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (error, payload) => {
+          console.log(payload);
+          if (error) return res.json({ error: error });
+
+          // res.json("accessToken ok");
+          //  get user
+          User.findById(payload.id)
+               .then((data) => res.json(data))
+               .catch((err) => res.json({ error: err }));
+     });
 });
 
 router.post("/:id", (req, res) => {

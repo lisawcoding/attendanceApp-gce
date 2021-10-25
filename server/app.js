@@ -2,8 +2,8 @@ const express = require("express");
 // const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
+const UserToken = require("./api/models/UserToken");
 // var cors = require("cors");
-const jwt = require("jsonwebtoken");
 
 const app = express();
 connectDB();
@@ -37,6 +37,12 @@ app.use("/register", require("./api/routes/register"));
 app.use("/users", require("./api/routes/users"));
 app.use("/companies", require("./api/routes/companies"));
 app.use("/employees", require("./api/routes/employees"));
+
+app.get("/usertoken", (req, res) => {
+     UserToken.find()
+          .then((data) => res.json(data))
+          .catch((err) => res.json(err));
+});
 
 const PORT = process.env.PORT || 9001;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

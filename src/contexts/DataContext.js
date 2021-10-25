@@ -3,6 +3,7 @@ import { useState, createContext } from "react";
 export const DataContext = createContext();
 
 export function DataProvider(props) {
+     const [thisUser, setThisUser] = useState(null);
      const [thisEmployee, setThisEmployee] = useState({
           name: "",
           image: "",
@@ -19,6 +20,8 @@ export function DataProvider(props) {
                value={{
                     thisEmployee,
                     setThisEmployee,
+                    thisUser,
+                    setThisUser,
                }}
           >
                {props.children}
