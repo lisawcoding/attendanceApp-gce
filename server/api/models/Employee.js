@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
 
-const EmployeeSchema = new mongoose.Schema({
+const EmployeeSchema = new Schema({
+     // _creator: { type: mongoose.Schema.ObjectId, ref: "User" },
+     user: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+     },
      name: {
           type: String,
           // required: true
@@ -8,18 +17,10 @@ const EmployeeSchema = new mongoose.Schema({
      image: {
           type: String,
      },
-     id: {
-          type: String,
-          // require: true
-     },
      password: {
           type: String,
-          // required: true,
      },
      tel: {
-          type: String,
-     },
-     position: {
           type: String,
      },
      remark: {
@@ -36,3 +37,4 @@ const EmployeeSchema = new mongoose.Schema({
 });
 
 module.exports = Employee = mongoose.model("employee", EmployeeSchema);
+// module.exports = EmployeeSchema;

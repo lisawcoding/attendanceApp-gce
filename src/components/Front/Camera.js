@@ -4,12 +4,12 @@ import { Link, withRouter } from "react-router-dom";
 
 import { GiConfirmed, GiCancel } from "react-icons/gi";
 import { InitContext } from "../../contexts/InitContext";
-import "./FaceCamera.scss";
-import { CameraLoader } from "./CameraLoader";
+import "./Camera.scss";
+// import { CameraLoader } from "./CameraLoader";
 import { DataContext } from "../../contexts/DataContext";
 
 const FaceCamera = (props, ref) => {
-     const { thisEmployee, setThisEmployee } = useContext(DataContext);
+     // const { thisEmployee, setThisEmployee } = useContext(DataContext);
      // const { imageBase64, setImgBase64 } = useContext(InitContext);
      const [pause, setPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
@@ -18,6 +18,7 @@ const FaceCamera = (props, ref) => {
      const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
      const videoRef = useRef();
      const canvasRef = useRef();
+     const [thisEmployee, setThisEmployee] = useState({ log: "clockIn" });
 
      let faceapiInterval;
      const onPlay = async () => {
@@ -25,8 +26,10 @@ const FaceCamera = (props, ref) => {
           setIsPlay(true);
           setPause(false);
 
-          const displaySize = { width: videoRef.current.videoWidth, height: videoRef.current.videoHeight };
+          // const displaySize = { width: videoRef.current.videoWidth, height: videoRef.current.videoHeight };
+          const displaySize = { width: videoRef.current.clientWidth, height: videoRef.current.clientHeight };
           setCameraSize({ width: videoRef.current.videoWidth, height: videoRef.current.videoHeight });
+
           faceapiInterval = setInterval(async () => {
                const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions());
                if (detections.length > 1) {
@@ -36,7 +39,10 @@ const FaceCamera = (props, ref) => {
                     const resizedDetections = faceapi.resizeResults(detections, displaySize);
                     canvasRef.current.getContext("2d").clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
                     faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
-                    if (detections.length === 1 && detections[0]._score > 0.5) capture();
+                    if (detections.length === 1 && detections[0]._score > 0.5) {
+                         capture();
+                         stopVideo();
+                    }
                }
                // if (videoRef.current.autoPlay === false) clearInterval(faceapiInterval);
                console.log(detections);
@@ -44,6 +50,7 @@ const FaceCamera = (props, ref) => {
      };
 
      useEffect(() => {
+          // return;
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
                faceapi.nets.faceRecognitionNet.loadFromUri("../../models"),
@@ -61,8 +68,9 @@ const FaceCamera = (props, ref) => {
 
      const startVideo = () => {
           console.log("startVideo");
-          return;
-          setThisEmployee({ ...thisEmployee, image: "" });
+          // return;
+
+          // setThisEmployee({ ...thisEmployee, image: "" });
 
           navigator.mediaDevices
                .getUserMedia({ video: true })
@@ -72,9 +80,8 @@ const FaceCamera = (props, ref) => {
                     return;
                })
                .catch((err) => {
-                    setMediaTest();
+                    setMediaTest("could not start video, please check your device setting");
                     console.log(err);
-                    alert("could not start video, please check your device setting");
                });
      };
 
@@ -89,7 +96,7 @@ const FaceCamera = (props, ref) => {
           videoRef.current.srcObject = null;
 
           // props.history.push("/create_employee");
-          props.setIsCamera(false);
+          // props.setIsCamera(false);
      };
 
      const capture = async () => {
@@ -98,28 +105,34 @@ const FaceCamera = (props, ref) => {
           await canvasRef.current.getContext("2d").drawImage(videoRef.current, 0, 0);
           console.log(canvasRef.current.toDataURL("image/jpeg", 0.5));
           // await setImgBase64(canvasRef.current.toDataURL("image/jpeg", 0.5));
-          await setThisEmployee({ ...thisEmployee, image: canvasRef.current.toDataURL("image/jpeg", 0.5) });
+          await setThisEmployee({ ...thisEmployee, image: canvasRef.current.toDataURL("image/jpeg", 0.5), time: props.timer.toString() });
           setPause(true);
           setIsPlay(false);
      };
 
      return (
-          <section className="video-box" onPlay={onPlay}>
-               <video id="video" autoPlay muted ref={videoRef} paused={pause.toString()} className="video-frame"></video>
+          <section id="Camera" onPlay={onPlay}>
+               <video id="video" autoPlay muted ref={videoRef} paused={pause.toString()}></video>
                <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
 
                {pause && (
                     <>
                          <img src={thisEmployee.image} style={cameraSize} />
-                         <div className="btn-div" style={cameraSize}>
+                         {/* <div className="btn-div" style={cameraSize}>
                               <GiConfirmed className="green" onClick={stopVideo} />
                               <GiCancel onClick={onPlay} className="red" />
-                         </div>
+                         </div> */}
                     </>
                )}
-               {!isPlay && !pause && <CameraLoader mediaTest={mediaTest} />}
+               {/* {!isPlay && !pause && <CameraLoader mediaTest={mediaTest} />} */}
 
                {alert.length > 0 && alert.map((elm) => <h1 className="alert-text">{elm}</h1>)}
+               {thisEmployee.image && (
+                    <div className="detail">
+                         <h1>{thisEmployee.log}</h1>
+                         <h1>time: {thisEmployee.time}</h1>
+                    </div>
+               )}
           </section>
      );
 };

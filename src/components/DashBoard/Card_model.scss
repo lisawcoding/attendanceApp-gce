@@ -32,4 +32,10 @@
      img[src*="fox"] {
           width: 50%;
      }
+     .img-wrapper {
+          svg {
+               font-size: 9em;
+               fill: var(--m-grey);
+          }
+     }
 }

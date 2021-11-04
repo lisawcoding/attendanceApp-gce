@@ -5,7 +5,7 @@ import { URLContext } from "./URLContext";
 export const FunctionContext = createContext();
 
 export function FunctionProvider(props) {
-     const { tokenURL, loginURL, usersURL, reIssueTokenURL } = useContext(URLContext);
+     const { tokenURL, loginURL, usersURL, reIssueTokenURL, logoutURL } = useContext(URLContext);
 
      const runFetch = (url, method, body, action, auth) => {
           fetch(url, {
@@ -44,14 +44,22 @@ export function FunctionProvider(props) {
                .catch((err) => console.error(err));
      };
 
-     function jwtPayload() {
-          var tokens = sessionStorage.getItem("refreshToken").split(".");
-          const payload = JSON.parse(atob(tokens[1]));
-          return payload.user;
-     }
+     const logout = (props) => {
+          sessionStorage.removeItem("accessToken");
+          sessionStorage.removeItem("refreshToken");
 
-     const reIssueToken = (props) => {
-          fetch(`${reIssueTokenURL}`, {
+          fetch(logoutURL, {
+               method: "DELETE",
+          })
+               .then((res) => res.json())
+               .then((data) => console.log(data))
+               .catch((err) => console.error(err));
+          props.history.push("/");
+     };
+
+     const reIssueToken = async (props) => {
+          console.log("reissue action");
+          await fetch(`${reIssueTokenURL}`, {
                method: "POST",
                headers: {
                     "Content-Type": "application/json",
@@ -61,10 +69,14 @@ export function FunctionProvider(props) {
                .then((res) => res.json())
                .then((data) => {
                     console.log(data);
-                    if (data.error) return props.history.push("/");
-                    if (data.accessToken) sessionStorage.setItem("accessToken", data.accessToken);
+                    if (data.error) return logout(props);
+                    if (data.accessToken) {
+                         sessionStorage.setItem("accessToken", data.accessToken);
+                         console.log(data.accessToken);
+                    }
                })
-               .catch((err) => console.error(err));
+               .catch((err) => console.error({ "reIssueToken error": err }));
+          // window.location.reload();
      };
 
      return (
@@ -72,8 +84,8 @@ export function FunctionProvider(props) {
                value={{
                     verifiedToken,
                     runFetch,
-                    jwtPayload,
                     reIssueToken,
+                    logout,
                }}
           >
                {props.children}

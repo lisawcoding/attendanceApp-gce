@@ -54,7 +54,8 @@ h1 {
      position: relative;
      overflow: hidden;
      border: 1px solid var(--light-grey);
-     img {
+     img,
+     svg {
           width: 100%;
           position: absolute;
           top: 50%;
@@ -83,17 +84,6 @@ h1 {
      }
 }
 
-.overlay {
-     content: "image recognizing...";
-     position: absolute;
-     width: 100%;
-     height: 100%;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     border: 1px solid orchid;
-}
-
 .red {
      fill: var(--red);
 }
@@ -111,10 +101,10 @@ h1 {
 /* loader^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 .loader-wrapper {
      position: absolute;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     background: var(--pink);
+     /* top: 50%; */
+     /* left: 50%; */
+     /* transform: translate(-50%, -50%); */
+     background: rgba(255, 255, 255, 0.9);
      z-index: 9;
      width: 100%;
      height: 100%;
@@ -122,6 +112,11 @@ h1 {
      justify-content: center;
      align-items: center;
      margin: 0;
+     z-index: 999;
+     height: 100vh;
+     top: 0;
+     left: 0;
+     width: 100vw;
 }
 .loader {
      border: 16px solid #f3f3f3;
@@ -162,7 +157,7 @@ h1 {
      right: 0;
      bottom: 0;
      background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+     z-index: 99; /* Specify a stack order in case you're using a different order for other elements */
 }
 
 .red-border {
@@ -211,4 +206,9 @@ img[alt*="logo"] {
      &:after {
           transform: rotate(-45deg);
      }
+}
+
+svg:hover {
+     fill: var(--pink);
+     transition: all 0.2s;
 }

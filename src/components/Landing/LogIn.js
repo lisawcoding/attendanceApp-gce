@@ -1,11 +1,13 @@
 import { useContext, useRef } from "react";
 import { useState } from "react/cjs/react.development";
+import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import { URLContext } from "../../contexts/URLContext";
 import ChangePW from "./ChangePW";
 
 function LogIn(props) {
      const { loginURL, usersURL, tokenURL, mailURL } = useContext(URLContext);
+     const { thisUser, setThisUser } = useContext(DataContext);
      const { runFetch } = useContext(FunctionContext);
      const formRef = useRef();
      const btnRef = useRef();
@@ -33,7 +35,9 @@ function LogIn(props) {
                     if (data.success) {
                          sessionStorage.setItem("accessToken", data.accessToken);
                          sessionStorage.setItem("refreshToken", data.refreshToken);
+                         setThisUser(data.user);
                          props.props.history.push("/home");
+                         return;
                     }
                     window.location.reload();
                })

@@ -2,7 +2,7 @@ const express = require("express");
 // const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
-const UserToken = require("./api/models/UserToken");
+// const UserToken = require("./api/models/UserToken");
 // var cors = require("cors");
 
 const app = express();
@@ -21,7 +21,8 @@ app.use((req, res, next) => {
      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
 
      // Request headers you wish to allow
-     res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
+     // res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
+     res.setHeader("Access-Control-Allow-Headers", "*");
 
      // Set to true if you need the website to include cookies in the requests sent to the API (e.g. in case you use sessions)
      // res.setHeader('Access-Control-Allow-Credentials', true);
@@ -33,11 +34,13 @@ app.use((req, res, next) => {
 app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => res.send("Hello World"));
-app.use("/register", require("./api/routes/register"));
 app.use("/users", require("./api/routes/users"));
-app.use("/companies", require("./api/routes/companies"));
-app.use("/employees", require("./api/routes/employees"));
+app.use("/users/:id/employees", require("./api/routes/employees"));
 
+// app.use("/companies", require("./api/routes/companies"));
+// app.use("/employees", require("./api/routes/employees"));
+
+//testing route
 app.get("/usertoken", (req, res) => {
      UserToken.find()
           .then((data) => res.json(data))

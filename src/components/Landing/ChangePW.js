@@ -5,7 +5,7 @@ import { URLContext } from "../../contexts/URLContext";
 import congratulations from "../../images/congratulations.jpg";
 
 function ChangePW(props) {
-     const { loginURL, usersURL, tokenURL, registerURL } = useContext(URLContext);
+     const { loginURL, usersURL, tokenURL, registerURL, updatdPasswordURL, findUserURL } = useContext(URLContext);
      const { runFetch } = useContext(FunctionContext);
      const btnRef = useRef();
      const [alert, setAlert] = useState([]);
@@ -30,7 +30,7 @@ function ChangePW(props) {
           e.preventDefault();
           // btnRef.current.disabled = true;
 
-          fetch(`${usersURL}/find`, {
+          fetch(findUserURL, {
                method: "POST",
                headers: {
                     "Content-Type": "application/json",
@@ -43,10 +43,10 @@ function ChangePW(props) {
                     if (!data) return setAlert([props.t("the eamil is invalid")]);
                     if (data.mailLimit > 20) return setAlert([props.t("request for too many tokens, the limit is 20 per email address")]);
 
-                    //email ok and send token mail
+                    //send email with token
                     delete data.password;
-                    // setInputValue(data);
                     setThisUser(data);
+
                     runFetch(`${registerURL}/mail`, "POST", data, function (data) {
                          if (data.status.toLowerCase().indexOf("success") !== -1) {
                               setIsSentMail(true);
@@ -66,37 +66,33 @@ function ChangePW(props) {
           // check if passwords are indentical
           if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
 
-          runFetch(
-               `${registerURL}/auth`,
-               "POST",
-               { email: e.target.email.value },
-               function (data) {
-                    if (data.status.toLowerCase().indexOf("success") === -1) {
-                         if (data.result.message && data.result.message.toLowerCase().indexOf("expire") !== -1) {
-                              return setAlert("token expired");
+          fetch(updatdPasswordURL, {
+               method: "PUT",
+               headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${e.target.token.value}`,
+               },
+               body: JSON.stringify({ ...thisUser, password: e.target.password.value }),
+          })
+               .then((res) => res.json())
+               .then((data) => {
+                    console.log(data);
+
+                    if (data.error) {
+                         if (data.error.message.indexOf("expire") !== -1) {
+                              setAlert("token expired");
+                              setTimeout(() => {
+                                   window.location.reload();
+                                   return;
+                              }, 1200);
                          } else {
                               return setAlert("invalid token");
                          }
+                    } else {
+                         setIsSuccess(true);
                     }
-
-                    // update user password and mail
-                    console.log({ ...thisUser, password: e.target.password.value });
-                    fetch(`${usersURL}/mailLimit`, {
-                         method: "PUT",
-                         headers: {
-                              "Content-Type": "application/json",
-                         },
-                         body: JSON.stringify({ ...thisUser, password: e.target.password.value }),
-                    })
-                         .then((res) => res.json())
-                         .then((data) => {
-                              console.log(data);
-                              setIsSuccess(true);
-                         })
-                         .catch((err) => console.error(err));
-               },
-               e.target.token.value
-          );
+               })
+               .catch((err) => console.error(err));
      };
 
      return (

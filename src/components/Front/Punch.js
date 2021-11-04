@@ -2,14 +2,13 @@ import React, { useState, useRef, createRef, useEffect, useContext } from "react
 import { Link } from "react-router-dom";
 import * as faceapi from "face-api.js";
 
-import "../styles/Punch.scss";
+import "./Punch.scss";
 import { BiCamera } from "react-icons/bi";
-import { InitContext } from "../contexts/InitContext";
-import FaceCamera from "./FaceCamera/FaceCamera";
-import FaceFind from "./FaceFind";
+import Camera from "./Camera";
 
 function Punch(props) {
      const [isChecked, setIsChecked] = useState(false);
+
      const [timer, setTimer] = useState(new Date());
 
      // useEffect( async() => {
@@ -27,25 +26,24 @@ function Punch(props) {
 
           return () => {
                clearInterval(timerInterval);
+               window.location.reload();
           };
      }, []);
 
      return (
-          <div id="Punch" className="file-outter">
-               <form id="File_model" encType="multipart/form-data">
-                    <section className="time-div">
+          <div id="Punch">
+               <section className="left-div">
+                    <div>
                          <h1>{new Date().toLocaleDateString()}</h1>
-                         {/* <h2 className="time" >{new Date().toLocaleTimeString("en-US")}</h2> */}
                          <h2>{timer.toLocaleTimeString("en-US")}</h2>
-                    </section>
-                    <section className="img-wrapper">
-                         <Link to="/facecamera">
-                              <BiCamera className="BiCamera" />
-                         </Link>{" "}
-                         <img src="" />
-                    </section>
-
-                    <section className="info-div">
+                    </div>
+               </section>
+               {/* <section> */}
+               <form className="right-div">
+                    {/* <div className="img-wrapper"> */}
+                    <Camera timer={timer} />
+                    {/* </div> */}
+                    {/* <div>
                          <label>
                               <input type="text" name="name" placeholder="name" autoComplete="off" disabled={isChecked} />
                          </label>
@@ -59,8 +57,9 @@ function Punch(props) {
                               <input type="submit" value="clock in" />
                               <input type="submit" value="clock out" />
                          </div>
-                    </section>
+                    </div> */}
                </form>
+               {/* </section> */}
           </div>
      );
 }

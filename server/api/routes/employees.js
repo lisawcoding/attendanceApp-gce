@@ -1,40 +1,53 @@
 const express = require("express");
-const router = express.Router();
-const multer = require("multer");
 
+const User = require("../models/User");
 const Employee = require("../models/Employee");
+const bcrypt = require("bcrypt");
+const { verifyAccessToken } = require("../../JWT");
 
-router.get("/", (req, res) => {
-     Employee.find()
-          .then((data) => res.json({ status: "success", result: data }))
-          .catch((err) => res.json({ status: "err", result: err }));
-     // .catch((err) => res.status(404).json({ error: "no Employee found" }));
+const employeeRouter = express.Router({ mergeParams: true });
+
+employeeRouter.get("/", (req, res) => {
+     Employee.find({ user: req.params.id })
+          .then((data) => {
+               res.json(data);
+          })
+          .catch((err) => res.json({ error: err }));
 });
 
-router.get("/:id", (req, res) => {
-     Employee.findById(req.params.id)
-          .then((data) => res.json({ status: "success", result: data }))
-          .catch((err) => res.status(404).json({ error: "no Employee found" }));
-});
-
-router.post("/", (req, res) => {
-     Employee.create(req.body)
-          .then((data) => res.json({ status: "success", result: data, msg: "Employee added successfully" }))
-          .catch((err) => res.json({ status: "err", result: err }));
-});
-
-router.put("/:id", (req, res) => {
-     Employee.findByIdAndUpdate(req.params.id, req.body)
-          .then((data) => res.json({ status: "success", result: data, msg: "updated successfully" }))
-          .catch((err) => res.json({ status: "err", result: err }));
-     // .catch((err) => res.status(400).json({ error: "unable to update this data" }));
-});
-
-router.delete("/:id", (req, res) => {
+employeeRouter.post("/", verifyAccessToken, (req, res) => {
      console.log(req.params);
-     Employee.findByIdAndDelete(req.params.id)
-          .then((data) => res.json({ msg: "data deleted successfully" }))
-          .catch((err) => res.status(404).json({ error: "no such a book" }));
+     Employee.create({ ...req.body, user: req.params.id })
+          .then((data) => {
+               res.json(data);
+          })
+          .catch((err) => res.json({ error: err }));
 });
 
-module.exports = router;
+employeeRouter.put("/:employeeId", verifyAccessToken, (req, res) => {
+     Employee.findByIdAndUpdate(req.params.employeeId, req.body, { returnNewDocument: true })
+          .then((data) => res.json(data))
+          .catch((err) => res.json({ error: err }));
+
+     // Employee.findOneAndUpdate({id: req.body_id}, req.body)
+     //      .then((data) => {
+     //           res.json(data);
+     //      })
+     //      .catch((err) => res.json({ error: err }));
+     // User.findByIdAndUpdate({ employees: { $elemMatch: { _id: req.params.employeeId } } })
+     //      .then((data) => {
+     //           res.json(data);
+     //           // const result = data.employees.filter((elm) => elm._id == req.params.employeeId);
+     //           // res.send(result);
+     //      })
+     //      .catch((err) => res.json({ error: err }));
+});
+
+employeeRouter.delete("/:employeeId", verifyAccessToken, (req, res) => {
+     console.log("del: ", req.params.employeeId);
+     Employee.findByIdAndDelete(req.params.employeeId)
+          .then((data) => res.json(data))
+          .catch((err) => res.json({ error: err }));
+});
+
+module.exports = employeeRouter;

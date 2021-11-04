@@ -3,6 +3,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const jwt = require("jsonwebtoken");
+const { signAccessToken, signRefreshToken, verifyAccessToken } = require("../../JWT");
 
 // const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 // const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -17,7 +18,8 @@ router.get("/", (req, res) => res.send("mail"));
 router.post("/mail", async (req, res) => {
      console.log("req.body: ", req.body);
 
-     const jwtToken = jwt.sign({ email: req.body.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m" });
+     // const jwtToken = jwt.sign({ email: req.body.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m" });
+     const jwtToken = signAccessToken({ email: req.body.email });
      // const accessToken = await oAuth2Client.getAccessToken();
      // const transporter = nodemailer.createTransport({
      //      service: "gmail",
@@ -59,26 +61,28 @@ router.post("/mail", async (req, res) => {
      });
 });
 
-function authenticateToken(req, res, next) {
-     const authHeader = req.headers.authorization;
-     const token = authHeader && authHeader.split(" ")[1];
-     console.log(token);
+// function authenticateToken(req, res, next) {
+//      const authHeader = req.headers.authorization;
+//      const token = authHeader && authHeader.split(" ")[1];
 
-     if (token == null) return res.json({ status: "err", result: "no token" });
+//      if (token == null) return res.json({ status: "err", result: "no token" });
 
-     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-          if (err) {
-               console.log(err);
-               res.json({ status: "err", result: err });
-          } else {
-               if (decoded.email !== req.body.email) return res.json({ status: "err", result: "wrong email" });
-               res.json({ status: "success: jwt verify", result: decoded });
-               // res.json({ status: "verify successfully", result: decoded });
-          }
-          next();
-     });
-}
+//      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+//           if (err) {
+//                console.log(err);
+//                res.json({ status: "err", result: err });
+//           } else {
+//                if (decoded.email !== req.body.email) return res.json({ status: "err", result: "wrong email" });
+//                res.json({ status: "success: jwt verify", result: decoded });
+//                // res.json({ status: "verify successfully", result: decoded });
+//           }
+//           next();
+//      });
+// }
 
-router.post("/auth", authenticateToken, (req, res) => {});
+router.post("/auth", verifyAccessToken, (req, res) => {
+     if (req.body.payload.email !== req.body.email) return res.json({ status: "err", result: "wrong email" });
+     res.json({ status: "success: jwt verify", result: req.body.payload });
+});
 
 module.exports = router;

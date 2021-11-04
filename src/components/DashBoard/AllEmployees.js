@@ -5,23 +5,35 @@ import { InitContext } from "../../contexts/InitContext";
 import Card_model from "./Card_model";
 import "./AllEmployees.scss";
 import { URLContext } from "../../contexts/URLContext";
+import { DataContext } from "../../contexts/DataContext";
+import { FunctionContext } from "../../contexts/FunctionContext";
 
-function AllEmployees() {
-     const { employeesURL, companiesURL } = useContext(URLContext);
+function AllEmployees(props) {
+     const { employeesURL, companiesURL, usersURL } = useContext(URLContext);
      const { initEmployees, setInitEmployees } = useContext(InitContext);
-     const [allEmployees, setAllemployees] = useState(initEmployees);
+     const { thisUser, setThisUser, editedEmployee, setEditedEmployee } = useContext(DataContext);
+     const { reIssueToken } = useContext(FunctionContext);
+     const [allEmployees, setAllEmployees] = useState(null);
      const [isLoading, setIsLoading] = useState(true);
 
      useEffect(() => {
-          //      fetch(employeesURL)
-          //           .then((res) => res.json())
-          //           .then((data) => {
-          //                console.log(data);
-          //                setAllemployees([...allEmployees, ...data.result]);
-          setIsLoading(false);
-          //           })
-          //           .catch((err) => console.error(`fetch error: ${err}`));
-     }, []);
+          const fetchEmployees = () => {
+               fetch(`${usersURL}/${thisUser._id}/employees`, {})
+                    .then((res) => res.json())
+                    .then((data) => {
+                         console.log(data);
+                         if (data.error) {
+                              reIssueToken(props);
+                         } else {
+                              setAllEmployees(data);
+                              setIsLoading(false);
+                         }
+                    })
+                    .catch((err) => console.error(err));
+          };
+
+          if (thisUser._id) fetchEmployees();
+     }, [thisUser]);
 
      return (
           <div id="AllEmployees">
@@ -31,7 +43,7 @@ function AllEmployees() {
                     </div>
                )}
                <h1>all employees</h1>
-               <section className="cards-div">{allEmployees.length > 0 && allEmployees.map((elm) => <Card_model elm={elm} key={uuidv4()} />)}</section>
+               <section className="cards-div">{allEmployees != null && allEmployees.map((elm) => <Card_model elm={elm} key={uuidv4()} />)}</section>
           </div>
      );
 }

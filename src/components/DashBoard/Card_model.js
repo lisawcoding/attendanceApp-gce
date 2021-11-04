@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { BiFace, BiImageAlt } from "react-icons/bi";
 // import "../../styles/Card_model.scss";
 import "./Card_model.scss";
 
@@ -25,13 +25,16 @@ function Card_model(props) {
 
      return (
           <div id="Card_model" className="card">
-               <Link to={`/employees/${props.elm._id}`}>
+               {/* <Link to={`/employees/${props.elm._id}`}> */}
+               {/* <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link> */}
+               <Link to={{ pathname: `/employees/${props.elm._id}`, state: props.elm }}>
                     <h1>{props.elm.name}</h1>
                     <p>{props.elm._id}</p>
                     <div className="img-wrapper">
                          {/* <img src={tryRequire(`../images/${props.elm.name}${props.elm.id}.jpg`)} alt={`${props.elm.name}'s image`} /> */}
                          {/* <img src={require(`../images/${props.elm.name}${props.elm.id}.jpg`).default} /> */}
-                         <img src={props.elm.image} />
+                         {props.elm.image.length > 0 ? <img src={props.elm.image} /> : <BiImageAlt />}
+
                          {/* <img src={require(`../images/${props.elm.name}${props.elm.id}.jpg`).default} /> */}
                     </div>
                </Link>

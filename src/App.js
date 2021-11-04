@@ -6,7 +6,7 @@ import "./App.scss";
 import FaceCamera from "./components/FaceCamera/FaceCamera";
 import Nav from "./components/Nav";
 import Home from "./components/Home/Home";
-import Punch from "./components/Punch";
+import Punch from "./components/Front/Punch";
 import FaceFind from "./components/FaceFind";
 import SignUp from "./components/Landing/SignUp";
 import Landing from "./components/Landing/Landing";
@@ -68,7 +68,7 @@ function App(props) {
           <div className="App">
                {window.onload ? (
                     <div className="loader-wrapper">
-                         <div className="loader"></div>fuck
+                         <div className="loader"></div>
                     </div>
                ) : (
                     <Router>
@@ -81,7 +81,7 @@ function App(props) {
                               <DashBoardNav exact path="/create_employee" component={(props) => <CreateEmployee {...props} />} />
                               <DashBoardNav exact path="/employees/:id" component={EachEmployee} />
 
-                              <Route exact path="/facecamera" component={FaceCamera} />
+                              {/* <Route exact path="/facecamera" component={FaceCamera} /> */}
                               <Route exact path="/punch" component={Punch} />
                               <Route exact path="/facefind" component={FaceFind} />
                               <Route path="" component={NotFound} />

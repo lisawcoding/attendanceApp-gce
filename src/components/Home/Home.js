@@ -6,15 +6,15 @@ import logo from "../../images/logo.png";
 import dashboard from "../../images/dashboard.png";
 import clockIn from "../../images/clockIn.png";
 import "./Home.scss";
-import { FunctionContext } from "../../contexts/FunctionContext";
-import { URLContext } from "../../contexts/URLContext";
 import { DataContext } from "../../contexts/DataContext";
 
 function Home(props) {
+     const { thisUser, setThisUser } = useContext(DataContext);
      return (
           <main id="Home">
                <section className="top">
                     <img src={logo} alt="logo" />
+                    <h1>Hello {thisUser.name}</h1>
                </section>
                <section className="main">
                     <div className="dashboard">
@@ -25,7 +25,7 @@ function Home(props) {
                     </div>
                     <div className="clockIn">
                          <img src={clockIn} alt="clorckIn" />
-                         <NavLink exact to="/facecamera" activeClassName="nav-active">
+                         <NavLink exact to="/punch" activeClassName="nav-active">
                               go to clockIn desk
                          </NavLink>
                     </div>

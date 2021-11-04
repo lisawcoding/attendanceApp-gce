@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const User = require("./api/models/User");
-const { signAccessToken, signRefreshToken } = require("./JWT");
+const { signAccessToken, signRefreshToken, verifyAccessToken } = require("./JWT");
 const UserToken = require("./api/models/UserToken");
 
 const app = express();
@@ -15,12 +15,14 @@ dotenv.config();
 app.use((req, res, next) => {
      res.setHeader("Access-Control-Allow-Origin", "*");
      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-     res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
+     res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization, x-token");
      next();
 });
 app.use(express.json({ extended: true }));
 
 app.get("/", (req, res) => res.send("authApp"));
+
+app.use("/register", require("./api/routes/register"));
 
 app.post("/login", async (req, res) => {
      const user = await User.findOne({ email: req.body.email });
@@ -31,24 +33,19 @@ app.post("/login", async (req, res) => {
      bcrypt.compare(req.body.password, user.password).then(async (result) => {
           if (!result) return res.json({ error: "wrong password" });
 
-          //email and password are correct
           try {
-               // const id = { id: user._id };
-               // const accessToken = jwt.sign(id, process.env.ACCESS_TOKEN_SECRET, {
-               //      expiresIn: "10m",
-               // });
-               // const refreshToken = jwt.sign(id, process.env.REFRESH_TOKEN_SECRET);
-               // res.cookie("refreshToken", refreshToken, { maxAge: EXPIRES_IN });
                await UserToken.deleteMany({ id: user._id })
                     .then((data) => console.log("deleteUserToken: ", data))
                     .catch((err) => console.log("deleteUserToken err: ", err));
 
                const accessToken = signAccessToken({ id: user._id });
                const refreshToken = signRefreshToken({ id: user._id });
+
                res.json({
                     success: result,
                     accessToken: accessToken,
                     refreshToken: refreshToken,
+                    user: user,
                });
                UserToken.create({ id: user._id, token: refreshToken, email: req.body.email })
                     .then((data) => console.log("userToken", data))
@@ -67,8 +64,6 @@ app.post("/reIssueToken", (req, res) => {
      jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, payload) => {
           if (err) return res.status(403).json({ error: err });
 
-          console.log("payLoad: ", payload);
-
           let userToken = await UserToken.find({ id: payload.id }).sort({ createdAt: -1 }).limit(1);
           userToken = userToken[0];
           console.log(userToken);
@@ -82,8 +77,20 @@ app.post("/reIssueToken", (req, res) => {
      });
 });
 
+app.put("/update_password", verifyAccessToken, (req, res) => {
+     console.log(req.body);
+     User.findOneAndUpdate(
+          { email: req.body.email },
+          { $inc: { mailLimit: 1 }, $set: { password: bcrypt.hashSync(req.body.password, 10) } },
+          { useFindAndModify: false, returnNewDocument: true, new: true }
+     )
+          .then((data) => {
+               res.json({ status: "success", result: data });
+          })
+          .catch((err) => res.json({ status: "err", result: err }));
+});
+
 app.delete("/logout", (req, res) => {
-     // refreshToken
      UserToken.deleteMany(req.body._id)
           .then((data) => console.log("deleteUserToken: ", data))
           .catch((err) => console.log("deleteUserToken err: ", err));

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useLayoutEffect } from "react";
+import React, { useContext, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { InitContext } from "../../contexts/InitContext";
@@ -7,40 +7,55 @@ import { URLContext } from "../../contexts/URLContext";
 import "./CreateEmployee.scss";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
+import FaceCamera from "../FaceCamera/FaceCamera";
 
 function CreateEmployee(props) {
-     const { companiesURL } = useContext(URLContext);
-     const { jwtPayload } = useContext(FunctionContext);
-     const { thisEmployee, setThisEmployee } = useContext(DataContext);
+     const { usersURL } = useContext(URLContext);
+     const { thisUser, setThisUser, thisEmployee, setThisEmployee } = useContext(DataContext);
+     const { reIssueToken } = useContext(FunctionContext);
+     const { logout } = useContext(FunctionContext);
+     const [isCamera, setIsCamera] = useState(false);
      const submitBtnRef = useRef();
      const formRef = useRef();
 
+     useEffect(() => {
+          return () => {
+               window.location.reload();
+          };
+     }, []);
+
      const submitForm = (e) => {
           e.preventDefault();
-          // submitBtnRef.current.disabled = true;
-          console.log(thisEmployee);
+          console.log("submit");
 
           // var fd = new FormData(formRef.current);
           // fd.append("image", imageBase64);
           // fd.forEach((value, key) => (fd[key] = value));
-          jwtPayload();
-
-          // fetch(companiesURL, {
-          //      method: "POST",
-          //      headers: {
-          //           "Content-Type": "application/json",
-          //           // Authorization: sessionStorage.getItem("refreshToken"),
-          //      },
-          //      // body: JSON.stringify({ email: jwtPayload(), employees: [thisEmployee] }),
-          //      body: JSON.stringify({ employees: [thisEmployee] }),
-          // })
-          //      .then((res) => res.json())
-          //      .then((data) => {
-          //           console.log(data);
-          //           alert("employee record added successfully");
-          //           props.history.push("/employees");
-          //      })
-          //      .catch((err) => console.error(err));
+          const fetchEmployee = () => {
+               fetch(`${usersURL}/${thisUser._id}/employees`, {
+                    method: "POST",
+                    headers: {
+                         "Content-Type": "application/json",
+                         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+                    },
+                    body: JSON.stringify(thisEmployee),
+               })
+                    .then((res) => res.json())
+                    .then(async (data) => {
+                         console.log(data);
+                         if (data.error) {
+                              await reIssueToken(props);
+                              fetchEmployee();
+                              return;
+                         } else {
+                              props.history.push("/employees");
+                              setThisUser({ ...thisUser, employees: data });
+                              Object.keys(thisEmployee).map((key) => (thisEmployee[key] = ""));
+                         }
+                    })
+                    .catch((err) => console.error(err));
+          };
+          fetchEmployee();
      };
 
      const changeInput = (e) => {
@@ -77,9 +92,13 @@ function CreateEmployee(props) {
                     </div> */}
                               <section className="img-wrapper">
                                    {thisEmployee.image.length < 1 ? (
-                                        <Link to="/facecamera">
-                                             <BiCamera className="BiCamera" />
-                                        </Link>
+                                        // <Link to="/facecamera"></Link>
+                                        <BiCamera
+                                             className="BiCamera"
+                                             onClick={() => {
+                                                  setIsCamera(true);
+                                             }}
+                                        />
                                    ) : (
                                         <img src={thisEmployee.image} type="text" name="image" />
                                    )}
@@ -89,10 +108,6 @@ function CreateEmployee(props) {
                                    <label>
                                         <span>name</span>
                                         <input type="text" name="name" onChange={changeInput} required value={thisEmployee.name} />
-                                   </label>
-                                   <label>
-                                        <span>employee id</span>
-                                        <input type="text" name="id" onChange={changeInput} value={thisEmployee.id} />
                                    </label>
                                    <label>
                                         <span>password</span>
@@ -116,6 +131,7 @@ function CreateEmployee(props) {
                          </form>
                     </div>
                </div>
+               {isCamera && <FaceCamera setIsCamera={setIsCamera} />}
           </>
      );
 }
