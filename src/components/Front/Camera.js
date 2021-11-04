@@ -16,9 +16,9 @@ const FaceCamera = (props, ref) => {
      const [mediaTest, setMediaTest] = useState(null);
      const [alert, setAlert] = useState([]);
      const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
+     const [thisEmployee, setThisEmployee] = useState({ log: "login" });
      const videoRef = useRef();
      const canvasRef = useRef();
-     const [thisEmployee, setThisEmployee] = useState({ log: "clockIn" });
 
      let faceapiInterval;
      const onPlay = async () => {
@@ -129,7 +129,7 @@ const FaceCamera = (props, ref) => {
                {alert.length > 0 && alert.map((elm) => <h1 className="alert-text">{elm}</h1>)}
                {thisEmployee.image && (
                     <div className="detail">
-                         <h1>{thisEmployee.log}</h1>
+                         <h1></h1>
                          <h1>time: {thisEmployee.time}</h1>
                     </div>
                )}
