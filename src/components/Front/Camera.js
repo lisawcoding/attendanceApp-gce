@@ -16,7 +16,7 @@ const FaceCamera = (props, ref) => {
      const [mediaTest, setMediaTest] = useState(null);
      const [alert, setAlert] = useState([]);
      const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
-     const [thisEmployee, setThisEmployee] = useState({ log: "login" });
+     const [thisEmployee, setThisEmployee] = useState({ log: "login", image: "", time: "" });
      const videoRef = useRef();
      const canvasRef = useRef();
 
@@ -117,7 +117,7 @@ const FaceCamera = (props, ref) => {
 
                {pause && (
                     <>
-                         <img src={thisEmployee.image} style={cameraSize} />
+                         <img src={thisEmployee.image} width={cameraSize.width} height={cameraSize.height} />
                          {/* <div className="btn-div" style={cameraSize}>
                               <GiConfirmed className="green" onClick={stopVideo} />
                               <GiCancel onClick={onPlay} className="red" />
