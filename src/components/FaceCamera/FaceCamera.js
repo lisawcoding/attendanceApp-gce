@@ -6,11 +6,8 @@ import { GiConfirmed, GiCancel } from "react-icons/gi";
 import { InitContext } from "../../contexts/InitContext";
 import "./FaceCamera.scss";
 import { CameraLoader } from "./CameraLoader";
-import { DataContext } from "../../contexts/DataContext";
 
-const FaceCamera = (props, ref) => {
-     const { thisEmployee, setThisEmployee } = useContext(DataContext);
-     // const { imageBase64, setImgBase64 } = useContext(InitContext);
+const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
      const [pause, setPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
      const [mediaTest, setMediaTest] = useState(null);
@@ -61,8 +58,6 @@ const FaceCamera = (props, ref) => {
 
      const startVideo = () => {
           console.log("startVideo");
-          return;
-          setThisEmployee({ ...thisEmployee, image: "" });
 
           navigator.mediaDevices
                .getUserMedia({ video: true })
@@ -89,7 +84,8 @@ const FaceCamera = (props, ref) => {
           videoRef.current.srcObject = null;
 
           // props.history.push("/create_employee");
-          props.setIsCamera(false);
+          // props.setIsCamera(false);
+          setIsCamera(false);
      };
 
      const capture = async () => {
@@ -97,7 +93,7 @@ const FaceCamera = (props, ref) => {
 
           await canvasRef.current.getContext("2d").drawImage(videoRef.current, 0, 0);
           console.log(canvasRef.current.toDataURL("image/jpeg", 0.5));
-          // await setImgBase64(canvasRef.current.toDataURL("image/jpeg", 0.5));
+
           await setThisEmployee({ ...thisEmployee, image: canvasRef.current.toDataURL("image/jpeg", 0.5) });
           setPause(true);
           setIsPlay(false);

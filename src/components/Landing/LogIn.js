@@ -49,19 +49,6 @@ function LogIn(props) {
           btnRef.current.disabled = false;
      };
 
-     const deleteBtn = (e) => {
-          console.log("click deleteBtn");
-          fetch(`${usersURL}/delete`, {
-               method: "DELETE",
-               // headers: {
-               //      "Content-Type": "application/json"
-               // },
-               // body: JSON.stringify()
-          })
-               .then((res) => res.json())
-               .catch((err) => console.log(err));
-     };
-
      return (
           <>
                <form ref={formRef} onSubmit={onSubmit}>
@@ -80,7 +67,6 @@ function LogIn(props) {
                     {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
                     <input type="submit" value={props.t("login")} ref={btnRef} />
                </form>
-               <button onClick={deleteBtn}>delete</button>
           </>
      );
 }

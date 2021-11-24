@@ -1,0 +1,19 @@
+#Punch {
+     .video-frame {
+          position: relative;
+          canvas {
+               top: 1.5vw;
+               left: 1.5vw;
+          }
+     }
+     .camera-loader-div {
+          top: 0;
+          left: 0;
+          z-index: 999;
+     }
+}
+
+@media screen and (orientation: portrait) {
+}
+@media screen and (orientation: landscape) {
+}

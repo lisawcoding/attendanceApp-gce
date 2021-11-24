@@ -36,9 +36,7 @@ app.use(express.json({ extended: false }));
 app.get("/", (req, res) => res.send("Hello World"));
 app.use("/users", require("./api/routes/users"));
 app.use("/users/:id/employees", require("./api/routes/employees"));
-
-// app.use("/companies", require("./api/routes/companies"));
-// app.use("/employees", require("./api/routes/employees"));
+app.use("/users/:id/employees/:employeeId/records", require("./api/routes/records"));
 
 //testing route
 app.get("/usertoken", (req, res) => {

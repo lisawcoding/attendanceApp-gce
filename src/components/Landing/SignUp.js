@@ -71,25 +71,25 @@ function SignUp(props) {
           btnRef.current.disabled = false;
      };
 
-     const create = (e) => {
-          fetch(`${usersURL}`, {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-               },
-               body: JSON.stringify({ name: "bb1", email: "bb1@bb.com", password: "12", password2: "12" }),
-          })
-               .then((res) => res.json())
-               .then((data) => {
-                    console.log(data);
-                    // setIsEdit(false);
-               })
-               .catch((err) => console.error(err));
-     };
+     // const create = (e) => {
+     //      fetch(`${usersURL}`, {
+     //           method: "POST",
+     //           headers: {
+     //                "Content-Type": "application/json",
+     //           },
+     //           body: JSON.stringify({ name: "bb1", email: "bb1@bb.com", password: "12", password2: "12" }),
+     //      })
+     //           .then((res) => res.json())
+     //           .then((data) => {
+     //                console.log(data);
+     //                // setIsEdit(false);
+     //           })
+     //           .catch((err) => console.error(err));
+     // };
 
      return (
           <>
-               <button onClick={create}>create account</button>
+               {/* <button onClick={create}>create account</button> */}
                {!isSentMail ? (
                     <form onSubmit={sendMail} ref={formRef}>
                          <input type="text" name="name" placeholder="name" required onChange={changeInput} value={inputValue.name} />

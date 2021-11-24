@@ -1,28 +1,26 @@
-import React, { useState, useRef, createRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import * as faceapi from "face-api.js";
+import React, { useState, useEffect, useContext } from "react";
 
 import "./Punch.scss";
-import { BiCamera } from "react-icons/bi";
-import Camera from "./Camera";
+import PunchCamera from "./PunchCamera";
+import { DataContext } from "../../contexts/DataContext";
 
 function Punch(props) {
-     const [isChecked, setIsChecked] = useState(false);
-
+     const { thisUser } = useContext(DataContext);
      const [timer, setTimer] = useState(new Date());
+     const [thisEmployee, setThisEmployee] = useState(null);
+     const [punch, setPunch] = useState({
+          status: "in",
+     });
 
-     // useEffect( async() => {
-     //     var sec =  60 - new Date().getSeconds();
-     //     const firstTimer = await setInterval(()=>{
-     //         clearInterval(firstTimer)
-     //     }, sec * 1000)
-     // }, [])
+     useEffect(async () => {
+          var sec = 60 - new Date().getSeconds();
+          const firstTimer = await setInterval(() => {
+               clearInterval(firstTimer);
+          }, sec * 1000);
+     }, []);
 
      useEffect(() => {
-          const timerInterval = setInterval(() => {
-               console.log("timer");
-               setTimer(new Date());
-          }, 1000);
+          const timerInterval = setInterval(() => setTimer(new Date()), 1000);
 
           return () => {
                clearInterval(timerInterval);
@@ -30,36 +28,39 @@ function Punch(props) {
           };
      }, []);
 
+     const clickClockInOutBtn = (e) => {
+          console.log(e.target.name);
+          console.log(e.target.value);
+          setPunch({ ...punch, [e.target.name]: e.target.value });
+     };
+
      return (
           <div id="Punch">
                <section className="left-div">
-                    <div>
-                         <h1>{new Date().toLocaleDateString()}</h1>
-                         <h2>{timer.toLocaleTimeString("en-US")}</h2>
+                    <div className="time-div">
+                         <h1 className="date">{new Date().toDateString()}</h1>
+                         <h1 className="timer">{timer.toTimeString("en-US").slice(0, 8)}</h1>
                     </div>
+                    <div className="wrapper">
+                         <input type="radio" name="status" id="option-1" onClick={clickClockInOutBtn} value="in" defaultChecked="checked" />
+                         <input type="radio" name="status" id="option-2" onClick={clickClockInOutBtn} value="out" />
+                         <div></div>
+                         <label htmlFor="option-1" className="option option-1">
+                              in
+                         </label>
+                         <label htmlFor="option-2" className="option option-2">
+                              out
+                         </label>
+                    </div>
+                    {thisUser.setting && (
+                         <p>
+                              Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut}
+                         </p>
+                    )}
                </section>
-               {/* <section> */}
                <form className="right-div">
-                    {/* <div className="img-wrapper"> */}
-                    <Camera timer={timer} />
-                    {/* </div> */}
-                    {/* <div>
-                         <label>
-                              <input type="text" name="name" placeholder="name" autoComplete="off" disabled={isChecked} />
-                         </label>
-                         <label>
-                              <input type="text" name="id" placeholder="id" disabled={isChecked} />
-                         </label>
-                         <label>
-                              <input type="password" name="password" placeholder="password" required disabled={isChecked} />
-                         </label>
-                         <div className="btn-div">
-                              <input type="submit" value="clock in" />
-                              <input type="submit" value="clock out" />
-                         </div>
-                    </div> */}
+                    <PunchCamera thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} timer={timer} punch={punch} thisUser={thisUser} />
                </form>
-               {/* </section> */}
           </div>
      );
 }

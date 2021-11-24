@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const DeletePopup = (props) => {
      console.log(props.elm);
      return (
@@ -12,12 +10,10 @@ const DeletePopup = (props) => {
                          <button className="btn cancel" onClick={props.closePopup}>
                               cancel
                          </button>
-                         <button className="btn delete" onClick={props.deletItem}>
+                         <button className="btn delete" onClick={props.deleteItem}>
                               delete
                          </button>
-                         {/* <Link to={{ pathname: `/employees/${props.elm._id}`, state: { ...props.elm, updated: true } }}>delete</Link> */}
                     </h1>
-                    <h1 className="link">{/* <Link to={{ pathname: `/employees/${props.elm._id}`, state: { ...props.elm, updated: true } }}>ok</Link> */}</h1>
                </div>
           </div>
      );

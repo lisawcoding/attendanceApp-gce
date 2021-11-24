@@ -7,14 +7,21 @@ import dashboard from "../../images/dashboard.png";
 import clockIn from "../../images/clockIn.png";
 import "./Home.scss";
 import { DataContext } from "../../contexts/DataContext";
+import { FunctionContext } from "../../contexts/FunctionContext";
 
 function Home(props) {
      const { thisUser, setThisUser } = useContext(DataContext);
+     const { logout } = useContext(FunctionContext);
      return (
           <main id="Home">
                <section className="top">
-                    <img src={logo} alt="logo" />
-                    <h1>Hello {thisUser.name}</h1>
+                    <div className="right-div">
+                         <img src={logo} alt="logo" />
+                         <h1>Hello {thisUser.name}</h1>
+                    </div>
+                    <h1 className="logout-btn" onClick={() => logout(props)}>
+                         logout
+                    </h1>
                </section>
                <section className="main">
                     <div className="dashboard">

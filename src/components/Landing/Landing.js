@@ -13,15 +13,10 @@ function Landing(props) {
      const [isForgotPW, setIsForgotPW] = useState(false);
      const [isLoading, setIsLoading] = useState(false);
 
-     // useEffect(() => {
-     //      console.log(document.readyState);
-     //      document.readyState === "loading" ? setIsLoading(true) : setIsLoading(false);
-     // });
-
      return (
           <main id="Landing">
                <section className="left-div">
-                    <h1>{t("attandance app")}</h1>
+                    <h1>{t("attendance app")}</h1>
                     <p>{t("sigin  or login")}</p>
                </section>
                <section className="right-div">

@@ -29,6 +29,12 @@ userRouter.post("/get", verifyAccessToken, (req, res) => {
           .then((data) => res.json(data))
           .catch((err) => res.json({ error: err }));
 });
+
+userRouter.put("/", verifyAccessToken, (req, res) => {
+     User.findByIdAndUpdate(req.body.payload.id, req.body, { returnNewDocument: true })
+          .then((data) => res.json(data))
+          .catch((err) => console.error({ error: err }));
+});
 // userRouter.post("/get", verifyAccessToken, (req, res) => {
 //      console.log(req.headers);
 //      console.log(req.body.payload);

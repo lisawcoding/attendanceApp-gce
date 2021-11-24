@@ -24,25 +24,25 @@ export function FunctionProvider(props) {
                .catch((err) => console.error(err));
      };
 
-     const verifiedToken = (action) => {
-          fetch(tokenURL, {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("refreshToken")}`,
-               },
-          })
-               .then((res) => res.json())
-               .then((data) => {
-                    console.log(data);
-                    if (data.status.indexOf("success") === -1) {
-                         // props.history.push("/");
-                    } else {
-                         action();
-                    }
-               })
-               .catch((err) => console.error(err));
-     };
+     // const verifiedToken = (action) => {
+     //      fetch(tokenURL, {
+     //           method: "POST",
+     //           headers: {
+     //                "Content-Type": "application/json",
+     //                Authorization: `Bearer ${sessionStorage.getItem("refreshToken")}`,
+     //           },
+     //      })
+     //           .then((res) => res.json())
+     //           .then((data) => {
+     //                console.log(data);
+     //                if (data.status.indexOf("success") === -1) {
+     //                     // props.history.push("/");
+     //                } else {
+     //                     action();
+     //                }
+     //           })
+     //           .catch((err) => console.error(err));
+     // };
 
      const logout = (props) => {
           sessionStorage.removeItem("accessToken");
@@ -70,10 +70,7 @@ export function FunctionProvider(props) {
                .then((data) => {
                     console.log(data);
                     if (data.error) return logout(props);
-                    if (data.accessToken) {
-                         sessionStorage.setItem("accessToken", data.accessToken);
-                         console.log(data.accessToken);
-                    }
+                    if (data.accessToken) sessionStorage.setItem("accessToken", data.accessToken);
                })
                .catch((err) => console.error({ "reIssueToken error": err }));
           // window.location.reload();
@@ -82,8 +79,8 @@ export function FunctionProvider(props) {
      return (
           <FunctionContext.Provider
                value={{
-                    verifiedToken,
-                    runFetch,
+                    // verifiedToken,
+                    // runFetch,
                     reIssueToken,
                     logout,
                }}

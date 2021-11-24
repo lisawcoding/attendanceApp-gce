@@ -1,3 +1,45 @@
 #User {
-     border: 1px solid var(--pink);
+     padding: 0 5vw;
+     text-align: left;
+     section,
+     form {
+          display: flex;
+          flex-direction: column;
+          p,
+          label,
+          .confirm-btn {
+               align-self: flex-start;
+               margin: 1em;
+          }
+          input {
+               margin-left: 1em;
+          }
+     }
+     form {
+          border: 1px solid var(--dark-grey);
+     }
+     // fieldset:disabled {
+     //      font-weight: unset;
+     //      border: none;
+     //      margin: 0;
+     //      padding: 0;
+     // }
+     button {
+          margin-left: 1em;
+          width: fit-content;
+          padding: 0.15em 0.5em;
+          text-transform: capitalize;
+          &:hover {
+               background: var(--pink);
+               cursor: pointer;
+          }
+          &:disabled {
+               color: var(--dark-grey);
+               border-color: var(--m-grey);
+               &:hover {
+                    background-color: unset;
+                    cursor: unset;
+               }
+          }
+     }
 }
