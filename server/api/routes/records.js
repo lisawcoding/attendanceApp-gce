@@ -55,7 +55,7 @@ recordRouter.put("/:recordId", verifyAccessToken, (req, res) => {
      console.log(":/recordId,put: ")
      console.log(req.params.recordId)
      console.log(req.body)
-     Record.findByIdAndUpdate(req.params.recordId, req.body )
+     Record.findByIdAndUpdate(req.params.recordId, req.body, { new: true} )
      .then(data=>res.json( data ))
      .catch(err=>res.json({ error: err }))
 })

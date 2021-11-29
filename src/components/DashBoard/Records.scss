@@ -36,12 +36,13 @@
         width: 12em;
     }
     form {
-        fieldset {
+        // fieldset {
             border: none;
             // display: flex;
             // flex-direction: column;
             align-items: flex-start;
             min-inline-size: inherit;
+            box-sizing: border-box;
             * {
                 font-weight: 200;
             }
@@ -72,7 +73,7 @@
                     font-weight: 900;
                 }
             }
-        }
+        // }
         input {
             background: var(--m-grey);
             border: none;
@@ -83,7 +84,7 @@
         }
     }
     .edit-item {
-        border-color: var(--pink) !important;
+        border: .15em solid var(--pink) !important;
         box-shadow: var(--box-shadow);
         .edit-btn {
             fill: var(--pink);

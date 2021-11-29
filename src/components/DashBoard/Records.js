@@ -57,6 +57,7 @@ function Records(props) {
 
     const updateRecord = (e, id) => {
         e.preventDefault();
+        if( inputValues == null ) return;
         console.log("updateRecord")
         console.log(id)
 
@@ -66,22 +67,24 @@ function Records(props) {
         // var fd = new FormData(formRef.current);
         // fd.forEach((value, key) => (fd[key] = value));
 
-        // fetch(`${thisRecordsURL}/${id}`, options("PUT", {}))
-        // .then(res => res.json())
-        // .then(async(data) => {
-        //     console.log("edit item: ", data)
-        //     if (data.error) {
-        //         await reIssueToken(props);
-        //         updateRecord();
-        //         return;
-        //     } else {
-        //         // getRecords();
-        //     }
-        // })
-        // .catch( err => {
-        //     console.error( err );
-        //     window.location.reload();
-        // })
+        fetch(`${thisRecordsURL}/${id}`, options("PUT", inputValues))
+        .then(res => res.json())
+        .then(async(data) => {
+            console.log("edit item: ", data)
+            if (data.error) {
+                await reIssueToken(props);
+                updateRecord();
+                return;
+            } else {
+                getRecords();
+                setIsEdit(false);
+                setInputValues(null)
+            }
+        })
+        .catch( err => {
+            console.error( err );
+            window.location.reload();
+        })
     }
 
     const clickDelIcon = id => {
@@ -96,6 +99,7 @@ function Records(props) {
 
     const clickEditIcon = id => {
         setEditItem( id )
+        setInputValues(null)
         if(id!==editItem) return setIsEdit(true)
         setIsEdit( !isEdit )
     }
