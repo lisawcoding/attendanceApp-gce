@@ -10,6 +10,7 @@ import AllEmployees from "./components/DashBoard/AllEmployees";
 import EachEmployee from "./components/DashBoard/EachEmployee";
 import CreateEmployee from "./components/DashBoard/CreateEmployee";
 import User from "./components/DashBoard/User";
+import Records from "./components/DashBoard/Records";
 import NotFound from "./NotFund";
 
 
@@ -46,7 +47,8 @@ function App(props) {
                               <DashBoardNav exact path="/employees" component={(props) => <AllEmployees {...props} />} />
                               <DashBoardNav exact path="/employees/create" component={(props) => <CreateEmployee {...props} />} />
                               <DashBoardNav exact path="/employees/edit/:id" component={EachEmployee} />
-                              <DashBoardNav exact path="/punch" component={Punch} />
+                              <DashBoardNav exact path="/employees/edit/:id/records" component={Records} />
+                              <Route exact path="/punch" component={Punch} />
                               <Route path="" component={NotFound} />
                          </Switch>
                     </Router>

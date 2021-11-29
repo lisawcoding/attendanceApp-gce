@@ -5,8 +5,7 @@ import { URLContext } from "../../contexts/URLContext";
 import congratulations from "../../images/congratulations.jpg";
 
 function ChangePW(props) {
-     const { loginURL, usersURL, tokenURL, registerURL, updatdPasswordURL, findUserURL } = useContext(URLContext);
-     const { runFetch } = useContext(FunctionContext);
+     const { loginURL, usersURL, tokenURL, registerURL, updatdPasswordURL, findUserURL, options } = useContext(URLContext);
      const btnRef = useRef();
      const [alert, setAlert] = useState([]);
      const [isSentMail, setIsSentMail] = useState(false);
@@ -47,13 +46,15 @@ function ChangePW(props) {
                     delete data.password;
                     setThisUser(data);
 
-                    runFetch(`${registerURL}/mail`, "POST", data, function (data) {
+                    fetch(`${registerURL}/mail`, options("POST", data) )
+                    .then(res=>res.json())
+                    .then(data => {
                          if (data.status.toLowerCase().indexOf("success") !== -1) {
                               setIsSentMail(true);
                          } else {
                               setAlert("mail sent failure");
-                         }
-                    });
+                         }                         
+                    })
                     setAlert([]);
                })
                .catch((err) => console.error(err));

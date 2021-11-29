@@ -3,28 +3,33 @@ import React, { useState, createContext } from "react";
 export const URLContext = createContext();
 
 export function URLProvider(props) {
-     
-     const registerURL = `http://localhost:9002/register`
-     const loginURL ="http://localhost:9002/login"
-     const updatdPasswordURL = "http://localhost:9002/update_password"
-     const logoutURL = "http://localhost:9002/logout"
-     const reIssueTokenURL = "http://localhost:9002/reIssueToken"
-     // const [registerURL] = useState("http://localhost:9002/register");
-     // const [loginURL] = useState("http://localhost:9002/login");
-     // const [updatdPasswordURL] = useState("http://localhost:9002/update_password");
-     // const [logoutURL] = useState("http://localhost:9002/logout");
-     // const [reIssueTokenURL] = useState("http://localhost:9002/reIssueToken");
+     const authOrigin = `http://localhost:9002`;
+     const origin = "http://localhost:9001"
 
-     const usersURL = "http://localhost:9001/users"
-    
-     const findUserURL = "http://localhost:9001/users/find"
-     const getUserURL= "http://localhost:9001/users/get"
-     // const [usersURL] = useState("http://localhost:9001/users");
-     // const [findUserURL] = useState("http://localhost:9001/users/find");
-     // const [getUserURL] = useState("http://localhost:9001/users/get");
-     // const [createEmployeeURL] = useState("http://localhost:9001/createEmployee");
-     // const [employeesURL] = useState("http://localhost:9001/employees");
-     // const [companiesURL] = useState("http://localhost:9001/companies");
+     const registerURL = `${authOrigin}/register`
+     const loginURL =`${authOrigin}/login`
+     const updatdPasswordURL = `${authOrigin}/update_password`
+     const logoutURL = `${authOrigin}/logout`
+     const reIssueTokenURL = `${authOrigin}/reIssueToken`
+
+     const usersURL = `${origin}/users`
+     const createUsersURL = `${origin}/users/create`
+     const findUserURL = `${origin}/users/find`
+     const getUserURL= `${origin}/users/get`
+
+     // const getEmployeesURL = `${usersURL}/${id}/employees`
+
+     const options = (method, bodyData) => {
+          return {
+                    method: method ,
+                    headers: {
+                         "Content-Type": "application/json",
+                         "Authorization": `Bearer ${sessionStorage.getItem(`accessToken`)}`,
+                    },
+                    body: JSON.stringify(bodyData),
+               }               
+          }
+
 
      return (
           <URLContext.Provider
@@ -37,6 +42,9 @@ export function URLProvider(props) {
                     getUserURL,
                     findUserURL,
                     logoutURL,
+                    createUsersURL,
+                    options
+                    // getEmployeesURL
                }}
           >
                {props.children}

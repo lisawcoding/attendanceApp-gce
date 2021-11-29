@@ -16,7 +16,8 @@ const RecordSchema = new Schema({
      in: String,
      out: String,
      date: String,
-     date1: Date,
+     // date1: Date,
+     date1: String,
      punch: {
           type: Object,
      },

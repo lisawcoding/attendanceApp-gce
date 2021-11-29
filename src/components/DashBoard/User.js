@@ -1,18 +1,12 @@
-import { useLayoutEffect, useContext, useState } from "react";
-import { NavLink, withRouter } from "react-router-dom";
-
-import logo from "../../images/logo.png";
-// import "../Home/Home.scss";
-import dashboard from "../../images/dashboard.png";
-import clockIn from "../../images/clockIn.png";
+import { useContext, useState } from "react";
 import "./User.scss";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import { URLContext } from "../../contexts/URLContext";
 import { DataContext } from "../../contexts/DataContext";
 
 function User(props) {
-     const { usersURL } = useContext(URLContext);
-     const { thisUser, setThisUser } = useContext(DataContext);
+     const { usersURL, options } = useContext(URLContext);
+     const { thisUser } = useContext(DataContext);
      const { reIssueToken } = useContext(FunctionContext);
      const [isEdit, setIsEdit] = useState(false);
      const [setting, setSetting] = useState(thisUser.setting);
@@ -20,36 +14,29 @@ function User(props) {
      const clickTimeInput = (e) => {
           console.log({ [e.target.name]: e.target.value });
           setSetting({ ...setting, [e.target.name]: e.target.value });
-          // setThisUser({ ...thisUser, setting: { ...thisUser.setting, [e.target.name]: e.target.value } });
      };
 
      const updateUserSetting = (e) => {
           e.preventDefault();
-
-          const fetchUser = () => {
-               console.log("fetchUser");
-               fetch(usersURL, {
-                    method: "PUT",
-                    headers: {
-                         "Content-Type": "application/json",
-                         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-                    },
-                    body: JSON.stringify({ setting: setting }),
-                    // body: JSON.stringify({ setting: thisUser.setting }),
-               })
+          console.log( {setting: setting})
+          const fetchUpdateUser = () => {
+               console.log("fetchUpdateUser");
+               fetch(`${usersURL}/${thisUser._id}`, options("PUT", {setting: setting}))
                     .then((res) => res.json())
                     .then(async (data) => {
                          console.log(data);
                          if (data.error) {
                               await reIssueToken(props);
-                              fetchUser();
+                              fetchUpdateUser();
                               return;
                          }
+                         setIsEdit(false)
                          window.location.reload();
+
                     })
                     .catch((err) => console.error(err));
           };
-          fetchUser();
+          fetchUpdateUser();
      };
 
      const clickEditBtn = () => {
@@ -79,14 +66,11 @@ function User(props) {
                                         <label htmlFor="timeIn">
                                              Choose a time for time in:
                                              <input type="time" name="timeIn" onChange={clickTimeInput} value={setting.timeIn} max={setting.timeOut} />
-                                             {/* <input type="time" name="timeIn" onChange={clickTimeInput} value={thisUser.setting.timeIn} max={thisUser.setting.timeOut} /> */}
                                         </label>
                                         <label htmlFor="timeOut">
                                              Choose a time for time out:
-                                             {/* <input type="time" name="timeOut" onChange={clickTimeInput} value={thisUser.setting.timeOut} min={thisUser.setting.timeIn} /> */}
                                              <input type="time" name="timeOut" onChange={clickTimeInput} value={setting.timeOut} min={setting.timeIn} />
                                         </label>
-                                        {/* {setting !== thisUser.setting && <button onClick={updateUserSetting}>confirm</button>} */}
                                         <button className="confirm-btn" disabled={setting == thisUser.setting && true}>
                                              confirm
                                         </button>

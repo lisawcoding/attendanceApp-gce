@@ -69,6 +69,10 @@
      }
 }
 
+.Popup.overlay {
+     z-index: 999;
+}
+
 // .success-text {
 //      color: green !important;
 //      &:before {

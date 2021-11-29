@@ -19,7 +19,7 @@ const Setting = new Schema(
 );
 
 const UserSchema = new Schema({
-     username: {
+     name: {
           type: String,
      },
      companyName: {
@@ -39,7 +39,10 @@ const UserSchema = new Schema({
           type: Number,
           default: 0,
      },
-     setting: Setting,
+     setting: {
+          type: Setting,
+          default: { Setting }
+     },
      employees: [
           {
                type: Schema.Types.ObjectId,
@@ -57,38 +60,4 @@ const UserSchema = new Schema({
      },
 });
 
-// module.exports = Employee = mongoose.model("employee", EmployeeSchema);
 module.exports = User = mongoose.model("user", UserSchema);
-
-// const EmployeeSchema = require("../models/Employee");
-// const EmployeeSchema = new Schema({
-//      // _creator: { type: mongoose.Schema.ObjectId, ref: "User" },
-//      user: {
-//           type: Schema.Types.ObjectId,
-//           ref: "User",
-//      },
-//      name: {
-//           type: String,
-//           // required: true
-//      },
-//      image: {
-//           type: String,
-//      },
-//      password: {
-//           type: String,
-//      },
-//      tel: {
-//           type: String,
-//      },
-//      remark: {
-//           type: String,
-//      },
-//      date: {
-//           type: String,
-//      },
-//      update_date: {
-//           type: Date,
-//           default: Date.now,
-//           // required: true,
-//      },
-// });

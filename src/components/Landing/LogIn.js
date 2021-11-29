@@ -41,7 +41,10 @@ function LogIn(props) {
                     }
                     window.location.reload();
                })
-               .catch((err) => console.error(err));
+               .catch((err) =>{ 
+                    console.error(err);
+                    window.location.reload();
+               });
      };
 
      const changeInput = (e) => {

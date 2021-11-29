@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
 
 import "./Punch.scss";
 import PunchCamera from "./PunchCamera";
 import { DataContext } from "../../contexts/DataContext";
+import { FunctionContext } from "../../contexts/FunctionContext";
 
 function Punch(props) {
-     const { thisUser } = useContext(DataContext);
+     const { thisUser, allEmployees } = useContext(DataContext);
+     const { fetchUser } = useContext(FunctionContext);
      const [timer, setTimer] = useState(new Date());
      const [thisEmployee, setThisEmployee] = useState(null);
      const [punch, setPunch] = useState({
@@ -13,6 +15,8 @@ function Punch(props) {
      });
 
      useEffect(async () => {
+          fetchUser()
+
           var sec = 60 - new Date().getSeconds();
           const firstTimer = await setInterval(() => {
                clearInterval(firstTimer);
@@ -28,11 +32,11 @@ function Punch(props) {
           };
      }, []);
 
-     const clickClockInOutBtn = (e) => {
-          console.log(e.target.name);
-          console.log(e.target.value);
-          setPunch({ ...punch, [e.target.name]: e.target.value });
-     };
+     const clickClockInOutBtn = (e) => setPunch({ ...punch, [e.target.name]: e.target.value });
+
+     const onSubmit= e => {
+          e.preventDefault()
+     }
 
      return (
           <div id="Punch">
@@ -58,8 +62,10 @@ function Punch(props) {
                          </p>
                     )}
                </section>
-               <form className="right-div">
-                    <PunchCamera thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} timer={timer} punch={punch} thisUser={thisUser} />
+               <form className="right-div" onSubmit={onSubmit}>
+
+                    {/* <BiPlayCircle/> */}
+                   { allEmployees && <PunchCamera thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} timer={timer} punch={punch} thisUser={thisUser} />}
                </form>
           </div>
      );

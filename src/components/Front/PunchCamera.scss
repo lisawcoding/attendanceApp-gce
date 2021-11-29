@@ -4,12 +4,22 @@
           canvas {
                top: 1.5vw;
                left: 1.5vw;
+               top: 50%;
+               left: 50%;
+               transform: translate(-50%, -50%);
+               // border: 1em solid navy;
           }
      }
      .camera-loader-div {
           top: 0;
           left: 0;
           z-index: 999;
+          svg {
+               fill: var(--blue)
+          }
+          .lds-ellipsis div  {
+               background-color: var(--blue);
+          }
      }
 }
 

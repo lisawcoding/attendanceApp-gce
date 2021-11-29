@@ -1,20 +1,24 @@
-import React, { useState, useRef, createRef, useEffect, useContext, useLayoutEffect, forwardRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as faceapi from "face-api.js";
-import { Link, withRouter } from "react-router-dom";
-
+import { withRouter } from "react-router-dom";
 import { GiConfirmed, GiCancel } from "react-icons/gi";
-import { InitContext } from "../../contexts/InitContext";
 import "./FaceCamera.scss";
 import { CameraLoader } from "./CameraLoader";
 
-const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
+const FaceCamera = ({thisEmployee, setThisEmployee}) => {
      const [pause, setPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
-     const [mediaTest, setMediaTest] = useState(null);
      const [alert, setAlert] = useState([]);
      const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
      const videoRef = useRef();
      const canvasRef = useRef();
+     const [isConfirm, setIsConfirm] = useState(false)
+
+     useEffect(()=>{
+          return()=>{
+               !isConfirm && window.location.reload()
+          }
+     }, [])
 
      let faceapiInterval;
      const onPlay = async () => {
@@ -43,22 +47,11 @@ const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
      useEffect(() => {
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
-               faceapi.nets.faceRecognitionNet.loadFromUri("../../models"),
-               // faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-               // faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+               faceapi.nets.faceRecognitionNet.loadFromUri("../../models")
           ]).then(startVideo);
-
-          // return async () => {
-          //      if (videoRef.current == null) {
-          //           //      // await props.history.push("/employees");
-          //           // window.location.reload();
-          //      }
-          // };
      }, []);
 
-     const startVideo = () => {
-          console.log("startVideo");
-
+     const startVideo = (e) => {
           navigator.mediaDevices
                .getUserMedia({ video: true })
                .then((stream) => {
@@ -67,14 +60,14 @@ const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
                     return;
                })
                .catch((err) => {
-                    setMediaTest();
                     console.log(err);
-                    alert("could not start video, please check your device setting");
+                    setAlert([...alert, "could not start video, please check your device setting"]);
                });
      };
 
      const stopVideo = () => {
-          console.log(videoRef.current);
+          setIsConfirm(true)
+
           videoRef.current.autoPlay = false;
 
           const stream = videoRef.current.srcObject;
@@ -82,10 +75,6 @@ const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
           const tracks = stream.getTracks();
           tracks.forEach((track) => track.stop());
           videoRef.current.srcObject = null;
-
-          // props.history.push("/create_employee");
-          // props.setIsCamera(false);
-          setIsCamera(false);
      };
 
      const capture = async () => {
@@ -100,7 +89,7 @@ const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
      };
 
      return (
-          <section className="video-box" onPlay={onPlay}>
+          <section className="video-box" onPlay={onPlay} style={{display: isConfirm? "none" : ""}}>
                <video id="video" autoPlay muted ref={videoRef} paused={pause.toString()} className="video-frame"></video>
                <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
 
@@ -113,19 +102,11 @@ const FaceCamera = ({thisEmployee, setThisEmployee, setIsCamera}) => {
                          </div>
                     </>
                )}
-               {!isPlay && !pause && <CameraLoader mediaTest={mediaTest} />}
+               {!isPlay && !pause && <CameraLoader/>}
 
-               {alert.length > 0 && alert.map((elm) => <h1 className="alert-text">{elm}</h1>)}
+               {alert.length > 0 && alert.map((elm, i) => <h1 className="alert-text" key={`alert-${i}`}>{elm}</h1>)}
           </section>
      );
 };
 
 export default withRouter(FaceCamera);
-
-// import React, { forwardRef } from "react";
-
-// const FaceCamera = forwardRef((props, ref) => {
-//      return <input type="text" value="hello" ref={ref} readOnly />;
-// });
-
-// export default FaceCamera;

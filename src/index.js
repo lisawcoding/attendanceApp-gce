@@ -11,13 +11,13 @@ import { DataProvider } from "./contexts/DataContext";
 ReactDOM.render(
      <React.StrictMode>
           <URLProvider>
-               <FunctionProvider>
-                    <InitProvider>
-                         <DataProvider>
+               <DataProvider>
+                    <FunctionProvider>
+                         <InitProvider>
                               <App />
-                         </DataProvider>
-                    </InitProvider>
-               </FunctionProvider>
+                         </InitProvider>
+                    </FunctionProvider>
+               </DataProvider>
           </URLProvider>
      </React.StrictMode>,
      document.getElementById("root")

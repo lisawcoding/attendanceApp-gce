@@ -24,6 +24,7 @@
           width: calc(100vw - 35%);
           background-color: var(--light-grey);
           display: flex;
+          flex-direction: column;
      }
      form {
           position: relative;

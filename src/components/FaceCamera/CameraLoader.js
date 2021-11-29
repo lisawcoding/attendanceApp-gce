@@ -12,12 +12,7 @@ export const CameraLoader = (props) => {
                               <div></div>
                          </div>
                     </>
-               ) : (
-                    <>
-                         <BiCameraOff />
-                         <h1 className="alert-text">{props.mediaTest}</h1>
-                    </>
-               )}
+               ) : <BiCameraOff />}
           </div>
      );
 };

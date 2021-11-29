@@ -1,48 +1,12 @@
 import React, { useState, createContext, useContext } from "react";
-import { Redirect } from "react-router";
 import { URLContext } from "./URLContext";
+import { DataContext } from "./DataContext";
 
 export const FunctionContext = createContext();
 
 export function FunctionProvider(props) {
-     const { tokenURL, loginURL, usersURL, reIssueTokenURL, logoutURL } = useContext(URLContext);
-
-     const runFetch = (url, method, body, action, auth) => {
-          fetch(url, {
-               method: method,
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${auth}`,
-               },
-               body: JSON.stringify(body),
-          })
-               .then((res) => res.json())
-               .then((data) => {
-                    console.log(`fetch data (${url}): `, data);
-                    action(data);
-               })
-               .catch((err) => console.error(err));
-     };
-
-     // const verifiedToken = (action) => {
-     //      fetch(tokenURL, {
-     //           method: "POST",
-     //           headers: {
-     //                "Content-Type": "application/json",
-     //                Authorization: `Bearer ${sessionStorage.getItem("refreshToken")}`,
-     //           },
-     //      })
-     //           .then((res) => res.json())
-     //           .then((data) => {
-     //                console.log(data);
-     //                if (data.status.indexOf("success") === -1) {
-     //                     // props.history.push("/");
-     //                } else {
-     //                     action();
-     //                }
-     //           })
-     //           .catch((err) => console.error(err));
-     // };
+     const { tokenURL, loginURL, usersURL, reIssueTokenURL, logoutURL, getUserURL, getEmployeesURL } = useContext(URLContext);
+     const { thisUser, setThisUser,setAllEmployees, isLoading, setIsLoading, isReload, setIsReload } = useContext(DataContext);
 
      const logout = (props) => {
           sessionStorage.removeItem("accessToken");
@@ -51,9 +15,9 @@ export function FunctionProvider(props) {
           fetch(logoutURL, {
                method: "DELETE",
           })
-               .then((res) => res.json())
-               .then((data) => console.log(data))
-               .catch((err) => console.error(err));
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.error(err));
           props.history.push("/");
      };
 
@@ -72,17 +36,61 @@ export function FunctionProvider(props) {
                     if (data.error) return logout(props);
                     if (data.accessToken) sessionStorage.setItem("accessToken", data.accessToken);
                })
-               .catch((err) => console.error({ "reIssueToken error": err }));
-          // window.location.reload();
+               .catch((err) =>{ 
+                    console.error({ "reIssueToken error": err });
+                    logout(props)
+               });
      };
+
+     //get User and Employees
+     const getEmployees = (data) => {
+          fetch(`${usersURL}/${data._id}/employees`, {})
+               .then((res) => res.json())
+               .then(async (data) => {
+                    console.log(data);
+                    if (data.error) {
+                         reIssueToken(props);
+                    } else {
+                         await setAllEmployees(data);
+                         setIsLoading(false);
+                    }
+               })
+               .catch((err) => console.error(err));
+     };
+
+     const fetchUser = (props) => {
+          console.log("run fetchUser")
+          fetch(getUserURL, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
+               },
+          })
+               .then((res) => res.json())
+               .then(async (data) => {
+                    console.log("fetchUser: ", data);
+                    if (data.error) {
+                         await reIssueToken(props);
+                         fetchUser();
+                         return;
+                    } else {
+                         delete data.password;
+                         setThisUser(data);
+                         getEmployees(data);
+                         return data
+                    }
+               })
+               .catch((err) => console.error(err));
+     };
+     //get User and Employees
 
      return (
           <FunctionContext.Provider
                value={{
-                    // verifiedToken,
-                    // runFetch,
                     reIssueToken,
                     logout,
+                    fetchUser
                }}
           >
                {props.children}

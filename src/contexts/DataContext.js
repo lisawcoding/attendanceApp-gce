@@ -13,11 +13,8 @@ export function DataProvider(props) {
           date: new Date().toISOString().slice(0, 10),
      };
      const [thisUser, setThisUser] = useState({});
-     const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
-     const [editedEmployee, setEditedEmployee] = useState(InitEmployeeInputs);
      const [allEmployees, setAllEmployees] = useState(null);
      const [isLoading, setIsLoading] = useState(true);
-     const [isReload, setIsReload] = useState(false);
      // const [thisEmployee, setThisEmployee] = useState({
      //      name: "",
      //      image: "",
@@ -29,15 +26,14 @@ export function DataProvider(props) {
      // });
      // const [editedEmployee, setEditedEmployee] = useState(null);
 
+     
+
      return (
           <DataContext.Provider
                value={{
-                    // thisEmployee, setThisEmployee,
                     thisUser, setThisUser,
-                    // editedEmployee, setEditedEmployee,
                     allEmployees, setAllEmployees,
                     isLoading, setIsLoading,
-                    isReload, setIsReload,
                     InitEmployeeInputs
                }}
           >

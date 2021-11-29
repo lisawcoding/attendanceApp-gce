@@ -6,7 +6,13 @@ const { verifyAccessToken } = require("../../JWT");
 
 const userRouter = express.Router();
 
-userRouter.post("/", verifyAccessToken, (req, res) => {
+userRouter.post("/find", (req, res) => {
+     User.findOne(req.body)
+          .then((data) => res.json(data))
+          .catch((err) => res.json({ error: err }));
+});
+
+userRouter.post("/create", verifyAccessToken, (req, res) => {
      console.log(req.body);
      User.create({ ...req.body, password: bcrypt.hashSync(req.body.password, 10) })
           .then((data) => {
@@ -16,32 +22,20 @@ userRouter.post("/", verifyAccessToken, (req, res) => {
           .catch((err) => res.json({ error: err }));
 });
 
-userRouter.post("/find", (req, res) => {
-     User.findOne(req.body)
-          .then((data) => res.json(data))
-          .catch((err) => res.json({ error: err }));
-});
-
 userRouter.post("/get", verifyAccessToken, (req, res) => {
      console.log("user headers", req.headers);
      console.log("user: ", req.body.payload);
      User.findById(req.body.payload.id)
           .then((data) => res.json(data))
-          .catch((err) => res.json({ error: err }));
+          .catch((err) => res.json({ error: err}));
 });
 
-userRouter.put("/", verifyAccessToken, (req, res) => {
-     User.findByIdAndUpdate(req.body.payload.id, req.body, { returnNewDocument: true })
+userRouter.put("/:id", verifyAccessToken, (req, res) => {
+     User.findByIdAndUpdate(req.body.payload.id, req.body, { new: true })
           .then((data) => res.json(data))
           .catch((err) => console.error({ error: err }));
 });
-// userRouter.post("/get", verifyAccessToken, (req, res) => {
-//      console.log(req.headers);
-//      console.log(req.body.payload);
-//      User.findById(req.body.payload.id)
-//           .then((data) => res.json(data))
-//           .catch((err) => res.json({ error: err }));
-// });
+
 
 //test route only
 userRouter.get("/", (req, res) => {

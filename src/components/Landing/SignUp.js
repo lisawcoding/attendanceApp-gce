@@ -1,12 +1,10 @@
 import { useRef, useContext, useState } from "react";
 import { URLContext } from "../../contexts/URLContext";
-import { FunctionContext } from "../../contexts/FunctionContext";
 import congratulations from "../../images/congratulations.jpg";
 
 function SignUp(props) {
      const formRef = useRef();
-     const { registerURL, usersURL } = useContext(URLContext);
-     const { runFetch } = useContext(FunctionContext);
+     const { registerURL, findUserURL, createUsersURL } = useContext(URLContext);
      const [isSentMail, setIsSentMail] = useState(false);
      const [alert, setAlert] = useState([]);
      const [token, setToken] = useState("");
@@ -15,33 +13,58 @@ function SignUp(props) {
      const [inputValue, setInputValue] = useState({
           name: "",
           email: "",
+          companyName: "",
           password: "",
           password2: "",
      });
 
-     const sendMail = (e) => {
-          e.preventDefault();
+     const sentTokenMail = () => {
+          fetch(`${registerURL}/mail`, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify(inputValue)
+          })
+          .then( res => res.json())
+          .then( data => {
+               console.log(data)
+               // if(data.error) return window.location.reload()
+          })
+          .catch( err => console.error(err))          
+     }
 
-          // check if passwords are indentical
-          if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
-
-          runFetch(`${usersURL}/find`, "POST", { email: inputValue.email }, function (data) {
+     const findExistUser = () => {
+          fetch( findUserURL, {
+               method: "POST", 
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ email: inputValue.email }),
+          })
+          .then( res => res.json())
+          .then( data => {
                //if email already exist
                if (data) return setAlert([props.t(`the email is taken. Try another.`)]);
+               
                //send token email
-               runFetch(`${registerURL}/mail`, "POST", inputValue, function (data) {
-                    if (data.status.toLowerCase().indexOf("success") !== -1) {
-                         setIsSentMail(true);
-                    }
-               });
-               setAlert([]);
-          });
+               setIsSentMail(true);
+               sentTokenMail()
+               setAlert([])
+          })
+          .catch( err => console.error(err))          
+     }
+
+     const clickNextBtn = (e) => {
+          e.preventDefault();
+          if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
+          findExistUser();
      };
 
      const createAccount = (e) => {
           e.preventDefault();
 
-          fetch(`${usersURL}`, {
+          fetch( createUsersURL , {
                method: "POST",
                headers: {
                     "Content-Type": "application/json",
@@ -71,35 +94,18 @@ function SignUp(props) {
           btnRef.current.disabled = false;
      };
 
-     // const create = (e) => {
-     //      fetch(`${usersURL}`, {
-     //           method: "POST",
-     //           headers: {
-     //                "Content-Type": "application/json",
-     //           },
-     //           body: JSON.stringify({ name: "bb1", email: "bb1@bb.com", password: "12", password2: "12" }),
-     //      })
-     //           .then((res) => res.json())
-     //           .then((data) => {
-     //                console.log(data);
-     //                // setIsEdit(false);
-     //           })
-     //           .catch((err) => console.error(err));
-     // };
-
      return (
           <>
-               {/* <button onClick={create}>create account</button> */}
                {!isSentMail ? (
-                    <form onSubmit={sendMail} ref={formRef}>
+                    <form onSubmit={clickNextBtn} ref={formRef}>
                          <input type="text" name="name" placeholder="name" required onChange={changeInput} value={inputValue.name} />
                          <input type="email" name="email" placeholder="email" required onChange={changeInput} value={inputValue.email} />
-                         <input type="text" name="companyName" placeholder="company name" required onChange={changeInput} value={inputValue.email} />
+                         <input type="text" name="companyName" placeholder="company name" onChange={changeInput} value={inputValue.companyName} />
                          <input type="password" name="password" placeholder="password" required onChange={changeInput} value={inputValue.password} />
                          <input type="password" name="password2" placeholder="confirm password" required onChange={changeInput} value={inputValue.password2} />
                          <input type="submit" value={props.t("next")} ref={btnRef} />
-                         {alert.map((alert, i) => (
-                              <h1 className="alert-text" key={`singup-alert-${i}}`}>
+                         {alert.map((alert) => (
+                              <h1 className="alert-text" key={alert}>
                                    {alert}
                               </h1>
                          ))}

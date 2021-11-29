@@ -32,6 +32,9 @@ router.post("/mail", async (req, res) => {
      //           accessToken: accessToken,
      //      },
      // });
+
+     return res.json(jwtToken)
+
      var transporter = nodemailer.createTransport({
           service: "hotmail",
           auth: {
@@ -50,35 +53,15 @@ router.post("/mail", async (req, res) => {
      };
 
      transporter.sendMail(mailOptions, function (error, user) {
-          return res.json({ status: "success", result: user, jwtToken: jwtToken, info: "mail sent succefully" });
-
           if (error) {
-               console.log("result error: ", error);
+               res.json({error: error})
           } else {
                console.log("mail sent: ", user);
+               console.log("mail jwtToken: ", jwtToken);
                res.json({ status: "success", result: user, jwtToken: jwtToken, info: "mail sent succefully" });
           }
      });
 });
-
-// function authenticateToken(req, res, next) {
-//      const authHeader = req.headers.authorization;
-//      const token = authHeader && authHeader.split(" ")[1];
-
-//      if (token == null) return res.json({ status: "err", result: "no token" });
-
-//      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-//           if (err) {
-//                console.log(err);
-//                res.json({ status: "err", result: err });
-//           } else {
-//                if (decoded.email !== req.body.email) return res.json({ status: "err", result: "wrong email" });
-//                res.json({ status: "success: jwt verify", result: decoded });
-//                // res.json({ status: "verify successfully", result: decoded });
-//           }
-//           next();
-//      });
-// }
 
 router.post("/auth", verifyAccessToken, (req, res) => {
      if (req.body.payload.email !== req.body.email) return res.json({ status: "err", result: "wrong email" });

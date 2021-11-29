@@ -8,42 +8,30 @@ import FaceCamera from "../FaceCamera/FaceCamera";
 import SuccessPopup from "../SuccessPopup";
 
 function CreateEmployee(props) {
-     const { usersURL } = useContext(URLContext);
-     const { thisUser,InitEmployeeInputs, setIsReload, isReload } = useContext(DataContext);
-     const { reIssueToken } = useContext(FunctionContext);
+     const { usersURL, options } = useContext(URLContext);
+     const { thisUser,InitEmployeeInputs, setIsLoading } = useContext(DataContext);
+     const { reIssueToken, fetchUser } = useContext(FunctionContext);
      const [isCamera, setIsCamera] = useState(false);
      const submitBtnRef = useRef();
      const formRef = useRef();
      const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
 
-     // useEffect(() => {
-     //      return () => {
-     //           Object.keys(thisEmployee).map((key) => (thisEmployee[key] = ""));
-     //      };
-     // }, []);
-
      const createEmployee = () => {
-          fetch(`${usersURL}/${thisUser._id}/employees`, {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-               },
-               body: JSON.stringify(thisEmployee),
+          fetch(`${usersURL}/${thisUser._id}/employees`, options("POST", thisEmployee))
+          .then((res) => res.json())
+          .then(async (data) => {
+               console.log(data);
+               if (data.error) {
+                    await reIssueToken(props);
+                    createEmployee();
+               } else {
+                    setIsLoading(true);
+                    fetchUser();
+                    setIsSuccessPopup(true);
+               }
           })
-               .then((res) => res.json())
-               .then(async (data) => {
-                    console.log(data);
-                    if (data.error) {
-                         await reIssueToken(props);
-                         createEmployee();
-                    } else {
-                         await setIsReload(!isReload);
-                         setIsSuccessPopup(true)
-                    }
-               })
-               .catch((err) => console.error(err));
+          .catch((err) => console.error(err));
      };
 
      const submitForm = (e) => {
@@ -114,7 +102,7 @@ function CreateEmployee(props) {
                     </div>
                </div>
                {isSuccessPopup && <SuccessPopup closePopup={()=>{setIsSuccessPopup(false)}} action="created" pathname="/employees" />}
-               {isCamera && <FaceCamera setIsCamera={setIsCamera} thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} />}
+               {isCamera && <FaceCamera thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} />}
           </>
      );
 }

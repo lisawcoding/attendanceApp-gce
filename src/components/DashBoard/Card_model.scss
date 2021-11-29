@@ -35,4 +35,16 @@
                fill: var(--m-grey);
           }
      }
+     .icon-div {
+          display: flex;
+          justify-content: space-between;
+          margin: .5em;
+          svg {
+               font-size: 1.5em;
+               fill: var(--dark-grey);
+               &:hover {
+                    fill: var(--pink)
+               }
+          }
+     }
 }

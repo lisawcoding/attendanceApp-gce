@@ -11,9 +11,9 @@ import DeletePopup from "../DeletePopup";
 import FaceCamera from "../FaceCamera/FaceCamera";
 
 function EachEmployee(props) {
-     const { thisUser, isReload, setIsReload, InitEmployeeInputs } = useContext(DataContext);
-     const { usersURL } = useContext(URLContext);
-     const { reIssueToken } = useContext(FunctionContext);
+     const { thisUser, InitEmployeeInputs, setIsLoading } = useContext(DataContext);
+     const { usersURL, options } = useContext(URLContext);
+     const { reIssueToken, fetchUser } = useContext(FunctionContext);
      const [isEdit, setIsEdit] = useState(false);
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
      const [isDelPopup, setIsDelPopup] = useState(false);
@@ -21,6 +21,7 @@ function EachEmployee(props) {
      const formRef = useRef();
      const submitBtnRef = useRef();
      const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
+     const EachEmployeeURL = `${usersURL}/${thisUser._id}/employees/${props.match.params.id}`;
 
      useLayoutEffect(() => {
           setThisEmployee(props.location.state);
@@ -28,58 +29,42 @@ function EachEmployee(props) {
 
      const changeInput = (e) => setThisEmployee({ ...thisEmployee, [e.target.name]: e.target.value });
 
-     const fetchUpdateEmployee = () => {
-          fetch(`${usersURL}/${thisUser._id}/employees/${props.match.params.id}`, {
-               method: "PUT",
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-               },
-               body: JSON.stringify(thisEmployee),
-          })
-               .then((res) => res.json())
-               .then(async (data) => {
-                    console.log(data);
-                    if (data.error) {
-                         await reIssueToken(props);
-                         fetchUpdateEmployee();
-                         return;
-                    }
-                    setIsEdit(false);
-                    setIsSuccessPopup(true);
-                    setIsReload(!isReload);
-               })
-               .catch((err) => console.error(err));
-     };    
-
-     const editEmployee = async (e) => {
+     const editEmployee = (e) => {
           e.preventDefault();
-          fetchUpdateEmployee();
+          
+          setIsEdit(false);
+          setIsLoading(true)
+          // updateEmployee();
+          fetch( EachEmployeeURL , options("PUT", thisEmployee))
+          .then((res) => res.json())
+          .then(async (data) => {
+               console.log(data);
+               if (data.error) {
+                    await reIssueToken(props);
+                    editEmployee();
+               } else {
+                    setIsSuccessPopup(true);
+                    fetchUser()
+               }
+          })
+          .catch((err) => console.error(err));
      };
 
      const deleteEmployee = () => {
-          fetch(`${usersURL}/${thisUser._id}/employees/${props.match.params.id}`, {
-               method: "DELETE",
-               headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-               },
+          setIsLoading(true);
+          fetch( EachEmployeeURL , options("DELETE"))
+          .then((res) => res.json())
+          .then(async (data) => {
+               console.log(data);
+               if (data.error) {
+                    await reIssueToken(props);
+                    deleteEmployee();
+                    return;
+               }
+               props.history.push("/employees");
+               fetchUser()
           })
-               .then((res) => res.json())
-               .then(async (data) => {
-                    console.log(data);
-                    if (data.error) {
-                         await reIssueToken(props);
-                         deleteEmployee();
-                         return;
-                    }
-                    await setIsReload(!isReload);
-                    await props.history.push("/employees");
-               })
-               .catch((err) => console.error(err));
-     };
-
-     const deleteItem = () => {
-          deleteEmployee();
+          .catch((err) => console.error(err));          
      };
 
      const clickCemeraIcon = () => setIsCamera(true);
@@ -88,17 +73,8 @@ function EachEmployee(props) {
           <div id="EachEmployee" className="center">
                <div className="card">
                     <section className="top-div">
-                         <AiOutlineEdit
-                              onClick={() => {
-                                   setIsEdit(!isEdit);
-                              }}
-                              style={{ fill: isEdit ? "var(--pink)" : "" }}
-                         />
-                         <AiOutlineDelete
-                              onClick={() => {
-                                   setIsDelPopup(!isDelPopup);
-                              }}
-                         />
+                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit);}} style={{ fill: isEdit ? "var(--pink)" : "" }}/>
+                         <AiOutlineDelete onClick={() => {setIsDelPopup(!isDelPopup)}}/>
                     </section>
                     <h1>update employee profile</h1>
                     <form ref={formRef} onSubmit={editEmployee}>
@@ -106,14 +82,12 @@ function EachEmployee(props) {
                               {thisEmployee && (
                                    <section className="img-div">
                                         <div className="img-wrapper">
-                                             <>
-                                                  <BiImageAlt className="BiImageAlt" style={{ display: isEdit ? "none" : "block" }} />
-                                                  <BiCamera style={{ display: !isEdit ? "none" : "block" }} onClick={clickCemeraIcon} />
-                                             </>
-                                             <>
-                                                  <img src={thisEmployee.image} type="text" name="image" />
-                                                  <BiCamera className="small-icon" style={{ display: isEdit && thisEmployee.image.length > 1 ? "block" : "none" }} onClick={clickCemeraIcon} />
-                                             </>
+                                             {
+                                                  thisEmployee.image.length > 1 ?
+                                                       <img src={thisEmployee.image} name="image" />:
+                                                       <BiImageAlt className="BiImageAlt" style={{ display: isEdit ? "none" : "block" }} />
+                                             }
+                                             <BiCamera style={{ display: !isEdit ? "none" : "block" }} className={ thisEmployee.image.length > 0 ? "small-icon" : ""} onClick={clickCemeraIcon} />   
                                         </div>
                                    </section>
                               )}
@@ -144,9 +118,8 @@ function EachEmployee(props) {
                     </form>
                </div>
                {isSuccessPopup && <SuccessPopup closePopup={()=>{setIsSuccessPopup(false)}} action="updated" pathname={`/employees/edit/${thisEmployee._id}`} />}
-               {/* {isSuccessPopup && <SuccessPopup elm={thisEmployee} closePopup={()=>{setIsSuccessPopup(false)}} action="updated" link={} />} */}
-               {isDelPopup && <DeletePopup elm={thisEmployee} closePopup={()=>{setIsDelPopup(false)}} deleteItem={deleteItem} />}
-               {isCamera && <FaceCamera setIsCamera={setIsCamera} thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} />}
+               {isDelPopup && <DeletePopup closePopup={()=>{setIsDelPopup(false)}} deleteItem={deleteEmployee} />}
+               {isCamera && <FaceCamera thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} />}
           </div>
      );
 }
