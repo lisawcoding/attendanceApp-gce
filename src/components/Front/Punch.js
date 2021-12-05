@@ -5,7 +5,7 @@ import PunchCamera from "./PunchCamera";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
 
-function Punch(props) {
+function Punch() {
      const { thisUser, allEmployees } = useContext(DataContext);
      const { fetchUser } = useContext(FunctionContext);
      const [timer, setTimer] = useState(new Date());
@@ -48,7 +48,6 @@ function Punch(props) {
                     <div className="wrapper">
                          <input type="radio" name="status" id="option-1" onClick={clickClockInOutBtn} value="in" defaultChecked="checked" />
                          <input type="radio" name="status" id="option-2" onClick={clickClockInOutBtn} value="out" />
-                         <div></div>
                          <label htmlFor="option-1" className="option option-1">
                               in
                          </label>
@@ -63,8 +62,6 @@ function Punch(props) {
                     )}
                </section>
                <form className="right-div" onSubmit={onSubmit}>
-
-                    {/* <BiPlayCircle/> */}
                    { allEmployees && <PunchCamera thisEmployee={thisEmployee} setThisEmployee={setThisEmployee} timer={timer} punch={punch} thisUser={thisUser} />}
                </form>
           </div>

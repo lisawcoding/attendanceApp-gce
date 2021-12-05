@@ -88,7 +88,8 @@ function SignUp(props) {
      };
 
      const changeInput = (e) => {
-          setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+          // setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+          setInputValue([e.target.name].e.target.value );
           setAlert([]);
           if (e.target.name === "token") return setToken(e.target.value);
           btnRef.current.disabled = false;

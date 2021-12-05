@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react/cjs/react.development";
 import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { BiImageAlt } from "react-icons/bi";
 
 import "./Records.scss";
 import Record from "./Record";
@@ -112,14 +113,18 @@ function Records(props) {
      return (
          <main id="Records">
                 <section className="top-div">
-                    <img src={props.location.state.image} alt={props.location.name} />
+                    <div className="employee-img-wrapper">
+                        {
+                            props.location.state.image ? <img src={props.location.state.image} alt={props.location.name} /> : <BiImageAlt/>
+                        }
+                    </div>
                     <div className="personal-info">
                         <h1>{props.location.state.name}</h1>
                         <h1>{props.location.state._id}</h1>
                     </div>
                 </section>
                 <hr/>
-                <section className="records-div">
+                <section>
                     { 
                         records && ( records.length<1 ? <h1>no records</h1> : 
                             records.map(record=> 

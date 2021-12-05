@@ -18,9 +18,9 @@ const PunchCamera = (props) => {
      const videoRef = useRef();
      const canvasRef = useRef();
      const [labeledFaceDescriptors, setLableFaceDescriptors] = useState(null)
+     
 
      useEffect(() => {
-          console.log("run PromiseAll")
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
                faceapi.nets.faceRecognitionNet.loadFromUri("../../models"),
@@ -28,29 +28,40 @@ const PunchCamera = (props) => {
                faceapi.nets.ssdMobilenetv1.loadFromUri("../../models"),
           ])
           .then(async()=>{
-               const results = await loadLabelImages()
-               setLableFaceDescriptors(results)
+               await labelImages()
+               startVideo()
           })
-          .then(startVideo);
+          .catch(err=>{
+               console.error(err)
+               window.location.reload()
+          })
      }, []);
 
-     const labelImages = (employees) => {
+     useEffect(()=>{
+          pause && setTimeout(()=>{
+               onPlay() 
+          }, 12000)
+     }, [pause])
+
+     const labelImages = async() => {
+          let employeesWithImage = allEmployees.filter((employee) => employee.image.length > 0)
+          console.log(employeesWithImage)
           return Promise.all(
-               employees.map(async (employee) => {
+               employeesWithImage.map(async (employee) => {
                     const img = await faceapi.fetchImage(employee.image);
                     const detection = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
                     console.log(employee.name + " : " + detection);
 
                     delete employee.image;
-                    return new faceapi.LabeledFaceDescriptors(JSON.stringify(employee), [detection.descriptor]);
+                    if (detection) return new faceapi.LabeledFaceDescriptors(JSON.stringify(employee), [detection.descriptor]);
                })
-          );
+          )
+          .then(results => setLableFaceDescriptors(results))
+          .catch(err=>{
+               console.log("labelImages error: ", err)
+               // window.location.reload()
+          })
      }
-
-     const loadLabelImages = () => {
-          let employees = allEmployees.filter((employee) => employee.image.length > 0);
-          return labelImages(employees)    
-     };
 
      const fetchAddRecord = (url, data) => {
           fetch(url, options("POST", data))
@@ -90,37 +101,32 @@ const PunchCamera = (props) => {
                const resizedDetections = faceapi.resizeResults(detections, displaySize);
                const results = resizedDetections.map((d) => faceMatcher.findBestMatch(d.descriptor));
 
-               if (detections.length > 1) {
-                    setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
-               } else {
-                    setAlert([]);
+               setAlert([])
+               console.log("run faceapiInaterval")
+               console.log(detections);
+               console.log(results)
+               if(detections.length == 0) return setAlert([])
+               if (detections.length > 1) return setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
+               if (detections.length === 1 && detections[0].detection._score > 0.5) {
+                    const box = resizedDetections[0].detection.box;
+                    const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
+                    drawBox.draw(canvasRef.current);
 
-                    if (detections.length === 1 && detections[0].detection._score > 0.65) {
-                         const box = resizedDetections[0].detection.box;
-                         const drawBox = new faceapi.draw.DrawBox(box, { label: results[0].toString() });
-                         drawBox.draw(canvasRef.current);
-
-                         capture();
-                         console.log(results);
-
-                         if (results[0]._label !== "unknown") {
-                              saveInfo(results)
-                         } else {
-                              setAlert([...alert, "cannot recongize"]);
-                         }
-                         capture();
-                         // stopVideo();
-                    }
+                    if(results[0]._label == "unknown") return setAlert([...alert, "cannot recongize this face"]);
+                    saveInfo(results)
+                    capture(); 
+                    setAlert([])
                }
                if (videoRef.current.autoPlay === false) clearInterval(faceapiInterval);
-               console.log(detections);
           }, 350);
      }
 
      const onPlay = () => {
           console.log("onPlay");
+          videoRef.current.play()
           setIsPlay(true);
           setPause(false);
+          props.setThisEmployee(null)
 
           canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
           const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
@@ -133,6 +139,7 @@ const PunchCamera = (props) => {
 
      const startVideo = () => {
           console.log("startVideo");
+          
           navigator.mediaDevices
                .getUserMedia({ video: true })
                .then(async (stream) => {
@@ -142,13 +149,12 @@ const PunchCamera = (props) => {
                })
                .catch((err) => {
                     setAlert([...alert, "could not start video, please check your device setting"]);
-                    console.log(err);
+                    console.log("startVideo error: ", err);
                });
      };
 
      const stopVideo = () => {
           console.log("stop")
-          videoRef.current.autoPlay = false;
 
           const stream = videoRef.current.srcObject;
           if (stream === null) return;
@@ -159,31 +165,19 @@ const PunchCamera = (props) => {
 
      const capture = async () => {
           clearInterval(faceapiInterval);
+          videoRef.current.pause();
           await canvasRef.current.getContext("2d").drawImage(videoRef.current, 0, 0);
           setPause(true);
      };
 
      return (
           <>
-               {/* <button onClick={testBtn}>test button</button> */}
                {!isPlay && !pause && <CameraLoader />}
 
                <section onPlay={onPlay} className="video-frame" width={cameraSize.width} height={cameraSize.height}>
-                    <video id="video" autoPlay muted ref={videoRef} paused={pause.toString()}></video>
+                    <video id="video" autoPlay muted ref={videoRef} ></video>
                     <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
-
-                    {/* {pause && (
-                    <>
-                         <img src={thisEmployee.image} width={cameraSize.width} height={cameraSize.height} />
-                         <div className="btn-div" style={cameraSize}>
-                              <GiConfirmed className="green" onClick={stopVideo} />
-                              <GiCancel onClick={onPlay} className="red" />
-                         </div>
-                    </>
-               )} */}
-
-                    {/* {alert.length > 0 && alert.map((elm) => <h1 className="alert-text">{elm}</h1>)} */}
-
+                    {alert.length > 0 && alert.map((elm) => <h1 key={elm} className="alert-text">{elm}</h1>)}
                </section>
                <section>
                     {props.thisEmployee && (
@@ -198,8 +192,8 @@ const PunchCamera = (props) => {
                                         <span style={{ color: props.thisEmployee.time < props.thisUser.setting.timeOut ? "var(--red)" : "" }}>{props.thisEmployee.time}</span>
                                    )}
                               </h1>
-                              <button onClick={stopVideo}>stop</button>
-                              <button onClick={onPlay}>play</button>
+                              {/* <button onClick={stopVideo}>stop</button> */}
+                              <button className="play-btn" onClick={onPlay}>play</button>
                          </div>
                     )}                    
                </section>
@@ -208,73 +202,3 @@ const PunchCamera = (props) => {
 };
 
 export default withRouter(PunchCamera);
-
-// let faceapiInterval;
-// const onPlay = async () => {
-//      console.log("onPlay");
-//      setIsPlay(true);
-//      setPause(false);
-
-//      canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-//      const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
-     
-//      const displaySize = { width: videoRef.current.clientWidth, height: videoRef.current.clientHeight };
-//      setCameraSize({ width: videoRef.current.clientWidth, height: videoRef.current.clientHeight });
-
-
-//      faceapiInterval = setInterval(async () => {
-//           const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
-//           const resizedDetections = faceapi.resizeResults(detections, displaySize);
-//           const results = resizedDetections.map((d) => faceMatcher.findBestMatch(d.descriptor));
-
-//           if (detections.length > 1) {
-//                setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
-//           } else {
-//                setAlert([]);
-
-//                if (detections.length === 1 && detections[0].detection._score > 0.65) {
-//                     const box = resizedDetections[0].detection.box;
-//                     const drawBox = new faceapi.draw.DrawBox(box, { label: results[0].toString() });
-//                     drawBox.draw(canvasRef.current);
-
-//                     capture();
-//                     console.log(results);
-//                     if (results[0]._label !== "unknown") {
-//                          const parseResult = JSON.parse(results[0]._label);
-//                          console.log(parseResult);
-//                          props.setThisEmployee({ ...parseResult, time: props.timer.toTimeString().slice(0, 8) });
-
-//                          var data = {
-//                               name: parseResult.name,
-//                               employee: parseResult._id,
-//                               // date: props.timer.toLocaleDateString("en-CA"),
-//                               date: '2021-11-22',
-//                               date1: "findOneAndUpdate2",
-//                          };
-//                          data[props.punch.status] = props.timer.toTimeString().slice(0, 8);
-
-//                          // const data = {
-//                          //      date: props.timer.toLocaleDateString(),
-//                          //      status: props.punch.status,
-//                          //      time: props.timer.toLocaleTimeString(),
-//                          // };
-
-//                          fetchAddRecord(`${usersURL}/${parseResult.user}/employees/${parseResult._id}/records`, data);
-//                          // fetchAddRecord(`${usersURL}/${parseResult.user}/employees/${parseResult._id}/records/${props.timer.toLocaleDateString("en-CA")}`, data);
-//                          // fetchAddRecord(`${usersURL}/${parseResult.user}/employees/${parseResult._id}/records/${props.timer.toLocaleDateString("en-CA").replaceAll("/", "")}`, {
-//                          //      punch: data,
-//                          //      name: parseResult.name,
-//                          // });
-
-//                     } else {
-//                          setAlert([...alert, "cannot recongize"]);
-//                     }
-//                     capture();
-//                     // stopVideo();
-//                }
-//           }
-//           if (videoRef.current.autoPlay === false) clearInterval(faceapiInterval);
-
-//           console.log(detections);
-//      }, 350);
-// };

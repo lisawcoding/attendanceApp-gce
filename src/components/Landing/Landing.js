@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import "./Landing.scss";
@@ -11,7 +10,7 @@ function Landing(props) {
      const { t, i18n } = useTranslation();
      const [isLogin, setIsLogin] = useState(true);
      const [isForgotPW, setIsForgotPW] = useState(false);
-     const [isLoading, setIsLoading] = useState(false);
+     const [isLoading] = useState(false);
 
      return (
           <main id="Landing">

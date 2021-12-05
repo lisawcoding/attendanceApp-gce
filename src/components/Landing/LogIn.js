@@ -6,16 +6,16 @@ import { URLContext } from "../../contexts/URLContext";
 import ChangePW from "./ChangePW";
 
 function LogIn(props) {
-     const { loginURL, usersURL, tokenURL, mailURL } = useContext(URLContext);
-     const { thisUser, setThisUser } = useContext(DataContext);
-     const { runFetch } = useContext(FunctionContext);
+     const { loginURL} = useContext(URLContext);
+     const { setThisUser } = useContext(DataContext);
      const formRef = useRef();
      const btnRef = useRef();
+     const fieldsetRef = useRef();
      const [alert, setAlert] = useState([]);
 
      const onSubmit = (e) => {
           e.preventDefault();
-          // btnRef.current.disabled= true
+          btnRef.current.disabled=true;
 
           console.log("on submit");
           var fd = new FormData(formRef.current);
@@ -28,8 +28,8 @@ function LogIn(props) {
                },
                body: JSON.stringify(fd),
           })
-               .then((res) => res.json())
-               .then((data) => {
+               .then(res => res.json())
+               .then(data => {
                     console.log(data);
                     if (data.error != undefined) return setAlert(data.error);
                     if (data.success) {
@@ -42,8 +42,10 @@ function LogIn(props) {
                     window.location.reload();
                })
                .catch((err) =>{ 
-                    console.error(err);
-                    window.location.reload();
+                    console.log(err);
+                    if(!navigator.onLine) return setAlert("network error")
+                    // window.location.reload();
+                    // detect if network aceesss faluire
                });
      };
 

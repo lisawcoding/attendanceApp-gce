@@ -1,8 +1,7 @@
-import { useLayoutEffect, useContext, useState } from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
 import logo from "../../images/logo.png";
-// import "../Home/Home.scss";
 import dashboard from "../../images/dashboard.png";
 import clockIn from "../../images/clockIn.png";
 import "./Home.scss";
@@ -10,7 +9,7 @@ import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
 
 function Home(props) {
-     const { thisUser, setThisUser } = useContext(DataContext);
+     const { thisUser } = useContext(DataContext);
      const { logout } = useContext(FunctionContext);
      return (
           <main id="Home">

@@ -71,12 +71,12 @@ function EachEmployee(props) {
 
      return (
           <div id="EachEmployee" className="center">
+               <h1>update employee profile</h1>
                <div className="card">
                     <section className="top-div">
                          <AiOutlineEdit onClick={() => {setIsEdit(!isEdit);}} style={{ fill: isEdit ? "var(--pink)" : "" }}/>
                          <AiOutlineDelete onClick={() => {setIsDelPopup(!isDelPopup)}}/>
                     </section>
-                    <h1>update employee profile</h1>
                     <form ref={formRef} onSubmit={editEmployee}>
                          <fieldset disabled={!isEdit} className="employeeForm">
                               {thisEmployee && (

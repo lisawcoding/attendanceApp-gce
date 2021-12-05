@@ -13,7 +13,8 @@ function User(props) {
 
      const clickTimeInput = (e) => {
           console.log({ [e.target.name]: e.target.value });
-          setSetting({ ...setting, [e.target.name]: e.target.value });
+          // setSetting({ ...setting, [e.target.name]: e.target.value });
+          setSetting([e.target.name].e.target.value)
      };
 
      const updateUserSetting = (e) => {

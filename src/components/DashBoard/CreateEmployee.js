@@ -42,24 +42,13 @@ function CreateEmployee(props) {
           createEmployee();
      };
 
-     const changeInput = (e) => {
-          setThisEmployee({ ...thisEmployee, [e.target.name]: e.target.value });
-          // console.log(e.target.value);
-          // // if(e.target.name==="image"){
-          // //     if(e.target.files[0].size > 1006300) {
-          // //         alert("image size exceed")
-          // //     } else {
-          // //         e.target.files.length>0 && setFile(URL.createObjectURL(e.target.files[0]));
-          // //     }
-          // // }
-          // setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-     };
+     const changeInput = (e) => setThisEmployee({ ...thisEmployee, [e.target.name]: e.target.value });
 
      return (
           <>
                <div id="CreateEmployee" className="center">
+                    <h1>create a new employee</h1>
                     <div className="card">
-                         <h1>create a new employee</h1>
                          <form onSubmit={submitForm} className="employeeForm" ref={formRef} autoComplete="false">
                               <section className="img-wrapper">
                                    {thisEmployee.image.length < 1 ? (

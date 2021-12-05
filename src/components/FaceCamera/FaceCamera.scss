@@ -25,6 +25,8 @@
      }
      .btn-div {
           position: absolute;
+          display: flex;
+          justify-content: center;
           svg {
                font-size: 3.5em;
           }
@@ -106,6 +108,7 @@
 
 canvas {
      position: absolute;
+     display: none;
 }
 
 .video-box {

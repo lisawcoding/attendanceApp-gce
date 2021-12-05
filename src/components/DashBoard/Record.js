@@ -20,8 +20,7 @@ const Record = ({record, clickDelIcon, clickEditIcon, DelIcon, EditIcon, isEdit,
                         <span>Time out:</span>
                         {!isEdit ? <input type="time" name="out" defaultValue={record.out} onChange={ onChange } step="1" /> : <span>{record.out}</span>}
                     </label>
-                    {!isEdit && <button>update</button>}                
-                    
+                    {!isEdit && <button>update</button>}      
                 {/* </fieldset> */}
             </form>
         </div>

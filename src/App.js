@@ -15,7 +15,6 @@ import NotFound from "./NotFund";
 
 
 function App(props) {
-
      const DashBoardNav = ({ exact, path, component: Component, ...rest }) => {
           return (
                <Route

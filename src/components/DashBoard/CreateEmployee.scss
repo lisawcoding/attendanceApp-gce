@@ -1,4 +1,6 @@
 #CreateEmployee {
+     display: flex;
+     flex-direction: column;
      .img-wrapper {
           padding-top: unset;
           display: flex;

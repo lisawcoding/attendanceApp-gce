@@ -1,6 +1,8 @@
 #EachEmployee {
      width: 90vw;
      max-width: 900px;
+     display: flex;
+     flex-direction: column;
      label {
           // display: grid;
           // grid-template-columns: auto 1fr;
@@ -10,9 +12,6 @@
           //     align-items: center;
           // }
           text-align: left;
-     }
-     fieldset {
-          border: none;
      }
      .img-wrapper {
           padding-top: unset;
@@ -45,24 +44,26 @@
      //      display: flex;
      //      flex-direction: column;
      // }
-}
-fieldset {
-     svg {
-          fill: var(--dark-grey);
-     }
-}
-fieldset:disabled {
-     * {
-          background: transparent;
-          border: none !important;
-          &:hover {
-               color: unset !important;
+     fieldset {
+          border:none;
+          svg {
+               fill: var(--dark-grey);
           }
      }
-     input[type="submit"] {
-          display: none;
-     }
+     fieldset:disabled {
+          * {
+               background: transparent;
+               border: none !important;
+               &:hover {
+                    color: unset !important;
+               }
+          }
+          input[type="submit"] {
+               display: none;
+          }
+     }     
 }
+
 
 #EachEmployee_form {
      svg {

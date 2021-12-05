@@ -9,6 +9,10 @@
                transform: translate(-50%, -50%);
                // border: 1em solid navy;
           }
+          .alert-text {
+               position: absolute;
+               z-index: 999;
+          }
      }
      .camera-loader-div {
           top: 0;
@@ -20,6 +24,14 @@
           .lds-ellipsis div  {
                background-color: var(--blue);
           }
+     }
+     .play-btn {
+          font-size: 2em;
+          text-transform: uppercase;
+          border-color: var(--blue);
+          background-color: var(--blue);
+          padding: .25em 1.5em;
+          border-radius: 5px;
      }
 }
 

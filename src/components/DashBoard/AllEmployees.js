@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Card_model from "./Card_model";
 import "./AllEmployees.scss";

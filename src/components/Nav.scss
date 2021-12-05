@@ -19,6 +19,8 @@ nav {
      & + *[id] {
           margin-top: calc(var(--dashboard_navHeight) + 1em);
           min-height: calc(100vh - var(--dashboard_navHeight) - 1em);
+          margin-left: auto;
+          margin-right: auto;
      }
      .link-div {
           display: flex;

@@ -26,9 +26,9 @@ const EmployeeSchema = new Schema({
      remark: {
           type: String,
      },
-     // date: {
-     //      type: String,
-     // },
+     date: {
+          type: String,
+     },
      update_date: {
           type: Date,
           default: Date.now,
