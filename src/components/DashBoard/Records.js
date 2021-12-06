@@ -125,6 +125,12 @@ function Records(props) {
                 </section>
                 <hr/>
                 <section>
+                    <div id="Record">
+                        <p>Date</p>
+                        <p>Date</p>
+                        <p>Date</p>
+                        <p>Date</p>
+                    </div>
                     { 
                         records && ( records.length<1 ? <h1>no records</h1> : 
                             records.map(record=> 

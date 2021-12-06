@@ -5,6 +5,10 @@
         background-color: #fff;
         padding: 1em;
         box-shadow: var(--box-shadow);
+        display: flex;
+        fieldset {
+            display: flex;
+        }
     }
     section {
         margin: 1em !important;

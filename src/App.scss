@@ -2,10 +2,14 @@
      --light-grey: #f9f9f9;
      --m-grey: #e0e0e0;
      --dark-grey: #909090;
-     --blue: #a5bfb8;
-     --pink: #d6b6a4;
+     --pink:#dbe2e9;
+     // --blue: #a5bfb8;
+     // --pink: #d6b6a4;
+     --blue: #d1e0d7;
+     // --pink: navy;
      --red: #cc0000;
-     --black: #050505;
+     // --black: #050505;
+     --black: #010203;
      --l-width: "1200px";
      --m-width: "900px";
      --box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
@@ -16,18 +20,27 @@ html,
 body {
      margin: 0;
      padding: 0;
-     background: var(--light-grey);
+     // background: var(--light-grey);
 }
 a {
-     text-decoration: navy;
+     text-decoration: none;
      color: unset;
      &:active {
           color: unset;
      }
 }
-.App [id]{
-     text-align: center;
+.App {
+     display: flex;
+     width: 100vw;
+     height: 100vh;
+     overflow: hidden;
+     & > [id] {
+          text-align: center;
+          width: 100%;
+          overflow-y: scroll;
+     }
 }
+
 * {
      font-family: sans-serif;
      font-size: 1em;
@@ -60,12 +73,6 @@ h1 {
      input {
           background: #fff !important;
           pointer-events: all !important;
-     }
-}
-
-.nav-active {
-     svg {
-          fill: var(--pink);
      }
 }
 
@@ -192,5 +199,5 @@ img[alt*="logo"] {
 
 svg:hover {
      fill: var(--pink);
-     transition: all 0.2s;
+     transition: all 0.12s;
 }

@@ -13,8 +13,15 @@ const RecordSchema = new Schema({
           type: String,
           // required: true
      },
-     in: String,
-     out: String,
+     in: {
+          type: String,
+          default: ""
+     }, 
+     out: {
+          type: String,
+          default: ""
+     },
+     // out: String,
      date: String,
      // date1: Date,
      date1: String,

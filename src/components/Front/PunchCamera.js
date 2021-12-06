@@ -53,7 +53,7 @@ const PunchCamera = (props) => {
                     console.log(employee.name + " : " + detection);
 
                     delete employee.image;
-                    if (detection) return new faceapi.LabeledFaceDescriptors(JSON.stringify(employee), [detection.descriptor]);
+                    if (detection != undefined) return new faceapi.LabeledFaceDescriptors(JSON.stringify(employee), [detection.descriptor]);
                })
           )
           .then(results => setLableFaceDescriptors(results))
@@ -155,7 +155,6 @@ const PunchCamera = (props) => {
 
      const stopVideo = () => {
           console.log("stop")
-
           const stream = videoRef.current.srcObject;
           if (stream === null) return;
           const tracks = stream.getTracks();

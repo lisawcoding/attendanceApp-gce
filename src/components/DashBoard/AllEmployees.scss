@@ -1,4 +1,5 @@
 #AllEmployees {
+    background-color: var(--pink);
     .cards-div {
         display: grid;
         grid-template-columns: repeat( 12, minmax(200px, 1fr) ); 
@@ -7,7 +8,40 @@
         gap: 1em;   
         padding: 0 5vw;
         margin: 0 auto;
-        #Card_model {
-        }
     }
+}
+
+.search-input {
+    position: relative;
+    width: 90%;
+    margin: 1em auto;
+    max-width: 350px;
+    svg {
+        position: absolute;
+        top: 50%;
+        left: calc(100% - 1.5em);
+        transform: translateY(-50%);
+        font-size: 2.5em;
+        fill: var(--dark-grey);
+    }
+    input {
+        border: none;
+        width: 100%;
+        padding: .5em;
+        box-shadow: var(--box-shadow);
+        border-radius: 5px;
+        font-size: 1.5em;
+    }
+    // background-color: #fff;
+    // box-sizing: var(--box-shadow);
+    // display: inline;
+    // &::before {
+    //     content: "asdfa";
+    //     width: 50px;
+    //     height: 50px;
+    //     position: absolute;
+    //     background-color: olive;
+    //     top: 0;
+    //     left: 0;
+    // }
 }

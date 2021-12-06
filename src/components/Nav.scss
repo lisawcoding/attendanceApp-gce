@@ -1,67 +1,98 @@
 nav {
-     height: var(--dashboard_navHeight);
-     display: flex;
-     align-items: center;
-     box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
-     z-index: 99;
-     background: #fff;
-     position: fixed;
-     width: 100%;
-     top: 0;
-     padding: 0 1.6em;
+     // height: var(--dashboard_navHeight);
+     // display: flex;
+     // align-items: center;
+     // box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+     // z-index: 99;
+     // background: #fff;
+     // position: fixed;
+     // width: 100%;
+     // top: 0;
+     // padding: 0 1.6em;
      box-shadow: var(--box-shadow);
+     display: flex;
+     flex-direction: column;
      justify-content: space-between;
+     height: 100vh;
+     padding: 1.5em 1em;
+     flex-shrink: 0;
+     h2 {
+          margin: 0 0 0 .5em;
+          color: var(--dark-grey);
+          text-transform: capitalize;
+     }
      svg {
           font-size: 28px;
           fill: var(--dark-grey);
           width: 28px;
      }
-     & + *[id] {
-          margin-top: calc(var(--dashboard_navHeight) + 1em);
-          min-height: calc(100vh - var(--dashboard_navHeight) - 1em);
-          margin-left: auto;
-          margin-right: auto;
-     }
+     // & + *[id] {
+     //      padding-top: calc(var(--dashboard_navHeight) + 1em);
+     //      min-height: calc(100vh - var(--dashboard_navHeight) - 1em);
+     //      margin-left: auto;
+     //      margin-right: auto;
+     // }
      .link-div {
           display: flex;
-          a {
-               margin-right: 1em;
+          flex-direction: column;
+          align-items: flex-start;
+          & > * {
+               margin: .5em
           }
-     }
-     .user-div {
-          position: relative;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          .user-dropdown {
-               position: absolute;
-               background: #fff;
-               padding: 1em;
-               top: calc(100% + 1em);
-               box-shadow: var(--box-shadow);
-               right: -1em;
-               &::after {
-                    content: "";
-                    width: 1em;
-                    height: 1em;
-                    background-color: #fff;
-                    position: absolute;
-                    top: -5px;
-                    // border: 1px solid var(--pink);
-                    top: 0;
-                    left: 50%;
-                    transform: translate(-50%, -50%) rotate(45deg);
-                    border: 1px solid var(--light-grey);
-                    // box-shadow: var(--box-shadow);
-               }
-               * {
-                    white-space: nowrap;
-               }
-          }
-     }
-     a {
+     }          
+
+     // .user-div {
+     //      position: relative;
+     //      display: flex;
+     //      align-items: center;
+     //      cursor: pointer;
+     //      .user-dropdown {
+     //           position: absolute;
+     //           background: #fff;
+     //           padding: 1em;
+     //           top: calc(100% + 1em);
+     //           box-shadow: var(--box-shadow);
+     //           right: -1em;
+     //           &::after {
+     //                content: "";
+     //                width: 1em;
+     //                height: 1em;
+     //                background-color: #fff;
+     //                position: absolute;
+     //                top: -5px;
+     //                // border: 1px solid var(--pink);
+     //                top: 0;
+     //                left: 50%;
+     //                transform: translate(-50%, -50%) rotate(45deg);
+     //                border: 1px solid var(--light-grey);
+     //                // box-shadow: var(--box-shadow);
+     //           }
+     //           * {
+     //                white-space: nowrap;
+     //           }
+     //      }
+     //      &:hover * {
+     //           color: var(--pink);
+     //           fill: var(--pink)
+     //      }
+     // }
+     .user-link, a {
           display: flex;
           align-items: center;
           justify-content: center;
+          &:hover h2, &:hover svg {
+               color: var(--pink);
+               fill: var(--pink)
+          }
+     }
+}
+
+
+.nav-active {
+     svg {
+          fill: var(--black);
+     }
+     h2 {
+          color: var(--black);
      }
 }
