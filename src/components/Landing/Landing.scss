@@ -19,7 +19,8 @@
           justify-content: center;
      }
      .left-div {
-          background: var(--pink);
+          background: var(--blue);
+          align-items: center;
           h1 {
                font-size: 2em;
                color: #000;
@@ -57,7 +58,7 @@
           }
           input[type="submit"],
           button {
-               background: var(--pink);
+               background: var(--blue);
                border: none;
           }
           label {
@@ -85,7 +86,7 @@
 }
 
 .selected-tab {
-     border-bottom: 0.15em solid var(--pink);
+     border-bottom: 0.15em solid var(--blue);
      color: #000;
 }
 
@@ -133,7 +134,7 @@
      button {
           background: #fff;
           padding: 0.5em 5em;
-          border: var(--pink) 1px solid;
+          border: var(--blue) 1px solid;
           border-radius: 50px;
           cursor: pointer;
      }

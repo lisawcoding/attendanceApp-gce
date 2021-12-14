@@ -11,6 +11,7 @@ const PunchCamera = (props) => {
      const { usersURL, options } = useContext(URLContext);
      const { allEmployees } = useContext(DataContext);
      const { reIssueToken } = useContext(FunctionContext);
+     const [ punchEmployee, setPunchEmployee ] = useState(null);
      const [pause, setPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
      const [alert, setAlert] = useState([]);
@@ -18,9 +19,9 @@ const PunchCamera = (props) => {
      const videoRef = useRef();
      const canvasRef = useRef();
      const [labeledFaceDescriptors, setLableFaceDescriptors] = useState(null)
-     
 
      useEffect(() => {
+          // return;
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
                faceapi.nets.faceRecognitionNet.loadFromUri("../../models"),
@@ -37,11 +38,11 @@ const PunchCamera = (props) => {
           })
      }, []);
 
-     useEffect(()=>{
-          pause && setTimeout(()=>{
-               onPlay() 
-          }, 12000)
-     }, [pause])
+     // useEffect(()=>{
+     //      pause && setTimeout(()=>{
+     //           onPlay() 
+     //      }, 3000)
+     // }, [pause])
 
      const labelImages = async() => {
           let employeesWithImage = allEmployees.filter((employee) => employee.image.length > 0)
@@ -79,17 +80,18 @@ const PunchCamera = (props) => {
 
      const saveInfo = (results) => {
           const parseResult = JSON.parse(results[0]._label);
+          const timer = new Date();
           console.log(parseResult);
-          props.setThisEmployee({ ...parseResult, time: props.timer.toTimeString().slice(0, 8) });
+          setPunchEmployee({ ...parseResult, time: timer.toTimeString().slice(0, 8) });
 
           var data = {
                name: parseResult.name,
                employee: parseResult._id,
-               date: props.timer.toLocaleDateString("en-CA"),
+               date: timer.toLocaleDateString("en-CA"),
                // date: '2021-11-22',
                date1: new Date(),
           };
-          data[props.punch.status] = props.timer.toTimeString().slice(0, 8);
+          data[props.punch.status] = timer.toTimeString().slice(0, 8);
           
           fetchAddRecord(`${usersURL}/${parseResult.user}/employees/${parseResult._id}/records`, data);
      }
@@ -103,8 +105,6 @@ const PunchCamera = (props) => {
 
                setAlert([])
                console.log("run faceapiInaterval")
-               console.log(detections);
-               console.log(results)
                if(detections.length == 0) return setAlert([])
                if (detections.length > 1) return setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
                if (detections.length === 1 && detections[0].detection._score > 0.5) {
@@ -126,7 +126,7 @@ const PunchCamera = (props) => {
           videoRef.current.play()
           setIsPlay(true);
           setPause(false);
-          props.setThisEmployee(null)
+          setPunchEmployee(null)
 
           canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
           const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
@@ -172,30 +172,27 @@ const PunchCamera = (props) => {
      return (
           <>
                {!isPlay && !pause && <CameraLoader />}
-
                <section onPlay={onPlay} className="video-frame" width={cameraSize.width} height={cameraSize.height}>
                     <video id="video" autoPlay muted ref={videoRef} ></video>
                     <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
                     {alert.length > 0 && alert.map((elm) => <h1 key={elm} className="alert-text">{elm}</h1>)}
+                         {punchEmployee && (
+                              <div className="info-div">
+                                   <h1>{punchEmployee.name}</h1>
+                                   <h1>
+                                        {props.punch.status}:
+                                        {props.punch.status == "in" ? (
+                                             <span style={{ color: punchEmployee.time > props.thisUser.setting.timeIn ? "var(--red)" : "" }}>{punchEmployee.time}</span>
+                                        ) : (
+                                             <span style={{ color: punchEmployee.time < props.thisUser.setting.timeOut ? "var(--red)" : "" }}>{punchEmployee.time}</span>
+                                        )}
+                                   </h1>
+                              </div>
+                         )}                    
+                    
+
                </section>
-               <section>
-                    {props.thisEmployee && (
-                         <div>
-                              <h1>{props.thisEmployee.name}</h1>
-                              <h1>{props.thisEmployee._id}</h1>
-                              <h1>
-                                   {props.punch.status}:
-                                   {props.punch.status == "in" ? (
-                                        <span style={{ color: props.thisEmployee.time > props.thisUser.setting.timeIn ? "var(--red)" : "" }}>{props.thisEmployee.time}</span>
-                                   ) : (
-                                        <span style={{ color: props.thisEmployee.time < props.thisUser.setting.timeOut ? "var(--red)" : "" }}>{props.thisEmployee.time}</span>
-                                   )}
-                              </h1>
-                              {/* <button onClick={stopVideo}>stop</button> */}
-                              <button className="play-btn" onClick={onPlay}>play</button>
-                         </div>
-                    )}                    
-               </section>
+
           </>
      );
 };

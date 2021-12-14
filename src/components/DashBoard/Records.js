@@ -110,6 +110,15 @@ function Records(props) {
         setInputValues({...inputValues, [e.target.name] : e.target.value})
     }
 
+    // const sortAtoZ = () => setSortEmployees(allEmployees.sort(function(a, b) {
+    //     var nameA = a.name.toUpperCase();
+    //     var nameB = b.name.toUpperCase();
+    //     if (nameA < nameB) return -1;
+    //     if (nameA > nameB) return 1;
+    //     return 0;
+    //   }))
+        
+
      return (
          <main id="Records">
                 <section className="top-div">
@@ -123,14 +132,14 @@ function Records(props) {
                         <h1>{props.location.state._id}</h1>
                     </div>
                 </section>
-                <hr/>
-                <section>
+                <section className="records-div">
                     <div id="Record">
                         <p>Date</p>
                         <p>Date</p>
                         <p>Date</p>
                         <p>Date</p>
                     </div>
+                    <div className="scroll-y">
                     { 
                         records && ( records.length<1 ? <h1>no records</h1> : 
                             records.map(record=> 
@@ -147,6 +156,7 @@ function Records(props) {
                                     onChange={onChange}
                                 />) )
                     }
+                    </div>
                 </section>
                 {
                     delItem && <DeletePopup closePopup = {closePopup} deleteItem={deleteItem} />

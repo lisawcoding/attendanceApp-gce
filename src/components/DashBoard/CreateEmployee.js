@@ -47,7 +47,6 @@ function CreateEmployee(props) {
      return (
           <>
                <div id="CreateEmployee" className="center">
-                    <h1>create a new employee</h1>
                     <div className="card">
                          <form onSubmit={submitForm} className="employeeForm" ref={formRef} autoComplete="false">
                               <section className="img-wrapper">

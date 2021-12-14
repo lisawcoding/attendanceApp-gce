@@ -11,6 +11,7 @@ import { FunctionContext } from "../../contexts/FunctionContext";
 function Home(props) {
      const { thisUser } = useContext(DataContext);
      const { logout } = useContext(FunctionContext);
+     
      return (
           <main id="Home">
                <section className="top">
@@ -23,14 +24,14 @@ function Home(props) {
                     </h1>
                </section>
                <section className="main">
-                    <div className="dashboard">
-                         <img src={dashboard} alt="dashboard" />
+                    <div className="dashboard" style={{backgroundImage: `url(${dashboard})`}}>
+                         {/* <img src={dashboard} alt="dashboard" /> */}
                          <NavLink exact to="/employees" activeClassName="nav-active">
                               go to dashboard
                          </NavLink>
                     </div>
-                    <div className="clockIn">
-                         <img src={clockIn} alt="clorckIn" />
+                    <div className="clockIn" style={{backgroundImage: `url(${dashboard})`}}>
+                         {/* <img src={clockIn} alt="clorckIn" /> */}
                          <NavLink exact to="/punch" activeClassName="nav-active">
                               go to clockIn desk
                          </NavLink>

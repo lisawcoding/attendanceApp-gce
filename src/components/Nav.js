@@ -3,7 +3,7 @@ import { NavLink, withRouter } from "react-router-dom";
 
 import { BiHome } from "react-icons/bi";
 import { RiTeamLine, RiLogoutBoxRLine } from "react-icons/ri";
-import { AiOutlineUserAdd } from "react-icons/ai";
+import { AiOutlineUserAdd, AiOutlinePushpin } from "react-icons/ai";
 import "./Nav.scss";
 import { FunctionContext } from "../contexts/FunctionContext";
 import { DataContext } from "../contexts/DataContext";
@@ -11,19 +11,27 @@ import { HiUserCircle } from "react-icons/hi";
 
 function Nav(props) {
      const { logout, fetchUser } = useContext(FunctionContext);
-     const { thisUser } = useContext(DataContext);
-     const [isUserDropdown, setIsUserDropdown] = useState(false);
+     const { thisUser, isLoading } = useContext(DataContext);
+     const [ isPin, setIsPin ] = useState(false)
+     const [isDropdown, setIsDropdown] = useState(false);
 
      useLayoutEffect(() => {
           fetchUser(props);
      }, []);
 
-     const clickUserIcon = () => setIsUserDropdown(!isUserDropdown);
+     const clickPinBtn = () => setIsPin(!isPin);
+     const clickDropDown = () => setIsDropdown(!isDropdown)
 
      return (
-          <nav style={{ display: props.match.path === "/puch" && "none" }}>
-               <div className="link-div">
+          <>
+               <div className="loader-wrapper" style={{ display: isLoading ? "flex" : "none" }}>
+                    <div className="loader"></div>
+               </div>
+               <nav style={{ display: props.match.path === "/puch" && "none" }} className={isPin ? "pin" : ""}>
+               <div className={ isDropdown ? "hamburger drop-down" : "hamburger"} onClick={clickDropDown}><span></span><span></span><span></span></div>
+               <div className="link-div" onClick={clickDropDown}>
                     {/* <h2>{thisUser.name}</h2> */}
+                    <AiOutlinePushpin onClick={clickPinBtn} className="pin-icon" />
                     <NavLink exact to="/home" activeClassName="nav-active">
                          <BiHome />
                          <h2>home</h2>
@@ -31,7 +39,6 @@ function Nav(props) {
                     <NavLink exact to="/employees" activeClassName="nav-active">
                          <RiTeamLine />
                          <h2>show all employees</h2>
-                         
                     </NavLink>
                     <NavLink exact to="/employees/create" activeClassName="nav-active">
                          <AiOutlineUserAdd />
@@ -39,7 +46,7 @@ function Nav(props) {
                     </NavLink>
                </div>
                {thisUser && (
-                    <section className="link-div" onClick={clickUserIcon}>
+                    <section className="link-div"  onClick={clickDropDown}>
                               <NavLink to="/user" className="user-link" activeClassName="nav-active">
                                    <HiUserCircle />
                                    <h2>my account</h2>
@@ -48,20 +55,11 @@ function Nav(props) {
                                    <RiLogoutBoxRLine/>
                                    <h2>logout</h2>
                               </div>
-                         {/* <HiUserCircle />
-                         <h2>{thisUser.name}</h2>
-                         
-                         <div className="user-dropdown" style={{ display: isUserDropdown ? "block" : "none" }}>
-                              <NavLink to="/user" className="user-link" activeClassName="nav-active">
-                                   my account
-                              </NavLink>
-                              <div className="user-link" onClick={() => logout(props)}>
-                                   logout
-                              </div>
-                         </div> */}
                     </section>
                )}
           </nav>
+          </>
+
      );
 }
 
