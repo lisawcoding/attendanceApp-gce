@@ -5,10 +5,6 @@
      label {
           text-align: left;
      }
-     .img-wrapper {
-          padding-top: unset;
-          height: 100%;
-     }
      label[for*="_"],
      label[for*="image"] {
           display: none;
@@ -17,20 +13,26 @@
           display: flex;
           justify-content: end;
           svg {
-               font-size: 1.5em;
-               margin: 0 0.5em;
+               transform: scale(1.2);
+               font-size: var(--icon-size);
                fill: var(--dark-grey);
+               margin: .15rem;
                &:hover {
                     fill: var(--pink);
-                    transform: scale(1.2);
                }
+          }
+     }
+     .img-wrapper {
+          svg {
+               fill: var(--pink);
           }
      }
      fieldset {
           border:none;
-          svg {
-               fill: var(--dark-grey);
-          }
+          // svg {
+          //      fill: var(--dark-grey);
+          //      background-color: navy;
+          // }
      }
      fieldset:disabled {
           * {
@@ -46,24 +48,13 @@
      }     
 }
 
-
-#EachEmployee_form {
-     svg {
-          font-size: 1.2em;
-          z-index: 9;
-          path {
-               color: var(--dark-grey);
-          }
-     }
-     &:hover path,
-     &:visited path,
-     &:focus path {
-          color: var(--blue);
-     }
-}
-
+// classList
 .small-icon {
      font-size: 3.5em !important;
      margin: 0 auto;
      top: calc(100% - 1em) !important;
+}
+
+.click-icon {
+     fill: var(--pink)
 }

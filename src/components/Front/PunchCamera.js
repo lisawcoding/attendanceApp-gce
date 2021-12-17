@@ -15,9 +15,9 @@ const PunchCamera = (props) => {
      const [pause, setPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
      const [alert, setAlert] = useState([]);
-     const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
+     // const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
      const videoRef = useRef();
-     const canvasRef = useRef();
+     // const canvasRef = useRef();
      const [labeledFaceDescriptors, setLableFaceDescriptors] = useState(null)
 
      useEffect(() => {
@@ -60,7 +60,7 @@ const PunchCamera = (props) => {
           .then(results => setLableFaceDescriptors(results))
           .catch(err=>{
                console.log("labelImages error: ", err)
-               // window.location.reload()
+               window.location.reload()
           })
      }
 
@@ -82,17 +82,16 @@ const PunchCamera = (props) => {
           const parseResult = JSON.parse(results[0]._label);
           const timer = new Date();
           console.log(parseResult);
-          setPunchEmployee({ ...parseResult, time: timer.toTimeString().slice(0, 8) });
+          setPunchEmployee({ ...parseResult, [props.punch.status]: timer.toTimeString().slice(0, 8) });
 
           var data = {
                name: parseResult.name,
                employee: parseResult._id,
                date: timer.toLocaleDateString("en-CA"),
-               // date: '2021-11-22',
                date1: new Date(),
           };
           data[props.punch.status] = timer.toTimeString().slice(0, 8);
-          
+          console.log(data)
           fetchAddRecord(`${usersURL}/${parseResult.user}/employees/${parseResult._id}/records`, data);
      }
 
@@ -110,7 +109,7 @@ const PunchCamera = (props) => {
                if (detections.length === 1 && detections[0].detection._score > 0.5) {
                     const box = resizedDetections[0].detection.box;
                     const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
-                    drawBox.draw(canvasRef.current);
+                    // drawBox.draw(canvasRef.current);
 
                     if(results[0]._label == "unknown") return setAlert([...alert, "cannot recongize this face"]);
                     saveInfo(results)
@@ -128,11 +127,11 @@ const PunchCamera = (props) => {
           setPause(false);
           setPunchEmployee(null)
 
-          canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          // canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
           const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
           
           const displaySize = { width: videoRef.current.clientWidth, height: videoRef.current.clientHeight };
-          setCameraSize({ width: videoRef.current.clientWidth, height: videoRef.current.clientHeight });
+          // setCameraSize({ width: videoRef.current.clientWidth, height: videoRef.current.clientHeight });
 
           startDetectFace( faceMatcher, displaySize )
      };
@@ -165,34 +164,32 @@ const PunchCamera = (props) => {
      const capture = async () => {
           clearInterval(faceapiInterval);
           videoRef.current.pause();
-          await canvasRef.current.getContext("2d").drawImage(videoRef.current, 0, 0);
+          // await canvasRef.current.getContext("2d").drawImage(videoRef.current, 0, 0);
           setPause(true);
      };
 
+     // const textStyle = props.punch.status == "timeIn" ? ( punchEmployee.time > props.thisUser.setting[props.punch.status] && "var(--red)" ) : ( punchEmployee.time < props.thisUser.setting[props.punch.status] && "var(--red)" )
+     // const textStyle = punchEmployee.time > "9:30" && "var(--red)"
+
      return (
           <>
-               {!isPlay && !pause && <CameraLoader />}
-               <section onPlay={onPlay} className="video-frame" width={cameraSize.width} height={cameraSize.height}>
-                    <video id="video" autoPlay muted ref={videoRef} ></video>
-                    <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
-                    {alert.length > 0 && alert.map((elm) => <h1 key={elm} className="alert-text">{elm}</h1>)}
-                         {punchEmployee && (
-                              <div className="info-div">
-                                   <h1>{punchEmployee.name}</h1>
-                                   <h1>
-                                        {props.punch.status}:
-                                        {props.punch.status == "in" ? (
-                                             <span style={{ color: punchEmployee.time > props.thisUser.setting.timeIn ? "var(--red)" : "" }}>{punchEmployee.time}</span>
-                                        ) : (
-                                             <span style={{ color: punchEmployee.time < props.thisUser.setting.timeOut ? "var(--red)" : "" }}>{punchEmployee.time}</span>
-                                        )}
-                                   </h1>
-                              </div>
-                         )}                    
-                    
-
-               </section>
-
+          {!isPlay && !pause && <CameraLoader />}
+          {/* <section onPlay={onPlay} className="video-frame" width={cameraSize.width} height={cameraSize.height}> */}
+          {/* <section onPlay={onPlay} className="video-frame"> */}
+          {/* <section className="video-frame"> */}
+               <video onPlay={onPlay} id="video" autoPlay muted ref={videoRef} ></video>
+               {/* <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas> */}
+               {alert.length > 0 && alert.map((elm) => <h1 key={elm} className="alert-text">{elm}</h1>)}
+               {punchEmployee && (
+                    <div className="info-div">
+                         <h1>{punchEmployee.name}</h1>
+                         <h1 className={ punchEmployee[props.punch.status] > props.thisUser.setting[props.punch.status] ? (
+                              props.punch.status == "in" ? "red" : "" ) : (props.punch.status=="out" ? "" : "red")}>
+                              {props.punch.status}: {punchEmployee[props.punch.status]}
+                         </h1>
+                    </div>
+               )}                    
+          {/* </section> */}
           </>
      );
 };

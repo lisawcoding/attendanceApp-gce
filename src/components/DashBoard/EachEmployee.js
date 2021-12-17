@@ -67,20 +67,23 @@ function EachEmployee(props) {
           .catch((err) => console.error(err));          
      };
 
-     const clickCemeraIcon = () => setIsCamera(true);
+     const clickCemeraIcon = () => { 
+          console.log("click camera icon")
+          setIsCamera(!isCamera)
+     };
 
      return (
           <div id="EachEmployee" className="center">
                <h1>update employee profile</h1>
                <div className="card">
                     <section className="top-div">
-                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit);}} style={{ fill: isEdit ? "var(--pink)" : "" }}/>
+                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit);}} className={ isEdit ? "click-icon" : "" }/>
                          <AiOutlineDelete onClick={() => {setIsDelPopup(!isDelPopup)}}/>
                     </section>
                     <form ref={formRef} onSubmit={editEmployee}>
                          <fieldset disabled={!isEdit} className="employeeForm">
                               {thisEmployee && (
-                                   <section className="img-div">
+                                   // <section className="img-div">
                                         <div className="img-wrapper">
                                              {
                                                   thisEmployee.image.length > 1 ?
@@ -89,7 +92,7 @@ function EachEmployee(props) {
                                              }
                                              <BiCamera style={{ display: !isEdit ? "none" : "block" }} className={ thisEmployee.image.length > 0 ? "small-icon" : ""} onClick={clickCemeraIcon} />   
                                         </div>
-                                   </section>
+                                   // </section>
                               )}
                               <section className="info-div">
                                    <label>

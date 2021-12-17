@@ -22,10 +22,6 @@ function Punch(props) {
 
      const clickClockInOutBtn = (e) => setPunch({ ...punch, [e.target.name]: e.target.value });
 
-     const onSubmit= e => {
-          e.preventDefault()
-     }
-
      return (
           <div id="Punch">
                <section className="left-div">
@@ -38,9 +34,9 @@ function Punch(props) {
                     </div>
                     {thisUser.setting && <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p> }
                </section>
-               <form className="right-div" onSubmit={onSubmit}>
+               <section className="right-div">
                    { allEmployees && <PunchCamera punch={punch} thisUser={thisUser} />}
-               </form>
+               </section>
           </div>
      );
 }

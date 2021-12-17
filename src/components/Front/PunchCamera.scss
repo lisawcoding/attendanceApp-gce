@@ -1,22 +1,28 @@
 #Punch {
-     .video-frame {
-          position: relative;
-          canvas {
-               top: 1.5vw;
-               left: 1.5vw;
-               top: 50%;
-               left: 50%;
-               transform: translate(-50%, -50%);
+     // .video-frame {
+          // max-width: 95%;
+          // width: 72%;
+          // position: relative;
+          video {
+               // height: 100%;
+               width: 100%;
           }
+          // canvas {
+          //      top: 1.5vw;
+          //      left: 1.5vw;
+          //      top: 50%;
+          //      left: 50%;
+          //      transform: translate(-50%, -50%);
+          // }
           .alert-text {
                position: absolute;
                z-index: 999;
           }
-     }
+     // }
      .camera-loader-div {
-          top: 0;
-          left: 0;
-          z-index: 999;
+          // top: 0;
+          // left: 0;
+          // z-index: 999;
           svg {
                fill: var(--blue)
           }
@@ -32,4 +38,8 @@
           padding: .25em 1.5em;
           border-radius: 5px;
      }
+}
+
+.red {
+     color: var(--red);
 }

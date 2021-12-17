@@ -1,6 +1,4 @@
 #CreateEmployee {
-     // display: flex;
-     // flex-direction: column;
      background: var(--pink);
      .img-wrapper {
           padding-top: unset;
@@ -12,6 +10,7 @@
           }
      }
 }
+
 .employeeForm {
      span,
      h1,
@@ -23,10 +22,10 @@
      }
 
      display: grid;
-     width: 100%;
+     // width: 100%;
      grid-template-columns: 1.2fr 1fr;
      gap: 1em;
-     position: relative;
+     // position: relative;
      .info-div {
           display: grid;
           gap: 0.5em;
@@ -39,7 +38,6 @@
      #upload-img {
           outline: none;
      }
-
      .upload-btn-wrapper {
           position: relative;
           width: 1.2em;
@@ -66,13 +64,11 @@
           text-align: left;
      }
      ::-webkit-input-placeholder {
-          /* Edge */
-          color: transparent;
+          color: transparent;/* Edge */
      }
 
      :-ms-input-placeholder {
-          /* Internet Explorer 10-11 */
-          color: transparent;
+          color: transparent;/* Internet Explorer 10-11 */
      }
 
      ::placeholder {

@@ -15,6 +15,7 @@ const FaceCamera = ({thisEmployee, setThisEmployee}) => {
      const canvasRef = useRef();
 
      useEffect(()=>{
+          // return
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
                faceapi.nets.faceRecognitionNet.loadFromUri("../../models")

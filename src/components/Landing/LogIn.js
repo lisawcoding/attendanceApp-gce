@@ -43,7 +43,8 @@ function LogIn(props) {
                })
                .catch((err) =>{ 
                     console.log(err);
-                    if(!navigator.onLine) return setAlert("network error");
+                    console.log(err);
+                    if(!navigator.onLine) return setAlert("network error, please check your nework connection.");
                     
                     if(err) window.location.reload()
                     // window.location.reload();

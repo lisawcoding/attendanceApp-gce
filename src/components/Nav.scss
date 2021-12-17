@@ -1,57 +1,48 @@
 nav {
      box-shadow: var(--box-shadow);
-     display: flex;
-     flex-direction: column;
-     justify-content: space-between;
      height: 100vh;
      padding: 1.5em 0;
      flex-shrink: 0;
      z-index: 99;
      background: #fff;
-     // position: fixed;
-     // background: #fff;
+     .link-div {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+     }
      svg {
           fill: var(--dark-grey);
+          font-size: var(--icon-size);
+     }
+     .user-icon {
+          margin-top: auto;
      }
      h2 {
           margin: 0 0 0 .5em;
           color: var(--dark-grey);
           text-transform: capitalize;
           display: none;
-          font-size: 15px;
+          // font-size: 15px;
      }
-     .link-div {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          & > * {
-               // margin: .5em;
-               padding: .5em;
-               font-size: var(--icon-size);
+     .link-div > a, .pin-icon {
+          padding: .5rem;
+          div {
+               display: flex;
+               align-items: center;
           }
-     }          
-     .user-link, a {
-          display: flex;
-          align-items: center;
-          // justify-content: center;
-          width: 100%;
-          filter: grayscale(100%) opacity(.5);
-          // background-color: var(--pink);
           &:hover {
                background-color: var(--pink);
                transition: all .2s;
-               
                filter: grayscale(0%) opacity(1)
           }
-          // background: var(--pink)
-          // &:hover h2, &:hover svg {
-          //      color: var(--pink);
-          //      fill: var(--pink)
-          // }
      }
+     .pin-icon {
+          margin: .5rem;
+          padding: 0;
+     }
+
      &:hover, &:active {
           h2 {
-               // width: calc(100% - 28px - .5em) !important;
                display: block;
           }
      }
@@ -63,7 +54,6 @@ nav {
           width: 100%;
           height: 5px;
           background-color: var(--dark-grey);
-          // margin: 6px 0; 
      }
 }
 
@@ -76,14 +66,10 @@ nav {
      }
 }
 
-.pin-icon {
-     padding: unset !important;
-     margin: .5em;
-}
-
 .pin {
      .pin-icon {
           fill: var(--black);
+          transform: rotate(-90deg);
      }
      h2 {
           display: block !important;
