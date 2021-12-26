@@ -7,7 +7,7 @@ import { BiImageAlt } from "react-icons/bi";
 import "./Records.scss";
 import Record from "./Record";
 import { FunctionContext } from "../../contexts/FunctionContext";
-import DeletePopup from "../DeletePopup";
+import DeletePopup from "../Common/DeletePopup";
 
 function Records(props) {
     const { usersURL, options } = useContext(URLContext);

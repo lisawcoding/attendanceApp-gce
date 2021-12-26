@@ -5,7 +5,7 @@ import "./CreateEmployee.scss";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import FaceCamera from "../FaceCamera/FaceCamera";
-import SuccessPopup from "../SuccessPopup";
+import SuccessPopup from "../Common/SuccessPopup";
 
 function CreateEmployee(props) {
      const { usersURL, options } = useContext(URLContext);

@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.scss";
-import "./loader.scss";
+// import "./loader.scss";
 import Nav from "./components/Nav";
 import Home from "./components/Home/Home";
 import Punch from "./components/FrontDesk/Punch";
@@ -12,7 +12,8 @@ import EachEmployee from "./components/DashBoard/EachEmployee";
 import CreateEmployee from "./components/DashBoard/CreateEmployee";
 import User from "./components/DashBoard/User";
 import Records from "./components/DashBoard/Records";
-import NotFound from "./NotFund";
+import NotFound from "./components/Common/NotFound";
+import Loader from "./components/Common/Loader";
 
 
 function App(props) {
@@ -35,9 +36,11 @@ function App(props) {
      return (
           <div className="App">
                {window.onload ? (
-                    <div className="loader-wrapper">
-                         <div className="loader"></div>
-                    </div>
+                    <></>
+                    // <Loader />
+                    // <div className="loader-wrapper">
+                    //      <div className="loader"></div>
+                    // </div>
                ) : (
                     <Router>
                          <Switch>

@@ -1,13 +1,13 @@
 import React, { useContext, useLayoutEffect, useState, useRef } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BiCamera, BiImageAlt } from "react-icons/bi";
-import SuccessPopup from "../SuccessPopup";
+import SuccessPopup from "../Common/SuccessPopup";
 
 import "./EachEmployee.scss";
 import { URLContext } from "../../contexts/URLContext";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
-import DeletePopup from "../DeletePopup";
+import DeletePopup from "../Common/DeletePopup";
 import FaceCamera from "../FaceCamera/FaceCamera";
 
 function EachEmployee(props) {

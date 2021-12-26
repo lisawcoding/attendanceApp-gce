@@ -1,12 +1,12 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 import { URLContext } from "./URLContext";
 import { DataContext } from "./DataContext";
 
 export const FunctionContext = createContext();
 
 export function FunctionProvider(props) {
-     const { tokenURL, loginURL, usersURL, reIssueTokenURL, logoutURL, getUserURL, getEmployeesURL } = useContext(URLContext);
-     const { thisUser, setThisUser,setAllEmployees, isLoading, setIsLoading, isReload, setIsReload } = useContext(DataContext);
+     const { usersURL, reIssueTokenURL, logoutURL, getUserURL } = useContext(URLContext);
+     const { setThisUser, setAllEmployees, setIsLoading } = useContext(DataContext);
 
      const logout = (props) => {
           sessionStorage.removeItem("accessToken");

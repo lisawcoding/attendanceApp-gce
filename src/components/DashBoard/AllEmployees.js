@@ -8,7 +8,7 @@ import { BiImageAlt, BiUserPin, BiSearchAlt } from "react-icons/bi";
 import "./Card_model.scss";
 
 function AllEmployees() {
-     const { allEmployees, setAllEmployees } = useContext(DataContext);
+     const { allEmployees } = useContext(DataContext);
      const [ searchTerm, setSearchTerm ] = useState("");
 
      const changeSearchInput = e => setSearchTerm(e.target.value);
