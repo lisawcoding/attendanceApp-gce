@@ -31,9 +31,7 @@ function Nav(props) {
                     <div className="loader"></div>
                </div>
                <nav style={{ display: props.match.path === "/puch" && "none" }} className={`${pin} ${dropDown}`}>
-                    <div className="hamburger" onClick={clickDropDown}>
-                         <span></span><span></span><span></span>
-                    </div>
+                    <div className="hamburger" onClick={clickDropDown}><span></span><span></span><span></span></div>
                     <div className="link-div" onClick={clickDropDown}>
                          <AiOutlinePushpin onClick={clickPinBtn} className="pin-icon" />
                          <NavLink exact to="/home" activeClassName="nav-active">
@@ -41,37 +39,31 @@ function Nav(props) {
                                    <BiHome />
                                    <h2>home</h2>
                               </div>
-
                          </NavLink>
                          <NavLink exact to="/employees" activeClassName="nav-active">
                               <div>
                                    <RiTeamLine />
                                    <h2>show all employees</h2>
                               </div>
-
                          </NavLink>
                          <NavLink exact to="/employees/create" activeClassName="nav-active">
                               <div>
                                    <AiOutlineUserAdd />
                                    <h2>create new employee</h2>
                               </div>
- 
                          </NavLink>
-                         {/* { thisUser && <> */}
-                              <NavLink to="/user" activeClassName="nav-active" className="icon-bottom user-icon">
-                                   <div>
-                                        <HiUserCircle />
-                                        <h2>my account</h2>
-                                   </div>
-
-                              </NavLink>
-                              <NavLink to="/" onClick={() => logout(props)}>
-                                   <div>
-                                        <RiLogoutBoxRLine/>
-                                        <h2>logout</h2>
-                                   </div>
-                              </NavLink>
-                         {/* </>} */}
+                         <NavLink to="/user" activeClassName="nav-active" className="icon-bottom user-icon">
+                              <div>
+                                   <HiUserCircle />
+                                   <h2>my account</h2>
+                              </div>
+                         </NavLink>
+                         <NavLink to="/" onClick={() => logout(props)}>
+                              <div>
+                                   <RiLogoutBoxRLine/>
+                                   <h2>logout</h2>
+                              </div>
+                         </NavLink>
                     </div>
                </nav>
           </>

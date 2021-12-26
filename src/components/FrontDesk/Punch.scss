@@ -29,10 +29,10 @@
           display: flex;
           .info-div {
                position: absolute;
-               bottom: .5rem;
-               font-size: 1.5rem;
+               bottom: 1.5vw;
+               font-size: 2.5vw;
                background-color: var(--blue);
-               padding: 1rem;
+               padding:.5vw;
                * {
                     margin: 0;
                }
@@ -61,6 +61,20 @@
           margin-top: 0;
           font-weight: 900;
           color: var(--black);
+     }
+     .logout-btn {
+          display: flex;
+          align-items: center;
+          gap: .5vw;
+          text-transform: uppercase;
+          cursor: pointer;
+          align-self: flex-start;
+          &:hover * {
+               color: var(--black);
+          }
+          * {
+               color: var(--dark-grey);
+          }
      }
 }
 

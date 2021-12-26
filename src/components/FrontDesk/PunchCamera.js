@@ -6,13 +6,13 @@ import { CameraLoader } from "../FaceCamera/CameraLoader";
 import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
+import { LabeledFaceDescriptors } from "face-api.js";
 
 const PunchCamera = (props) => {
      const { usersURL, options } = useContext(URLContext);
      const { allEmployees } = useContext(DataContext);
      const { reIssueToken } = useContext(FunctionContext);
      const [ punchEmployee, setPunchEmployee ] = useState(null);
-     const [pause, setPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
      const [alert, setAlert] = useState([]);
      // const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
@@ -38,11 +38,11 @@ const PunchCamera = (props) => {
           })
      }, []);
 
-     // useEffect(()=>{
-     //      pause && setTimeout(()=>{
-     //           onPlay() 
-     //      }, 3000)
-     // }, [pause])
+     useEffect(()=>{
+          if(!isPlay) return
+          videoRef.current.play();
+          setPunchEmployee(null)
+     }, [props.punch])
 
      const labelImages = async() => {
           let employeesWithImage = allEmployees.filter((employee) => employee.image.length > 0)
@@ -57,7 +57,7 @@ const PunchCamera = (props) => {
                     if (detection != undefined) return new faceapi.LabeledFaceDescriptors(JSON.stringify(employee), [detection.descriptor]);
                })
           )
-          .then(results => setLableFaceDescriptors(results))
+          .then(results => setLableFaceDescriptors(results.filter((r) => r !== undefined)))
           .catch(err=>{
                console.log("labelImages error: ", err)
                window.location.reload()
@@ -91,7 +91,6 @@ const PunchCamera = (props) => {
                date1: new Date(),
           };
           data[props.punch.status] = timer.toTimeString().slice(0, 8);
-          console.log(data)
           fetchAddRecord(`${usersURL}/${parseResult.user}/employees/${parseResult._id}/records`, data);
      }
 
@@ -107,14 +106,21 @@ const PunchCamera = (props) => {
                if(detections.length == 0) return setAlert([])
                if (detections.length > 1) return setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
                if (detections.length === 1 && detections[0].detection._score > 0.5) {
-                    const box = resizedDetections[0].detection.box;
-                    const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
+                    // const box = resizedDetections[0].detection.box;
+                    // const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
                     // drawBox.draw(canvasRef.current);
 
                     if(results[0]._label == "unknown") return setAlert([...alert, "cannot recongize this face"]);
-                    saveInfo(results)
-                    capture(); 
+                    
                     setAlert([])
+                    saveInfo(results);
+                    clearInterval(faceapiInterval);
+                    videoRef.current.pause();
+                    
+                    setTimeout(()=>{
+                         videoRef.current.play();
+                         setPunchEmployee(null)
+                    }, 9000)
                }
                if (videoRef.current.autoPlay === false) clearInterval(faceapiInterval);
           }, 350);
@@ -124,12 +130,9 @@ const PunchCamera = (props) => {
           console.log("onPlay");
           videoRef.current.play()
           setIsPlay(true);
-          setPause(false);
-          setPunchEmployee(null)
 
           // canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
           const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
-          
           const displaySize = { width: videoRef.current.clientWidth, height: videoRef.current.clientHeight };
           // setCameraSize({ width: videoRef.current.clientWidth, height: videoRef.current.clientHeight });
 
@@ -152,30 +155,20 @@ const PunchCamera = (props) => {
                });
      };
 
-     const stopVideo = () => {
-          console.log("stop")
-          const stream = videoRef.current.srcObject;
-          if (stream === null) return;
-          const tracks = stream.getTracks();
-          tracks.forEach((track) => track.stop());
-          videoRef.current.srcObject = null;
-     };
-
-     const capture = async () => {
-          clearInterval(faceapiInterval);
-          videoRef.current.pause();
-          // await canvasRef.current.getContext("2d").drawImage(videoRef.current, 0, 0);
-          setPause(true);
-     };
-
-     // const textStyle = props.punch.status == "timeIn" ? ( punchEmployee.time > props.thisUser.setting[props.punch.status] && "var(--red)" ) : ( punchEmployee.time < props.thisUser.setting[props.punch.status] && "var(--red)" )
-     // const textStyle = punchEmployee.time > "9:30" && "var(--red)"
+     // const stopVideo = () => {
+     //      console.log("stop")
+     //      const stream = videoRef.current.srcObject;
+     //      if (stream === null) return;
+     //      const tracks = stream.getTracks();
+     //      tracks.forEach((track) => track.stop());
+     //      videoRef.current.srcObject = null;
+     // };
 
      return (
           <>
-          {!isPlay && !pause && <CameraLoader />}
-          {/* <section onPlay={onPlay} className="video-frame" width={cameraSize.width} height={cameraSize.height}> */}
-          {/* <section onPlay={onPlay} className="video-frame"> */}
+          {!isPlay && <CameraLoader />}
+               {/* <button onClick={stopVideo}>stop</button> */}
+               <button onClick={startVideo}>start</button>
           {/* <section className="video-frame"> */}
                <video onPlay={onPlay} id="video" autoPlay muted ref={videoRef} ></video>
                {/* <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas> */}

@@ -1,0 +1,25 @@
+#Punch {
+     video {
+          min-width: 100%;
+     }
+     .alert-text {
+          position: absolute;
+          z-index: 999;
+     }
+     .camera-loader-div {
+          svg {
+               fill: var(--blue)
+          }
+          .lds-ellipsis div  {
+               background-color: var(--blue);
+          }
+     }
+     .play-btn {
+          font-size: 2em;
+          text-transform: uppercase;
+          border-color: var(--blue);
+          background-color: var(--blue);
+          padding: .25em 1.5em;
+          border-radius: 5px;
+     }
+}

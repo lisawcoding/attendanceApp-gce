@@ -5,7 +5,7 @@ import "./App.scss";
 import "./loader.scss";
 import Nav from "./components/Nav";
 import Home from "./components/Home/Home";
-import Punch from "./components/Front/Punch";
+import Punch from "./components/FrontDesk/Punch";
 import Landing from "./components/Landing/Landing";
 import AllEmployees from "./components/DashBoard/AllEmployees";
 import EachEmployee from "./components/DashBoard/EachEmployee";

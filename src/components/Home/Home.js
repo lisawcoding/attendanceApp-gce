@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 
 import logo from "../../images/logo.png";
 import dashboard from "../../images/dashboard.png";
-import clockIn from "../../images/clockIn.png";
 import "./Home.scss";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
@@ -24,16 +23,14 @@ function Home(props) {
                     </h1>
                </section>
                <section className="main">
-                    <div className="dashboard" style={{backgroundImage: `url(${dashboard})`}}>
-                         {/* <img src={dashboard} alt="dashboard" /> */}
-                         <NavLink exact to="/employees" activeClassName="nav-active">
-                              go to dashboard
-                         </NavLink>
-                    </div>
                     <div className="clockIn" style={{backgroundImage: `url(${dashboard})`}}>
-                         {/* <img src={clockIn} alt="clorckIn" /> */}
                          <NavLink exact to="/punch" activeClassName="nav-active">
                               go to clockIn desk
+                         </NavLink>
+                    </div>
+                    <div className="dashboard" style={{backgroundImage: `url(${dashboard})`}}>
+                         <NavLink exact to="/employees" activeClassName="nav-active">
+                              go to dashboard
                          </NavLink>
                     </div>
                </section>

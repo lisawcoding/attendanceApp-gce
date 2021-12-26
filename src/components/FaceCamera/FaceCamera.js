@@ -76,6 +76,7 @@ const FaceCamera = ({thisEmployee, setThisEmployee}) => {
      };
 
      const capture = async () => {
+          console.log(videoRef)
           clearInterval(faceapiInterval);
           videoRef.current.pause()
 

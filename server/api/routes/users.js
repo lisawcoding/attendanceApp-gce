@@ -49,6 +49,7 @@ userRouter.post("/:id", (req, res) => {
           .then((data) => res.json(data))
           .catch((err) => res.json(err));
 });
+
 userRouter.delete("/delete", (req, res) => {
      User.deleteMany()
           .then((data) => res.json(data))

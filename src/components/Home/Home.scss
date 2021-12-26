@@ -42,6 +42,8 @@
           color: var(--dark-grey);
           box-shadow: var(--box-shadow);
           cursor: pointer;
+          text-align: center;
+          text-transform: capitalize;
           &:hover {
                color: #000;
           }
