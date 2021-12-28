@@ -1,8 +1,8 @@
 import { BiImageAlt } from "react-icons/bi";
-import "./Records.scss";
-import RecordsTable from "./RecordsTable";
+import "./EmployeeRecords.scss";
+import EmployeeRecords_table from "./EmployeeRecords_table";
 
-function Records(props) {
+function EmployeeRecords(props) {
 
      return (
          <main id="Records">
@@ -17,9 +17,9 @@ function Records(props) {
                         <h1>{props.location.state._id}</h1>
                     </div>
                 </section>
-                <RecordsTable props={props}/>
+                <EmployeeRecords_table props={props}/>
          </main>
      );
 }
 
-export default Records;
+export default EmployeeRecords;

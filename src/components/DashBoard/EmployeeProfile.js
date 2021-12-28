@@ -3,7 +3,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BiCamera, BiImageAlt } from "react-icons/bi";
 import SuccessPopup from "../Common/SuccessPopup";
 
-import "./EachEmployee.scss";
+import "./EmployeeProfile.scss";
 import { URLContext } from "../../contexts/URLContext";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
@@ -11,7 +11,7 @@ import DeletePopup from "../Common/DeletePopup";
 import FaceCamera from "../FaceCamera/FaceCamera";
 import { FormInfoDiv } from "../Common/FormInfoDiv";
 
-function EachEmployee(props) {
+function EmployeeProfile(props) {
      const { thisUser, InitEmployeeInputs, setIsLoading } = useContext(DataContext);
      const { usersURL, options } = useContext(URLContext);
      const { reIssueToken, fetchUser } = useContext(FunctionContext);
@@ -103,4 +103,4 @@ function EachEmployee(props) {
      );
 }
 
-export default EachEmployee;
+export default EmployeeProfile;

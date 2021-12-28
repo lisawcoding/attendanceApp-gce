@@ -6,7 +6,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import DeletePopup from "../Common/DeletePopup";
 
-function RecordsTable ({props}) {
+function EmployeeRecords_table ({props}) {
     const { usersURL, options } = useContext(URLContext);
     const { thisUser } = useContext(DataContext);
     const { reIssueToken } = useContext(FunctionContext);
@@ -151,4 +151,4 @@ function RecordsTable ({props}) {
     )
 }
 
-export default RecordsTable;
+export default EmployeeRecords_table;

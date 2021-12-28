@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import "./AllEmployees.scss";
 import { DataContext } from "../../contexts/DataContext";
 import { BiSearchAlt } from "react-icons/bi";
-import EmployeeCards from "./EmployeeCards";
+import AllEmployees_cards from "./AllEmployees_cards";
 
-function AllEmployees() {
+function AllEmployees () {
      const { allEmployees } = useContext(DataContext);
      const [ searchTerm, setSearchTerm ] = useState("");
 
@@ -20,7 +20,7 @@ function AllEmployees() {
                          <BiSearchAlt />
                     </div>
                </section>               
-               <EmployeeCards allEmployees={allEmployees} searchTerm={searchTerm} />
+               <AllEmployees_cards allEmployees={allEmployees} searchTerm={searchTerm} />
                {allEmployees.length<1 && <h1>no employees</h1>}
           </main>
      );

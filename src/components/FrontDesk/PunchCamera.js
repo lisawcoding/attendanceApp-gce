@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import * as faceapi from "face-api.js";
 import { withRouter } from "react-router-dom";
 import "./PunchCamera.scss";
-// import { CameraLoader } from "../FaceCamera/CameraLoader";
 import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
@@ -15,14 +14,14 @@ const PunchCamera = (props) => {
      const { reIssueToken } = useContext(FunctionContext);
      const [ punchEmployee, setPunchEmployee ] = useState(null);
      const [isPlay, setIsPlay] = useState(false);
-     const [alert, setAlert] = useState([]);
+     const [alert, setAlert] = useState(["cannot recongize this face"]);
      // const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
      const videoRef = useRef();
      // const canvasRef = useRef();
      const [labeledFaceDescriptors, setLableFaceDescriptors] = useState(null)
 
      useEffect(() => {
-          // return;
+          return;
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
                faceapi.nets.faceRecognitionNet.loadFromUri("../../models"),
@@ -106,7 +105,7 @@ const PunchCamera = (props) => {
                console.log("run faceapiInaterval")
                if(detections.length == 0) return setAlert([])
                if (detections.length > 1) return setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
-               if (detections.length === 1 && detections[0].detection._score > 0.5) {
+               if (detections.length === 1 && detections[0].detection._score > 0.6) {
                     // const box = resizedDetections[0].detection.box;
                     // const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
                     // drawBox.draw(canvasRef.current);
@@ -173,7 +172,7 @@ const PunchCamera = (props) => {
           {/* <section className="video-frame"> */}
                <video onPlay={onPlay} id="video" autoPlay muted ref={videoRef} ></video>
                {/* <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas> */}
-               {alert.length > 0 && alert.map((elm) => <h1 key={elm} className="alert-text">{elm}</h1>)}
+               {alert.length > 0 && alert.map((elm, i) => <h1 key={`${elm}-${i}`} className="alert-text">{elm}</h1>)}
                {punchEmployee && (
                     <div className="info-div">
                          <h1>{punchEmployee.name}</h1>

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { BiImageAlt, BiUserPin } from "react-icons/bi";
-import "./EmployeeCards.scss";
+import "./AllEmployees_cards.scss";
 import { useMemo } from "react";
 
-function EmployeeCards({allEmployees, searchTerm}) {
+function AllEmployees_cards ({allEmployees, searchTerm}) {
 
     const columns = useMemo(()=>{
         console.log("useMemo")
@@ -37,4 +37,4 @@ function EmployeeCards({allEmployees, searchTerm}) {
     );
 }
 
-export default EmployeeCards
+export default AllEmployees_cards;
