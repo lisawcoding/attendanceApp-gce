@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import * as faceapi from "face-api.js";
 import { withRouter } from "react-router-dom";
 import "./PunchCamera.scss";
-import { CameraLoader } from "../FaceCamera/CameraLoader";
+// import { CameraLoader } from "../FaceCamera/CameraLoader";
 import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
-import { LabeledFaceDescriptors } from "face-api.js";
+// import { LabeledFaceDescriptors } from "face-api.js";
+import CameraLoader from "../Common/CameraLoader";
 
 const PunchCamera = (props) => {
      const { usersURL, options } = useContext(URLContext);

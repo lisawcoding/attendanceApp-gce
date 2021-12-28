@@ -27,6 +27,10 @@ a {
      }
 }
 
+fieldset {
+     border: none;
+}
+
 .App {
      display: flex;
      width: 100vw;
@@ -209,6 +213,9 @@ img[alt*="logo"] {
                }
           }
      }
+     #EachEmployee {
+          justify-content: unset;
+     }
 }
 
 @media (orientation: portrait), (max-width: 900px){
@@ -248,10 +255,14 @@ img[alt*="logo"] {
                     display: none;
                }
           }
-          form {
+          fieldset {
                grid-template-columns: unset;
                grid-template-rows: 1fr 1fr;
           }
+          // form {
+          //      grid-template-columns: unset;
+          //      grid-template-rows: 1fr 1fr;
+          // }
      }
 }
 
@@ -272,7 +283,6 @@ img[alt*="logo"] {
 
 @media (max-width: 710px), (orientation: portrait) {
      #EachEmployee {
-          justify-content: unset;
           * {
                box-shadow: unset;
           }

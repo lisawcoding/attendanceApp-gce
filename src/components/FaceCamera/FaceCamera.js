@@ -3,7 +3,7 @@ import * as faceapi from "face-api.js";
 import { withRouter } from "react-router-dom";
 import { GiConfirmed, GiCancel } from "react-icons/gi";
 import "./FaceCamera.scss";
-import { CameraLoader } from "./CameraLoader";
+import CameraLoader from "../Common/CameraLoader";
 
 const FaceCamera = ({thisEmployee, setThisEmployee}) => {
      const [isPause, setIsPause] = useState(false);

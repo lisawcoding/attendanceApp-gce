@@ -42,8 +42,6 @@ employeeRouter.get("/", (req, res) => {
 });
 
 employeeRouter.post("/", verifyAccessToken, (req, res) => {
-     // console.log("employeeRouter: ", req.params);
-     // console.log("employeeRouter, req.body: ", req.body);
      Employee.create({ ...req.body, user: req.params.id })
           .then((data) => res.json(data))
           .catch((err) => res.json({ error: err }));

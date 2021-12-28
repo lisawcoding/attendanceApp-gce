@@ -27,13 +27,6 @@
                fill: var(--dark-grey);
           }
      }
-     fieldset {
-          border:none;
-          // svg {
-          //      fill: var(--dark-grey);
-          //      background-color: navy;
-          // }
-     }
      fieldset:disabled {
           * {
                background: transparent;

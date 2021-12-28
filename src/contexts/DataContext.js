@@ -6,27 +6,15 @@ export function DataProvider(props) {
      const InitEmployeeInputs = {
           name: "",
           image: "",
-          password: "",
+          email: "",
           tel: "",
-          position: "",
+          title: "",
           remark: "",
           date: new Date().toISOString().slice(0, 10),
      };
      const [thisUser, setThisUser] = useState({});
      const [allEmployees, setAllEmployees] = useState(null);
      const [isLoading, setIsLoading] = useState(true);
-     // const [thisEmployee, setThisEmployee] = useState({
-     //      name: "",
-     //      image: "",
-     //      password: "",
-     //      tel: "",
-     //      position: "",
-     //      remark: "",
-     //      date: new Date().toISOString().slice(0, 10),
-     // });
-     // const [editedEmployee, setEditedEmployee] = useState(null);
-
-     
 
      return (
           <DataContext.Provider

@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.scss";
-// import "./loader.scss";
 import Nav from "./components/Nav";
 import Home from "./components/Home/Home";
 import Punch from "./components/FrontDesk/Punch";
@@ -13,10 +12,10 @@ import CreateEmployee from "./components/DashBoard/CreateEmployee";
 import User from "./components/DashBoard/User";
 import Records from "./components/DashBoard/Records";
 import NotFound from "./components/Common/NotFound";
-import Loader from "./components/Common/Loader";
 
 
 function App(props) {
+
      const DashBoardNav = ({ exact, path, component: Component, ...rest }) => {
           return (
                <Route
@@ -35,27 +34,19 @@ function App(props) {
 
      return (
           <div className="App">
-               {window.onload ? (
-                    <></>
-                    // <Loader />
-                    // <div className="loader-wrapper">
-                    //      <div className="loader"></div>
-                    // </div>
-               ) : (
-                    <Router>
-                         <Switch>
-                              <Route exact path="/" component={Landing} />
-                              <Route exact path="/home" component={Home} />
-                              <DashBoardNav exact path="/user" component={User} />
-                              <DashBoardNav exact path="/employees" component={(props) => <AllEmployees {...props} />} />
-                              <DashBoardNav exact path="/employees/create" component={(props) => <CreateEmployee {...props} />} />
-                              <DashBoardNav exact path="/employees/edit/:id" component={EachEmployee} />
-                              <DashBoardNav exact path="/employees/edit/:id/records" component={Records} />
-                              <Route exact path="/punch" component={Punch} />
-                              <Route path="" component={NotFound} />
-                         </Switch>
-                    </Router>
-               )}
+               <Router>
+                    <Switch>
+                         <Route exact path="/" component={Landing} />
+                         <Route exact path="/home" component={Home} />
+                         <DashBoardNav exact path="/user" component={User} />
+                         <DashBoardNav exact path="/employees" component={(props) => <AllEmployees {...props} />} />
+                         <DashBoardNav exact path="/employee/create" component={(props) => <CreateEmployee {...props} />} />
+                         <DashBoardNav exact path="/employee/profile/:id" component={EachEmployee} />
+                         <DashBoardNav exact path="/employee/records/:id" component={Records} />
+                         <Route exact path="/punch" component={Punch} />
+                         <Route path="*" component={NotFound} />
+                    </Switch>
+               </Router>
           </div>
      );
 }

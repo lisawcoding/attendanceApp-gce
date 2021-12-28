@@ -16,8 +16,12 @@ const EmployeeSchema = new Schema({
      },
      image: {
           type: String,
+          default: ""
      },
-     password: {
+     title: {
+          type: String
+     },
+     email: {
           type: String,
      },
      tel: {

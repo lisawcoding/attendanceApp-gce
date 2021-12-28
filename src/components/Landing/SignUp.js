@@ -17,6 +17,11 @@ function SignUp(props) {
           password: "",
           password2: "",
      });
+     const mailSuccessMsg = [
+          "verify token has been sent to your email, please check youre email and verify", 
+          "please enter token to verify your account",
+          "the token will be expired within 10mins"
+     ]
 
      const sentTokenMail = () => {
           fetch(`${registerURL}/mail`, {
@@ -99,6 +104,7 @@ function SignUp(props) {
           <>
                {!isSentMail ? (
                     <form onSubmit={clickNextBtn} ref={formRef}>
+                         {/* <input type="password" pattern="[a-zA-Z0-9]{8,}"> */}
                          <input type="text" name="name" placeholder="name" required onChange={changeInput} value={inputValue.name} />
                          <input type="email" name="email" placeholder="email" required onChange={changeInput} value={inputValue.email} />
                          <input type="text" name="companyName" placeholder="company name" onChange={changeInput} value={inputValue.companyName} />
@@ -114,15 +120,8 @@ function SignUp(props) {
                ) : !isSignUpSuccess ? (
                     <form onSubmit={createAccount}>
                          <textarea type="text" name="token" placeholder={props.t("verify token")} required onChange={changeInput} className={alert.length > 0 ? "red-border" : ""} rows="5" />
-                         {token.length < 1 && (
-                              <>
-                                   <h1 className="success-text">{props.t("verify token has been sent to your email, please check youre email and verify")}</h1>
-                                   <h1 className="success-text">{props.t("please enter token to verify your account")}</h1>
-                                   <h1 className="success-text">{props.t("the token will be expired within 10mins")}</h1>
-                              </>
-                         )}
+                         {token.length < 1 &&  mailSuccessMsg.map(msg=> <h1 className="success-text">{props.t(msg)}</h1>)}
                          {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
-
                          <input type="submit" value={props.t("verify")} />
                     </form>
                ) : (

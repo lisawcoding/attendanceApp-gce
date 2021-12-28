@@ -41,25 +41,19 @@
      h1 {
           font-size: 2em;
      }
-     .btn {
-          background-color: var(--blue);
-          color: #fff;
-          padding: 0.35em 2.5em;
-          text-transform: uppercase;
-          border: none;
-          font-size: 0.9em;
-     }
      .btn-div {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 0.5em;
-          * {
-               width: 100%;
-               padding-left: unset;
-               padding-right: unset;
+          .btn {
+               background-color: var(--blue);
+               color: #fff;
+               text-transform: uppercase;
+               border: none;
+               font-size: 0.9em;
                &:hover {
                     color: #000;
-               }
+               }               
           }
           .cancel {
                background: var(--dark-grey);
@@ -73,17 +67,3 @@
 .Popup.overlay {
      z-index: 999;
 }
-
-// .success-text {
-//      color: green !important;
-//      &:before {
-//           content: "✔";
-//      }
-// }
-
-// .alert-text {
-//      color: var(--red) !important;
-//      &::before {
-//           content: "✖";
-//      }
-// }

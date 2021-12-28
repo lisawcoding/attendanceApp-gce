@@ -2,7 +2,7 @@
     padding: 5vh;
     display: flex;
     background: var(--pink);
-    #Record {
+    .table-heading {
         display: flex;
         fieldset {
             display: flex;
@@ -50,6 +50,7 @@
         background: #fff;
         padding: 1em;
         box-shadow: var(--box-shadow);
+        width: 100%;
     }
 
     form {
@@ -61,10 +62,10 @@
                 font-weight: 200;
             }
             label {
-                display: grid;
-                grid-template-columns: 1fr 1.5fr;
-                gap: 1em;
-                margin: .15em 0;
+                // display: grid;
+                // grid-template-columns: 1fr 1.5fr;
+                // gap: 1em;
+                // margin: .15em 0;
                 span {
                     display: flex;
                     align-items: center;

@@ -1,6 +1,6 @@
 import { BiCamera, BiCameraOff } from "react-icons/bi";
 
-export const CameraLoader = (props) => {
+const CameraLoader = (props) => {
      return (
           <div className="camera-loader-div">
                {props.mediaTest == null ? (
@@ -16,3 +16,5 @@ export const CameraLoader = (props) => {
           </div>
      );
 };
+
+export default CameraLoader;

@@ -45,7 +45,7 @@ function Nav(props) {
                               <h2>show all employees</h2>
                          </div>
                     </NavLink>
-                    <NavLink exact to="/employees/create" activeClassName="nav-active">
+                    <NavLink exact to="/employee/create" activeClassName="nav-active">
                          <div>
                               <AiOutlineUserAdd />
                               <h2>create new employee</h2>
@@ -66,7 +66,6 @@ function Nav(props) {
                </div>
           </nav>
           </>
-
      );
 }
 
