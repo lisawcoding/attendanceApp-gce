@@ -16,7 +16,8 @@ function Punch(props) {
      });
 
      useEffect(() => {
-          fetchUser(props)
+          fetchUser(props);
+
           return () => {
                window.location.reload();
                // logout(props)
