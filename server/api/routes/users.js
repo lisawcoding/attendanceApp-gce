@@ -1,40 +1,15 @@
 const express = require("express");
 
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
 const { verifyAccessToken } = require("../../JWT");
+const { findUsers, postUser, getUser, putUser } = require("../controllers/users.js");
 
 const userRouter = express.Router();
 
-userRouter.post("/find", (req, res) => {
-     User.findOne(req.body)
-          .then((data) => res.json(data))
-          .catch((err) => res.json({ error: err }));
-});
-
-userRouter.post("/create", verifyAccessToken, (req, res) => {
-     console.log(req.body);
-     User.create({ ...req.body, password: bcrypt.hashSync(req.body.password, 10) })
-          .then((data) => {
-               console.log(data);
-               res.json(data);
-          })
-          .catch((err) => res.json({ error: err }));
-});
-
-userRouter.post("/get", verifyAccessToken, (req, res) => {
-     console.log("user headers", req.headers);
-     console.log("user: ", req.body.payload);
-     User.findById(req.body.payload.id)
-          .then((data) => res.json(data))
-          .catch((err) => res.json({ error: err}));
-});
-
-userRouter.put("/:id", verifyAccessToken, (req, res) => {
-     User.findByIdAndUpdate(req.body.payload.id, req.body, { new: true })
-          .then((data) => res.json(data))
-          .catch((err) => console.error({ error: err }));
-});
+userRouter.post("/find", findUsers);
+userRouter.post("/create", verifyAccessToken, postUser);
+userRouter.post("/get", verifyAccessToken, getUser );
+userRouter.put("/:id", verifyAccessToken, putUser);
 
 
 //test route only

@@ -1,18 +1,10 @@
-#EmployeeCards {
-     background: #fff;
-     border-radius: 12px;
-     width: 100%;
-     overflow: hidden;
-     box-shadow: var(--box-shadow);
-     padding: 1vw 0.5vw;
-
+#AllEmpoyeeCards {
      h1 {
           text-transform: capitalize;
           justify-content: center;
           padding: 0.5em;
      }
-     p,
-     h1 {
+     p, h1 {
           margin: 0;
           display: flex;
           svg {

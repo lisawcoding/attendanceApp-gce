@@ -16,7 +16,6 @@ function Landing(props) {
           <main id="Landing">
                <section className="left-div">
                     <h1>{t("attendance app")}</h1>
-                    <p>{t("sigin  or login")}</p>
                </section>
                <section className="right-div">
                     <div className="tab-div">

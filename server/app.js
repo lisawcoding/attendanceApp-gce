@@ -1,13 +1,13 @@
 const express = require("express");
 // const mongoose = require("mongoose");
 const connectDB = require("./config/db");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 // const UserToken = require("./api/models/UserToken");
 // var cors = require("cors");
 
 const app = express();
 connectDB();
-dotenv.config();
+// dotenv.config();
 // app.use(cors({
 //     origin: true,
 //     credentials: true

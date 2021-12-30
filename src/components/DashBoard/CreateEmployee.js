@@ -17,7 +17,7 @@ function CreateEmployee(props) {
      const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
 
-     const createEmployee = (thisEmployee) => {
+     const createEmployee = () => {
           fetch(`${usersURL}/${thisUser._id}/employees`, options("POST", thisEmployee))
           .then((res) => res.json())
           .then(async (data) => {

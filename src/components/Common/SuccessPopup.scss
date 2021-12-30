@@ -41,6 +41,10 @@
      h1 {
           font-size: 2em;
      }
+     .ok {
+          background: var(--blue);
+          padding: .5rem 1.5rem;
+     }
      .btn-div {
           display: grid;
           grid-template-columns: 1fr 1fr;

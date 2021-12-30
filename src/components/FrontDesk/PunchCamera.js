@@ -14,14 +14,14 @@ const PunchCamera = (props) => {
      const { reIssueToken } = useContext(FunctionContext);
      const [ punchEmployee, setPunchEmployee ] = useState(null);
      const [isPlay, setIsPlay] = useState(false);
-     const [alert, setAlert] = useState(["cannot recongize this face"]);
-     // const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
+     const [alert, setAlert] = useState([]);
+     const [cameraSize, setCameraSize] = useState({ width: 0, height: 0 });
      const videoRef = useRef();
-     // const canvasRef = useRef();
+     const canvasRef = useRef();
      const [labeledFaceDescriptors, setLableFaceDescriptors] = useState(null)
 
      useEffect(() => {
-          return;
+          // return;
           Promise.all([
                faceapi.nets.tinyFaceDetector.loadFromUri("../../models"),
                faceapi.nets.faceRecognitionNet.loadFromUri("../../models"),
@@ -45,15 +45,23 @@ const PunchCamera = (props) => {
      }, [props.punch])
 
      const labelImages = async() => {
+
+          console.log(allEmployees)
           let employeesWithImage = allEmployees.filter((employee) => employee.image.length > 0)
+          // let employeesWithImage = allEmployees.filter((employee) => {
+          //      console.log(employee.image)
+          //      return employee.image.length > 0;
+          // })
           console.log(employeesWithImage)
+          // let employeesWithImage = allEmployees;
+
           return Promise.all(
                employeesWithImage.map(async (employee) => {
                     const img = await faceapi.fetchImage(employee.image);
                     const detection = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
                     console.log(employee.name + " : " + detection);
 
-                    delete employee.image;
+                    // delete employee.image;
                     if (detection != undefined) return new faceapi.LabeledFaceDescriptors(JSON.stringify(employee), [detection.descriptor]);
                })
           )
@@ -103,12 +111,15 @@ const PunchCamera = (props) => {
 
                setAlert([])
                console.log("run faceapiInaterval")
-               if(detections.length == 0) return setAlert([])
+               if (detections.length == 0) return setAlert([])
                if (detections.length > 1) return setAlert([...alert, "there are more than one person in the camera, only one person allowed"]);
-               if (detections.length === 1 && detections[0].detection._score > 0.6) {
-                    // const box = resizedDetections[0].detection.box;
-                    // const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
-                    // drawBox.draw(canvasRef.current);
+               if (detections[0].detection._score < 0.9) console.log(detections[0].detection._score < 0.9)
+                    console.log(detections)
+                  
+                    console.log(results[0])
+                    const box = resizedDetections[0].detection.box;
+                    const drawBox = new faceapi.draw.DrawBox(box, { label: results[0] });
+                    drawBox.draw(canvasRef.current);
 
                     if(results[0]._label == "unknown") return setAlert([...alert, "cannot recongize this face"]);
                     
@@ -117,12 +128,13 @@ const PunchCamera = (props) => {
                     clearInterval(faceapiInterval);
                     videoRef.current.pause();
                     
-                    setTimeout(()=>{
-                         videoRef.current.play();
-                         setPunchEmployee(null)
-                    }, 9000)
-               }
+                    // setTimeout(()=>{
+                    //      videoRef.current.play();
+                    //      setPunchEmployee(null)
+                    // }, 9000)
+
                if (videoRef.current.autoPlay === false) clearInterval(faceapiInterval);
+               return;
           }, 350);
      }
 
@@ -131,10 +143,11 @@ const PunchCamera = (props) => {
           videoRef.current.play()
           setIsPlay(true);
 
-          // canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-          const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
+          canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          
+          const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.9);
           const displaySize = { width: videoRef.current.clientWidth, height: videoRef.current.clientHeight };
-          // setCameraSize({ width: videoRef.current.clientWidth, height: videoRef.current.clientHeight });
+          setCameraSize({ width: videoRef.current.clientWidth, height: videoRef.current.clientHeight });
 
           startDetectFace( faceMatcher, displaySize )
      };
@@ -171,7 +184,7 @@ const PunchCamera = (props) => {
                <button onClick={startVideo}>start</button>
           {/* <section className="video-frame"> */}
                <video onPlay={onPlay} id="video" autoPlay muted ref={videoRef} ></video>
-               {/* <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas> */}
+               <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
                {alert.length > 0 && alert.map((elm, i) => <h1 key={`${elm}-${i}`} className="alert-text">{elm}</h1>)}
                {punchEmployee && (
                     <div className="info-div">

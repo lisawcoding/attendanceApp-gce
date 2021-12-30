@@ -15,8 +15,6 @@ function Punch(props) {
           status: "in",
      });
 
-     // if(!allEmployees) return <Loader />
-
      useEffect(() => {
           fetchUser(props)
           return () => {
@@ -37,7 +35,7 @@ function Punch(props) {
                          <label htmlFor="option-1" className="option option-1"> in </label>
                          <label htmlFor="option-2" className="option option-2"> out </label>
                     </div>
-                    <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p>
+                    {thisUser.setting && <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p>}
                     <div onClick={() => logout(props)} className="logout-btn">
                          <RiLogoutBoxRLine/>
                          <h2>logout</h2>
