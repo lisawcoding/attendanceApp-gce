@@ -23,8 +23,6 @@ function EmployeeProfile(props) {
      const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
      const EachEmployeeURL = `${usersURL}/${thisUser._id}/employees/${props.match.params.id}`;
 
-     // if(!thisEmployee) return <h1>return</h1>
-
      useEffect(() => {
           if(props.location.state) setThisEmployee(props.location.state);
      }, []);

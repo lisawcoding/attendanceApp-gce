@@ -1,5 +1,5 @@
 {
-     "attandance app": "Attandance App",
+     "attandance app": "Attendance App",
      "sigin  or login": "sigin or login",
      "create an account": "create an account",
      "remember me": "remember me",
@@ -10,7 +10,7 @@
      "verify token has been sent to your email, please check youre email and verify": "verify token has been sent to your email, please check youre email and verify",
      "Those passwords didn’t match": "Those passwords didn’t match. Try again",
      "verifty": "verify",
-     "verifty token": "verifty token",
+     "enter token": "enter token",
      "please enter token to verify your account": "please enter token to verify your account",
      "the token will be expired within 10mins": "the token will be expired within 10mins",
      "invalid signature": "invalid signature",

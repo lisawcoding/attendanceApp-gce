@@ -12,8 +12,11 @@
      grid-template-columns: repeat(auto-fit, minMax(500px, 1fr));
      // max-width: 900px;
      // box-shadow: var(--box-shadow);
+     * {
+          font-size: 1.2rem;
+     }
      section {
-          padding: 5em;
+          padding: 5vw;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -22,7 +25,6 @@
           background: var(--blue);
           align-items: center;
           h1 {
-               font-size: 2em;
                color: #000;
           }
      }
@@ -44,31 +46,37 @@
      }
      .link {
           text-align: left;
+          &:hover {
+               color: var(--black)
+          }
      }
      form {
           display: flex;
           flex-direction: column;
           * {
-               margin: 0.5em 0;
+               margin: 0.25em 0;
           }
           input,
-          button {
+          button,
+          textarea {
                width: 100%;
-               padding: 1em;
                font-weight: 900;
+               padding: 0 1.5rem;
           }
           input[type="submit"],
           button {
                background: var(--blue);
                border: none;
+               height: 100%;
           }
           label {
                display: flex;
-               // width: 100%;
                align-items: center;
+               // height: 100%;
                input {
-                    width: unset;
+                    width: 100%;
                     margin-right: 0.5em;
+                    // height: 100%;
                }
           }
           .bottom-div {
@@ -76,9 +84,14 @@
                width: 100%;
                justify-content: space-between;
                align-items: center;
+               margin: .5rem 0;
                * {
                     color: var(--dark-grey);
                }
+          }
+          input {
+               max-height: 9rem;
+               min-height: 3.5rem;
           }
      }
      fieldset {
@@ -127,8 +140,8 @@
      flex-direction: column;
      align-items: center;
      justify-content: center;
+     text-align: center;
      h1 {
-          font-size: 2em;
           margin: 0 auto;
           color: #000;
      }

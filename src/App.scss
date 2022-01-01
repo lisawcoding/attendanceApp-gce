@@ -173,6 +173,11 @@ img[alt*="logo"] {
      }
 }
 
+.hero-text {
+     font-size: 3.5vw;
+     font-size: clamp( 2.5rem, 2.5vw, 3.5vw); 
+}
+
 @media (orientation: portrait) {
      #Home {
           .main {

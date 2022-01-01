@@ -6,7 +6,8 @@ export function URLProvider(props) {
      const authOrigin = `http://localhost:9002`;
      const origin = "http://localhost:9001"
 
-     const registerURL = `${authOrigin}/register`
+     const registerURL = `${authOrigin}/register`;
+     const emailTokenURL = `${authOrigin}/register/mail`
      const loginURL =`${authOrigin}/login`
      const updatdPasswordURL = `${authOrigin}/update_password`
      const logoutURL = `${authOrigin}/logout`
@@ -43,6 +44,7 @@ export function URLProvider(props) {
                     findUserURL,
                     logoutURL,
                     createUsersURL,
+                    emailTokenURL,
                     options
                     // getEmployeesURL
                }}

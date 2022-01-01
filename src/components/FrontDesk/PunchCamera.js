@@ -72,7 +72,7 @@ const PunchCamera = (props) => {
      }
         
      const labelImages = async() => {
-          let employeesWithImage = allEmployees.filter((employee) => employee.image.length > 0 && employee.name.toLowerCase().indexOf("julien") == -1)
+          let employeesWithImage = allEmployees.filter((employee) => employee.image.length > 0 )
           console.log(employeesWithImage)
 
           return Promise.all(

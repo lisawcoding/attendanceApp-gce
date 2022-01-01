@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.scss";
-import Nav from "./components/Nav";
+import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Punch from "./components/FrontDesk/Punch";
 import Landing from "./components/Landing/Landing";
@@ -23,7 +23,7 @@ function App(props) {
                     {...rest}
                     render={(routeProps) => (
                          <>
-                              <Nav {...routeProps} />
+                              <Navbar {...routeProps} />
                               <Component {...routeProps} />
                          </>
                     )}

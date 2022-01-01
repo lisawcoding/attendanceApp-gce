@@ -4,6 +4,7 @@ import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import { URLContext } from "../../contexts/URLContext";
 import ChangePW from "./ChangePW";
+import Input from "../Common/Input";
 
 function LogIn(props) {
      const { loginURL} = useContext(URLContext);
@@ -58,24 +59,22 @@ function LogIn(props) {
      };
 
      return (
-          <>
-               <form ref={formRef} onSubmit={onSubmit}>
-                    <input type="email" name="email" placeholder="email" onChange={changeInput} required />
-                    <input type="password" name="password" placeholder="password" onChange={changeInput} required />
-                    <div className="bottom-div">
-                         <p
-                              className="link"
-                              onClick={() => {
-                                   props.setIsForgotPW(true);
-                              }}
-                         >
-                              {props.t("forgot password")}
-                         </p>
-                    </div>
-                    {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
-                    <input type="submit" value={props.t("login")} ref={btnRef} />
-               </form>
-          </>
+          <form ref={formRef} onSubmit={onSubmit} className="login-form">
+               <Input name="email" type="email" placeholder="email..." handleChange={changeInput} required autoFocus />
+               <Input type="password" name="password" placeholder="password" handleChange={changeInput} required />
+               <div className="bottom-div">
+                    <p
+                         className="link"
+                         onClick={() => {
+                              props.setIsForgotPW(true);
+                         }}
+                    >
+                         {props.t("forgot password")}
+                    </p>
+               </div>
+               {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
+               <input type="submit" value={props.t("login")} ref={btnRef} />
+          </form>
      );
 }
 

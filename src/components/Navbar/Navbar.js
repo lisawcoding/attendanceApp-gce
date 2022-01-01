@@ -1,18 +1,14 @@
 import React, { useState, useContext, useLayoutEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-
 import { BiHome } from "react-icons/bi";
 import { RiTeamLine, RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlineUserAdd, AiOutlinePushpin } from "react-icons/ai";
-import "./Nav.scss";
-import { FunctionContext } from "../contexts/FunctionContext";
-import { DataContext } from "../contexts/DataContext";
 import { HiUserCircle } from "react-icons/hi";
-import Loader from "./Common/Loader";
+import { FunctionContext } from "../../contexts/FunctionContext";
+import "./Navbar.scss";
 
-function Nav(props) {
+function Navbar(props) {
      const { logout, fetchUser } = useContext(FunctionContext);
-     const { isLoading } = useContext(DataContext);
      const [ isPin, setIsPin ] = useState(false)
      const [isDropdown, setIsDropdown] = useState(false);
 
@@ -27,8 +23,6 @@ function Nav(props) {
      const dropDown = isDropdown ? "drop-down" : "";
 
      return (
-          <>
-          { isLoading && <Loader />}
           <nav style={{ display: props.match.path === "/puch" && "none" }} className={`${pin} ${dropDown}`}>
                <div className="hamburger" onClick={clickDropDown}><span></span><span></span><span></span></div>
                <div className="link-div" onClick={clickDropDown}>
@@ -65,8 +59,7 @@ function Nav(props) {
                     </NavLink>
                </div>
           </nav>
-          </>
      );
 }
 
-export default withRouter(Nav);
+export default withRouter(Navbar);

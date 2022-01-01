@@ -36,10 +36,6 @@ function CreateEmployee(props) {
 
      const submitForm = (e) => {
           e.preventDefault();
-
-          // var obj={};
-          // var fd = new FormData(formRef.current);
-          // fd.forEach((value, key) => (obj[key] = value));
           createEmployee();
      };
 

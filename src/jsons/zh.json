@@ -10,7 +10,7 @@
      "verify token has been sent to your email, please check youre email and verify": "驗證碼已寄至您的信箱，請確認",
      "Those passwords didn’t match": "密碼不一樣，請重新輸入",
      "verify": "驗證",
-     "verify token": "驗證碼",
+     "enter token": "輸入驗證碼",
      "please enter token to verify your account": "請輸入驗證碼，以確認您的帳戶",
      "the token will be expired within 10mins": "驗證碼將於10分鐘後失效",
      "invalid token": "驗證碼錯誤",
