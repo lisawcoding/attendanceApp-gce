@@ -4,10 +4,10 @@ import { URLContext } from "../../../contexts/URLContext";
 import Input from "../../Common/Input";
 import Congratulations from "./Congratulations";
 
-function SignUp({setIsLogin, t}) {
+function SignUp({setIsLoginTab, t}) {
      const formRef = useRef();
      const { emailTokenURL, findUserURL, createUsersURL } = useContext(URLContext);
-     const { findExistUser } = useContext(AuthContext);
+     const { findExistUser, createUser } = useContext(AuthContext);
      const [isSentMail, setIsSentMail] = useState(false);
      const [alert, setAlert] = useState([]);
      const [token, setToken] = useState("");
@@ -29,13 +29,13 @@ function SignUp({setIsLogin, t}) {
 
      const clickNextBtn = async (e) => {
           e.preventDefault();
+          btnRef.current.disabled = true;
+
           if (e.target.password.value !== e.target.password2.value) return setAlert([t("Those passwords didn't match")]);
 
           let obj={}
           let fd = new FormData(formRef.current);
           fd.forEach((value, key) => obj[key] = value);
-          
-          btnRef.current.disabled = true;
           const data = await findExistUser(obj);
           console.log(data)
           if (data) {
@@ -44,32 +44,9 @@ function SignUp({setIsLogin, t}) {
                setIsSentMail(true);
                setAlert([])       
                emailToken(obj)    
-               setInputValue(data)               
+               setInputValue(obj)               
           }
-          
      };
-
-     // const findExistUser = (obj) => {
-     //      console.log(obj)
-     //      console.log({ email: obj.email })
-
-     //      fetch( findUserURL, {
-     //           method: "POST", 
-     //           headers: {
-     //                "Content-Type": "application/json",
-     //           },
-     //           body: JSON.stringify({ email: obj.email }),
-     //      })
-     //      .then( res => res.json())
-     //      .then( data => {
-     //           console.log(data)
-     //           if (data) return setAlert([t(`the email is taken. Try another.`)]);//if email already exist
-     //           setIsSentMail(true);
-     //           setAlert([])       
-     //           emailToken(obj)             
-     //      })
-     //      .catch( err => console.error(err))          
-     // }
 
      const emailToken = (data) => {
           console.log(data)
@@ -88,37 +65,20 @@ function SignUp({setIsLogin, t}) {
           .catch( err => console.error(err))          
      }
 
-     const createAccount = (e) => {
+     const createAccount = async (e) => {
           e.preventDefault();
-          
           btnRef.current.disabled = true;
-          fetch( createUsersURL , {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${e.target.token.value}`,
-               },
-               body: JSON.stringify(inputValue),
-          })
-               .then((res) => res.json())
-               .then((data) => {
-                    console.log(data);
-                    if (data.error) {
-                         if (data.error.message && data.error.message.toLowerCase().indexOf("expire") !== -1) {
-                              return setAlert(["token expired"]);
-                         } else {
-                              return setAlert(["invalid token"]);
-                         }
-                    }
-                    setIsSignUpSuccess(true);
-               })
-               .catch((err) => {
-                    console.error(err);
-                    setAlert(["wrong token"])
-               });
+          
+          const data = await createUser(e.target.token.value, inputValue );
+          if (data.error) {
+               if (data.error.message && data.error.message.toLowerCase().indexOf("expire") !== -1) return setAlert(["token expired"]);
+               return setAlert(["invalid token"]);
+          } else {
+               setIsSignUpSuccess(true);
+          }
      };
 
-     const clickLoginBtn = () => setIsLogin(true);
+     const clickLoginBtn = () => setIsLoginTab(true);
 
      return (
           <>
