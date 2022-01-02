@@ -15,6 +15,7 @@ export function DataProvider(props) {
      const [thisUser, setThisUser] = useState({});
      const [allEmployees, setAllEmployees] = useState(null);
      const [isLoading, setIsLoading] = useState(true);
+     const [alert, setAlert] = useState([])
 
      return (
           <DataContext.Provider
@@ -22,6 +23,7 @@ export function DataProvider(props) {
                     thisUser, setThisUser,
                     allEmployees, setAllEmployees,
                     isLoading, setIsLoading,
+                    alert, setAlert,
                     InitEmployeeInputs
                }}
           >

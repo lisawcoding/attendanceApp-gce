@@ -1,4 +1,5 @@
 import { useRef, useContext, useState } from "react";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { URLContext } from "../../../contexts/URLContext";
 import Input from "../../Common/Input";
 import Congratulations from "./Congratulations";
@@ -6,6 +7,7 @@ import Congratulations from "./Congratulations";
 function SignUp({setIsLogin, t}) {
      const formRef = useRef();
      const { emailTokenURL, findUserURL, createUsersURL } = useContext(URLContext);
+     const { findExistUser } = useContext(AuthContext);
      const [isSentMail, setIsSentMail] = useState(false);
      const [alert, setAlert] = useState([]);
      const [token, setToken] = useState("");
@@ -25,39 +27,49 @@ function SignUp({setIsLogin, t}) {
           if (e.target.name === "token") setToken(e.target.value);
      };
 
-     const clickNextBtn = (e) => {
+     const clickNextBtn = async (e) => {
           e.preventDefault();
           if (e.target.password.value !== e.target.password2.value) return setAlert([t("Those passwords didn't match")]);
 
           let obj={}
           let fd = new FormData(formRef.current);
           fd.forEach((value, key) => obj[key] = value);
-          setInputValue(obj)
-          findExistUser(obj);
+          
           btnRef.current.disabled = true;
-     };
-
-     const findExistUser = (obj) => {
-          console.log(obj)
-          console.log({ email: obj.email })
-
-          fetch( findUserURL, {
-               method: "POST", 
-               headers: {
-                    "Content-Type": "application/json",
-               },
-               body: JSON.stringify({ email: obj.email }),
-          })
-          .then( res => res.json())
-          .then( data => {
-               console.log(data)
-               if (data) return setAlert([t(`the email is taken. Try another.`)]);//if email already exist
+          const data = await findExistUser(obj);
+          console.log(data)
+          if (data) {
+             return setAlert([t(`the email is taken. Try another.`)])  
+          } else {
                setIsSentMail(true);
                setAlert([])       
-               emailToken(obj)             
-          })
-          .catch( err => console.error(err))          
-     }
+               emailToken(obj)    
+               setInputValue(data)               
+          }
+          
+     };
+
+     // const findExistUser = (obj) => {
+     //      console.log(obj)
+     //      console.log({ email: obj.email })
+
+     //      fetch( findUserURL, {
+     //           method: "POST", 
+     //           headers: {
+     //                "Content-Type": "application/json",
+     //           },
+     //           body: JSON.stringify({ email: obj.email }),
+     //      })
+     //      .then( res => res.json())
+     //      .then( data => {
+     //           console.log(data)
+     //           if (data) return setAlert([t(`the email is taken. Try another.`)]);//if email already exist
+     //           setIsSentMail(true);
+     //           setAlert([])       
+     //           emailToken(obj)             
+     //      })
+     //      .catch( err => console.error(err))          
+     // }
 
      const emailToken = (data) => {
           console.log(data)
@@ -114,7 +126,6 @@ function SignUp({setIsLogin, t}) {
                <form onSubmit={clickNextBtn} ref={formRef}>
                     <Input type="text" name="name" placeholder="name" required handleChange={changeInput} autoFocus />
                     <Input type="email" name="email" placeholder="email" required handleChange={changeInput} />
-                    <Input type="text" name="companyName" placeholder="company name" handleChange={changeInput} />
                     <Input type="password" name="password" placeholder="password" required handleChange={changeInput} />
                     <Input type="password" name="password2" placeholder="confirm password" required handleChange={changeInput} />
                     <input type="submit" value={t("next")} ref={btnRef}/>

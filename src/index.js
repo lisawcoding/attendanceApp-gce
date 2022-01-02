@@ -7,16 +7,19 @@ import "./i18n";
 import { URLProvider } from "./contexts/URLContext";
 import { FunctionProvider } from "./contexts/FunctionContext";
 import { DataProvider } from "./contexts/DataContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 ReactDOM.render(
      <React.StrictMode>
           <URLProvider>
                <DataProvider>
-                    <FunctionProvider>
-                         <InitProvider>
-                              <App />
-                         </InitProvider>
-                    </FunctionProvider>
+                    <InitProvider>
+                         <FunctionProvider>
+                              <AuthProvider>
+                                   <App />
+                              </AuthProvider>
+                         </FunctionProvider>
+                    </InitProvider>
                </DataProvider>
           </URLProvider>
      </React.StrictMode>,
