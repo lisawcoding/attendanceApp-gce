@@ -1,63 +1,31 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
+import { useEffect } from "react/cjs/react.development";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
 import Input from "../Common/Input";
 
 function LogIn(props) {
-     const { loginURL} = useContext(URLContext);
-     const { setThisUser, alert, setAlert } = useContext(DataContext);
+     const { alert, setAlert } = useContext(DataContext);
      const { userLogin } = useContext(AuthContext);
+     const { loginURL} = useContext(URLContext)
      const formRef = useRef();
      const btnRef = useRef();
-     // const [alert, setAlert] = useState([]);
 
-     // const fetchUserLogin = (fd) => {
-     //      fetch(loginURL, {
-     //           method: "POST",
-     //           headers: {
-     //                "Content-Type": "application/json",
-     //           },
-     //           body: JSON.stringify(fd),
-     //      })
-     //      .then(res =>{ 
-     //           if(!res.ok) throw Error("could not fetch the data for that resource")
-     //           return res.json()
-     //      })
-     //      .then(data => {
-     //           console.log(data);
-     //           if (data.error != undefined) return setAlert(data.error);
-     //           if (data.success) {
-     //                sessionStorage.setItem("accessToken", data.accessToken);
-     //                sessionStorage.setItem("refreshToken", data.refreshToken);
-     //                setThisUser(data.user);
-     //                props.props.history.push("/home");
-     //                return;
-     //           }
-     //           window.location.reload();
-     //      })
-     //      .catch((err) =>{ 
-     //           console.log(err);
-     //           console.log(err.message)
-     //           if(!navigator.onLine) return setAlert("network error, please check your nework connection.");
-     //           setAlert(err.message)
-     //           // if(err) window.location.reload()
-     //           // window.location.reload();
-     //           // detect if network aceesss faluire
-     //      });
-     // }
+     useEffect(()=>{
+          return () => {
+               setAlert([])
+          }
+     }, [])
 
      const onSubmit = async (e) => {
           e.preventDefault();
-          btnRef.current.disabled=true;
-
           console.log("on submit");
+          btnRef.current.disabled=true;
 
           var formData = new FormData(formRef.current);
           formData.forEach((value, key) => (formData[key] = value));
-          // fetchUserLogin(formData)
-          userLogin(props, formData)
-          // console.log(data)
+          userLogin(props.props, loginURL, formData)
      };
 
      const changeInput = (e) => {

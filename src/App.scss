@@ -178,6 +178,10 @@ img[alt*="logo"] {
      font-size: clamp( 2.5rem, 2.5vw, 3.5vw); 
 }
 
+input:disabled {
+     color: var(--light-grey);
+}
+
 @media (orientation: portrait) {
      #Home {
           .main {

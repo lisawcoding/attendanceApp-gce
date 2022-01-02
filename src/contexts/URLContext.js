@@ -12,7 +12,9 @@ export function URLProvider(props) {
      const updatdPasswordURL = `${authOrigin}/update_password`
      const logoutURL = `${authOrigin}/logout`
      const reIssueTokenURL = `${authOrigin}/reIssueToken`
-     const assignTokenURL = `${authOrigin}/register/assignToken`
+     const assignTokenURL = `${authOrigin}/register/assignToken`;
+
+     const googleLoginURL = `${authOrigin}/googleLogin`;
 
      const usersURL = `${origin}/users`
      const createUsersURL = `${origin}/users/create`
@@ -47,6 +49,7 @@ export function URLProvider(props) {
                     createUsersURL,
                     emailTokenURL,
                     assignTokenURL,
+                    googleLoginURL,
                     options
                     // getEmployeesURL
                }}

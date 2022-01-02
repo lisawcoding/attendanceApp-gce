@@ -15,10 +15,15 @@ const { signAccessToken, signRefreshToken, verifyAccessToken } = require("../../
 
 router.get("/", (req, res) => res.send("mail"));
 
+router.post("/assignToken", (req, res) => {
+     console.log("req body: ", req.body);
+     const jwtToken =signAccessToken({ email: req.body.email})
+     return res.json(jwtToken);
+})
+
 router.post("/mail", async (req, res) => {
      console.log("req.body: ", req.body);
 
-     // const jwtToken = jwt.sign({ email: req.body.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m" });
      const jwtToken = signAccessToken({ email: req.body.email });
      // const accessToken = await oAuth2Client.getAccessToken();
      // const transporter = nodemailer.createTransport({
@@ -26,7 +31,7 @@ router.post("/mail", async (req, res) => {
      //      auth: {
      //           type: "OAuth2",
      //           user: "tolisapc@gmail.com",
-     //           clientId: GOOGLE_CLIENT_ID,
+     //           clientId: GOOGLE_CLIENT_ID
      //           clientSecret: GOOGLE_CLIENT_SECRET,
      //           refreshToken: GOOGLE_REFRESH_TOKEN,
      //           accessToken: accessToken,

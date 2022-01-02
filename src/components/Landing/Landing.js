@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
@@ -6,20 +6,22 @@ import "./Landing.scss";
 import SignUp from "./SingUp/SignUp";
 import LogIn from "./LogIn";
 import ChangePW from "./ChangePW";
+import { AuthContext } from "../../contexts/AuthContext";
+import { URLContext } from "../../contexts/URLContext";
 
 function Landing(props) {
      const { t, i18n } = useTranslation();
-     const [isLogin, setIsLogin] = useState(false);
+     const { googleLoginURL } = useContext( URLContext);
+     const { userLogin, findExistUser, createUser } = useContext( AuthContext );
+     const [isLoginTab, setIsLoginTab] = useState(true);
      const [isForgotPW, setIsForgotPW] = useState(false);
-     const [isLoading] = useState(false);
      const GOOGLE_CLIENTID = process.env.REACT_APP_GOOGLE_CLIENTID
 
-     const googleSuccess = (res) => {
+     const googleSuccess = async (res) => {
           const result = res?.profileObj;
-          const token = res?.tokenId;
-
           try {
              console.log(res)  
+             userLogin(props, googleLoginURL, result)
           } catch (err) {
                console.log("err: ", err)
           }
@@ -27,6 +29,11 @@ function Landing(props) {
 
      const googleFailure = (err) => {
           console.log("google failure: ", err)
+     }
+
+     const googleLogoutSuccess = (res) => {
+          console.log("google logout success: ", res)
+          // console.clear()
      }
 
      return (
@@ -39,33 +46,32 @@ function Landing(props) {
                          onFailure={googleFailure}
                          cookiePolicy="single_host_origin"
                     />
+                    <GoogleLogout
+                         clientId= {GOOGLE_CLIENTID}
+                         onLogoutSuccess={googleLogoutSuccess}
+                    />
                </section>
                <section className="right-div">
                     <div className="tab-div">
-                         <h1 className={!isLogin ? "selected-tab" : undefined} onClick={() => setIsLogin(false)}>
+                         <h1 className={!isLoginTab ? "selected-tab" : undefined} onClick={() => setIsLoginTab(false)}>
                               {t("create an account")}
                          </h1>
-                         <h1 className={isLogin ? "selected-tab" : undefined} onClick={() => setIsLogin(true)}>
+                         <h1 className={isLoginTab ? "selected-tab" : undefined} onClick={() => setIsLoginTab(true)}>
                               {isForgotPW ? t("change password") : t("login")}
                          </h1>
                     </div>
                     <div className="form-div">
-                         {isLogin ? (
+                         {isLoginTab ? (
                               isForgotPW ? (
                                    <ChangePW t={t} setIsForgotPW={setIsForgotPW} />
                               ) : (
-                                   <LogIn t={t} setIsForgotPW={setIsForgotPW} props={props} />
+                                   <LogIn t={t} props={props} />
                               )
                          ) : (
-                              <SignUp t={t} setIsLogin={setIsLogin} />
+                              <SignUp t={t} setIsLoginTab={setIsLoginTab} />
                          )}
                     </div>
                </section>
-               {isLoading && (
-                    <div className="loader-wrapper">
-                         <div className="loader"></div>
-                    </div>
-               )}
           </main>
      );
 }

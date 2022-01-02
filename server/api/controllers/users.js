@@ -9,7 +9,9 @@ module.exports.findUsers = (req, res) => {
 
 module.exports.postUser = (req, res) => {
     console.log(req.body);
-    User.create({ ...req.body, password: bcrypt.hashSync(req.body.password, 10) })
+    const pw = req.body.password ? bcrypt.hashSync(req.body.password, 10) : undefined;
+//     User.create({ ...req.body, password: bcrypt.hashSync(req.body.password, 10) })
+    User.create({ ...req.body, password: pw })
          .then((data) => {
               console.log(data);
               res.json(data);
