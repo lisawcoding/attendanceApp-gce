@@ -7,6 +7,8 @@ const bcrypt = require("bcrypt");
 const User = require("./api/models/User");
 const { signAccessToken, signRefreshToken, verifyAccessToken } = require("./JWT");
 const UserToken = require("./api/models/UserToken");
+const { handleLoginTokens } = require("./api/controllers/authApp");
+const { postUser } = require("./api/controllers/users");
 
 const app = express();
 connectDB();
@@ -25,36 +27,25 @@ app.get("/", (req, res) => res.send("authApp"));
 app.use("/register", require("./api/routes/register"));
 
 app.post("/login", async (req, res) => {
+     console.log("/login, req.body: ", req.body)
+
      const user = await User.findOne({ email: req.body.email });
-     console.log(user);
-
-     if (!user) return res.json({ error: "this email is not registerdd" });
-
+     if (!user) return res.json({ error: "this email is not registerd" });
      bcrypt.compare(req.body.password, user.password).then(async (result) => {
+          console.log("bcrypt: ", result);
+          console.log(user)
           if (!result) return res.json({ error: "wrong password" });
+     });      
+     handleLoginTokens(req, res, user)     
+}); 
 
-          try {
-               await UserToken.deleteMany({ id: user._id })
-                    .then((data) => console.log("deleteUserToken: ", data))
-                    .catch((err) => console.log("deleteUserToken err: ", err));
+app.post("/googleLogin", async (req, res) => {
+     console.log("google login: ", req.body)
 
-               const accessToken = signAccessToken({ id: user._id });
-               const refreshToken = signRefreshToken({ id: user._id });
-
-               res.json({
-                    success: result,
-                    accessToken: accessToken,
-                    refreshToken: refreshToken,
-                    user: user,
-               });
-               UserToken.create({ id: user._id, token: refreshToken, email: req.body.email })
-                    .then((data) => console.log("userToken", data))
-                    .catch((err) => console.log("err", err));
-          } catch (err) {
-               console.log(err);
-          }
-     });
-});
+     const user = await User.findOne({email: req.body.email})
+     if(!user) postUser(req, res);
+     handleLoginTokens(req, res, user)
+})
 
 app.post("/reIssueToken", (req, res) => {
      const refreshToken = req.headers.authorization.split(" ")[1];

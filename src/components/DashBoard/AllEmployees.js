@@ -6,8 +6,7 @@ import AllEmployeesCards from "./AllEmployeesCards";
 import Loader from "../Common/Loader";
 
 function AllEmployees () {
-     const { allEmployees } = useContext(DataContext);
-     const { isLoading } = useContext(DataContext);
+     const { allEmployees, isLoading } = useContext(DataContext);
      const [ searchTerm, setSearchTerm ] = useState("");
 
      const changeSearchInput = e => setSearchTerm(e.target.value);
