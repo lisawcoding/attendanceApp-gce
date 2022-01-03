@@ -1,14 +1,15 @@
 import React, { useState, useContext, useLayoutEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { BiHome } from "react-icons/bi";
-import { RiTeamLine, RiLogoutBoxRLine } from "react-icons/ri";
+import { RiTeamLine } from "react-icons/ri";
 import { AiOutlineUserAdd, AiOutlinePushpin } from "react-icons/ai";
 import { HiUserCircle } from "react-icons/hi";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import "./Navbar.scss";
+import Logout from "../Common/Logout";
 
 function Navbar(props) {
-     const { logout, fetchUser } = useContext(FunctionContext);
+     const { fetchUser } = useContext(FunctionContext);
      const [ isPin, setIsPin ] = useState(false)
      const [isDropdown, setIsDropdown] = useState(false);
 
@@ -51,11 +52,8 @@ function Navbar(props) {
                               <h2>my account</h2>
                          </div>
                     </NavLink>
-                    <NavLink to="/" onClick={() => logout(props)}>
-                         <div>
-                              <RiLogoutBoxRLine/>
-                              <h2>logout</h2>
-                         </div>
+                    <NavLink to="/">
+                         <Logout props={props} />
                     </NavLink>
                </div>
           </nav>

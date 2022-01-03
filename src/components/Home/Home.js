@@ -6,21 +6,20 @@ import dashboard from "../../images/dashboard.png";
 import "./Home.scss";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
+import Logout from "../Common/Logout";
 
 function Home(props) {
      const { thisUser } = useContext(DataContext);
-     const { logout } = useContext(FunctionContext);
+     // const { logout } = useContext(FunctionContext);
      
      return (
           <main id="Home">
                <section className="top">
                     <div className="right-div">
                          <img src={logo} alt="logo" />
-                         <h1>Hello {thisUser.name}</h1>
+                         <h2>Hello {thisUser.name}</h2>
                     </div>
-                    <h1 className="logout-btn" onClick={() => logout(props)}>
-                         logout
-                    </h1>
+                    <Logout props={props} />
                </section>
                <section className="main">
                     <div className="clockIn" style={{backgroundImage: `url(${dashboard})`}}>

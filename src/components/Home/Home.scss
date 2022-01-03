@@ -11,15 +11,27 @@
           display: flex;
           align-items: center;
      }
-     .logout-btn:hover {
-          cursor: pointer;
-          color: var(--black);
+     .logout-btn {
+          display: flex;
+          align-items: center;
+          svg {
+               font-size: 30px;
+               margin-right: .15em;
+          }
+          &:hover * {
+               cursor: pointer;
+               color: var(--black);               
+          }
      }
      .top,
      .bottom {
           display: flex;
           align-items: center;
           padding: 0 2.5em;
+          text-transform: uppercase;
+          * {
+              color: var(--dark-grey); 
+          }
      }
      .user-link:hover {
           font-weight: 900;
