@@ -5,12 +5,10 @@ import logo from "../../images/logo.png";
 import dashboard from "../../images/dashboard.png";
 import "./Home.scss";
 import { DataContext } from "../../contexts/DataContext";
-import { FunctionContext } from "../../contexts/FunctionContext";
 import Logout from "../Common/Logout";
 
 function Home(props) {
      const { thisUser } = useContext(DataContext);
-     // const { logout } = useContext(FunctionContext);
      
      return (
           <main id="Home">

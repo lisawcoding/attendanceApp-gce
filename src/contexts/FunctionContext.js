@@ -9,7 +9,7 @@ export function FunctionProvider(props) {
      const { setThisUser, setAllEmployees, setIsLoading } = useContext(DataContext);
 
      const logout = (props) => {
-          sessionStorage.clear();
+          sessionStorage.clear()
 
           fetch(logoutURL, {
                method: "DELETE",

@@ -10,15 +10,16 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { URLContext } from "../../contexts/URLContext";
 
 function Landing(props) {
-     const { t, i18n } = useTranslation();
+     const { t } = useTranslation();
      const { googleLoginURL } = useContext( URLContext);
-     const { userLogin, findExistUser, createUser } = useContext( AuthContext );
+     const { userLogin } = useContext( AuthContext );
      const [isLoginTab, setIsLoginTab] = useState(true);
      const [isForgotPW, setIsForgotPW] = useState(false);
+     const [ alert, setAlert ] = useState([])
      const GOOGLE_CLIENTID = process.env.REACT_APP_GOOGLE_CLIENTID
 
      const googleSuccess = async (res) => {
-          const result = res?.profileObj;
+          const result = res.profileObj;
           try {
              console.log(res)  
              userLogin(props, googleLoginURL, result)
@@ -29,11 +30,7 @@ function Landing(props) {
 
      const googleFailure = (err) => {
           console.log("google failure: ", err)
-     }
-
-     const googleLogoutSuccess = (res) => {
-          console.log("google logout success: ", res)
-          // console.clear()
+          err.details && setAlert([...alert, err.details])
      }
 
      return (
@@ -46,10 +43,7 @@ function Landing(props) {
                          onFailure={googleFailure}
                          cookiePolicy="single_host_origin"
                     />
-                    <GoogleLogout
-                         clientId= {GOOGLE_CLIENTID}
-                         onLogoutSuccess={googleLogoutSuccess}
-                    />
+                    {alert.length > 0 && <h1 className="alert-text">{t(`${alert}`)}!</h1>}
                </section>
                <section className="right-div">
                     <div className="tab-div">
