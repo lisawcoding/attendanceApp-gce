@@ -1,4 +1,5 @@
 import React, { useContext, useLayoutEffect, useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BiCamera, BiImageAlt } from "react-icons/bi";
 import SuccessPopup from "../Common/SuccessPopup";
@@ -19,7 +20,6 @@ function EmployeeProfile(props) {
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
      const [isDelPopup, setIsDelPopup] = useState(false);
      const [isCamera, setIsCamera] = useState(false);
-     const formRef = useRef();
      const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
      const EachEmployeeURL = `${usersURL}/${thisUser._id}/employees/${props.match.params.id}`;
 
@@ -35,7 +35,7 @@ function EmployeeProfile(props) {
           
           setIsEdit(false);
           setIsLoading(true)
-          // updateEmployee();
+
           fetch( EachEmployeeURL , options("PUT", thisEmployee))
           .then((res) => res.json())
           .then(async (data) => {
@@ -68,30 +68,25 @@ function EmployeeProfile(props) {
           .catch((err) => console.error(err));          
      };
 
-     const clickCemeraIcon = () => { 
-          console.log("click camera icon")
-          setIsCamera(!isCamera)
-     };
+     const clickCemeraIcon = () => setIsCamera(!isCamera)
 
      return (
-          <div id="EachEmployee" className="center">
+          <div id="EmployeeProfile" className="center">
                <div className="card">
                     <section className="top-div">
-                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit);}} className={ isEdit ? "click-icon" : "" }/>
+                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit)}} className={ isEdit ? "click-icon" : null }/>
                          <AiOutlineDelete onClick={() => {setIsDelPopup(!isDelPopup)}}/>
                     </section>
-                    <form ref={formRef} onSubmit={editEmployee}>
-                         <fieldset disabled={!isEdit} className="employeeForm">
-                              <section className="img-wrapper">
-                                   {console.log(thisEmployee)}
-                                   { thisEmployee.image.length > 1 ?
-                                        <img src={thisEmployee.image} name="image" alt={thisEmployee.name} />:
-                                        <BiImageAlt className="BiImageAlt" style={{ display: isEdit ? "none" : "block" }} />
-                                   }
-                                   <BiCamera style={{ display: !isEdit ? "none" : "block" }} className={ thisEmployee.image.length > 0 ? "small-icon" : ""} onClick={clickCemeraIcon} />   
-                              </section>
-                              <FormInfoDiv changeInput={changeInput} thisEmployee={thisEmployee} />
-                         </fieldset>
+                    <form onSubmit={editEmployee} className="employeeForm" >
+                         <section className="img-wrapper" >
+                              { thisEmployee.image.length > 1 ?
+                                   <img src={thisEmployee.image} name="image" alt={thisEmployee.name} />:
+                                   <BiImageAlt className="BiImageAlt" style={{ display: isEdit ? "none" : "block" }} />
+                              }
+                              <BiCamera style={{ display: !isEdit ? "none" : "block" }} className={ thisEmployee.image.length > 0 ? "small-icon" : null} onClick={clickCemeraIcon} />   
+                              {/* <Link to={{ pathname: `/employee/profile/camera` }} style={{ display: !isEdit ? "none" : "block" }}><BiCamera/></Link> */}
+                         </section>
+                         <FormInfoDiv changeInput={changeInput} thisEmployee={thisEmployee} disabled={!isEdit} />
                     </form>
                </div>
                {isSuccessPopup && <SuccessPopup closePopup={()=>{setIsSuccessPopup(false)}} action="updated" pathname={`/employee/profile/${thisEmployee._id}`} />}

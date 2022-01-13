@@ -11,6 +11,7 @@ import EmployeeProfile from "./components/DashBoard/EmployeeProfile";
 import CreateEmployee from "./components/DashBoard/CreateEmployee";
 import User from "./components/DashBoard/User";
 import EmployeeRecords from "./components/DashBoard/EmployeeRecords";
+import FaceCamera from "./components/FaceCamera/FaceCamera";
 import NotFound from "./components/Common/NotFound";
 
 
@@ -40,8 +41,10 @@ function App(props) {
                          <DashBoardNav exact path="/user" component={User} />
                          <DashBoardNav exact path="/employees" component={(props) => <AllEmployees {...props} />} />
                          <DashBoardNav exact path="/employee/create" component={(props) => <CreateEmployee {...props} />} />
+                         <Route exatc path="/employee/profile/camera" component={FaceCamera} />
                          <DashBoardNav exact path="/employee/profile/:id" component={EmployeeProfile} />
                          <DashBoardNav exact path="/employee/records/:id" component={EmployeeRecords} />
+                         
                          <Route exact path="/punch" component={Punch} />
                          <Route path="" component={NotFound} />
                     </Switch>

@@ -1,7 +1,7 @@
 #CreateEmployee {
      background: var(--pink);
      .img-wrapper {
-          padding-top: unset;
+          // padding-top: unset;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -12,20 +12,9 @@
 }
 
 .employeeForm {
-     span,
-     h1,
-     input[type="submit"] {
-          color: var(--dark-grey);
-          &:hover {
-               color: #000;
-          }
-     }
-
      display: grid;
-     // width: 100%;
      grid-template-columns: 1.2fr 1fr;
      gap: 1em;
-     // position: relative;
      .info-div {
           display: grid;
           gap: 0.5em;
@@ -111,3 +100,4 @@
      border-radius: 15px;
      box-shadow: var(--box-shadow);
 }
+

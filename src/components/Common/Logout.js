@@ -18,10 +18,10 @@ export function Logout (props) {
         console.log("google logout failure: ", res)
     }
 
-    const buttonDiv=<div className='logout-btn'>
+    const buttonDiv = <div className='logout-btn'>
                         <RiLogoutBoxRLine/>
                         <h2>logout</h2>                    
-                    </div>     
+                      </div>     
 
         return (
             <>

@@ -1,5 +1,5 @@
 
-const Input = ({label, name, type, placeholder, handleChange,  defaultValue, required, autoFocus }) => {
+const Input = ({label, name, type, placeholder, handleChange,  defaultValue, required, autoFocus, disabled }) => {
     return (
         <label>
             <span>{label}</span>
@@ -11,6 +11,7 @@ const Input = ({label, name, type, placeholder, handleChange,  defaultValue, req
                 defaultValue={defaultValue} 
                 required = {required}
                 autoFocus={autoFocus}
+                disabled={disabled}
             />
         </label>
     )

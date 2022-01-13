@@ -1,0 +1,185 @@
+[33mcommit 587a4e8c902373a4c080d9df66c4fe363ae287fd[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Tue Jan 4 01:02:28 2022 +0800
+
+    create google-logout
+
+[33mcommit 1c1ab62126f8edc41eeb792ba0559ae7fbefaed5[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Mon Jan 3 23:31:07 2022 +0800
+
+    create Logout.js
+
+[33mcommit d23ae87d23d5473685fb39ac1739f6b07054e4c3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Mon Jan 3 00:58:29 2022 +0800
+
+    modified
+
+[33mcommit c62e5d251e1c03c1d717861026f5f13208695459[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Mon Jan 3 00:58:05 2022 +0800
+
+    create google login
+
+[33mcommit 0a5a33982c9aed2cecde49fe7e2bb2f0365c4d03[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Sun Jan 2 18:26:12 2022 +0800
+
+    create AuthContext.js
+
+[33mcommit 880112a9e1894f03c0a3d3ab138d2b580923f346[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Sun Jan 2 10:59:20 2022 +0800
+
+    create AuthContext
+
+[33mcommit 4eea2f61476dadbf71ca77ff268c6af3b2ff44cf[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Sat Jan 1 15:03:43 2022 +0800
+
+    create .env file
+
+[33mcommit d62c3a1a48f8609bdd87e56f16b4b6c5c03a7354[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Thu Dec 30 16:22:51 2021 +0800
+
+    modified PunchCamera.js
+
+[33mcommit d1c1dd6356c8fde8b81e5d5f6dd134c3b9254613[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Thu Dec 30 10:41:12 2021 +0800
+
+    change routes folder files and create controllers folder
+
+[33mcommit ea0e1830431540bdd5bebf8a711d18b8efc2798b[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Tue Dec 28 20:58:57 2021 +0800
+
+    change files' name in  DashBoard folder
+
+[33mcommit 8add2aaf43b78b65c18bce985bffd83a059eb81a[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Tue Dec 28 19:24:58 2021 +0800
+
+    change employee pathname
+
+[33mcommit 6f1d11559c75cabbd6d8a1160097b6374ebde2e4[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Mon Dec 27 00:20:58 2021 +0800
+
+    update NotFound.js and Common folider
+
+[33mcommit df84c8b15288f2fd932c984e074c915cbdb0bf4f[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Sun Dec 26 23:27:12 2021 +0800
+
+    update Punch.js & PunchCamera.js
+
+[33mcommit 332f5de6d832ca3f0a5fe828132eedaba493c9d5[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Sat Dec 18 00:15:53 2021 +0800
+
+    style, modify PunchCamera.js
+
+[33mcommit bfc651377981bb1a1a32ff42e1758c919343b919[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Tue Dec 14 19:09:39 2021 +0800
+
+    create Timer.js and style dashboard
+
+[33mcommit d023a12c214b1c3e670e60efbec23ddbf9671979[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Tue Dec 7 00:38:56 2021 +0800
+
+    change navbar style and position
+
+[33mcommit 4566fae25840491a6d6b0aeb66631ef77e970aed[m
+Author: tolisacoding <tolisacoding@gmail.com>
+Date:   Sun Dec 5 17:05:31 2021 +0800
+
+    mondify canvas
+
+[33mcommit 020db685d7b8e90b2d7184fcdd224bb297ba2e9a[m
+Author: lisawcoding <sulinwood@gmail.com>
+Date:   Mon Nov 29 23:46:37 2021 +0800
+
+    Records.js
+
+[33mcommit 32407483f7e4a06c89e7f50139fa09720ae6d70b[m
+Author: lisawcoding <sulinwood@gmail.com>
+Date:   Mon Nov 29 22:26:01 2021 +0800
+
+    update 11/29
+
+[33mcommit 6e8f79d0614622d31d49a82ed7b93016ba5dbabc[m
+Author: lisawcoding <sulinwood@gmail.com>
+Date:   Wed Nov 24 23:40:32 2021 +0800
+
+    PunchCamera updated
+
+[33mcommit 88d52187038ce2d5c2a3a4b131efc462d9d1d83e[m
+Author: lisawcoding <sulinwood@gmail.com>
+Date:   Wed Nov 24 13:49:43 2021 +0800
+
+    update
+
+[33mcommit c25540570857868aa1d9c484d4b8859aa1186ba4[m
+Author: lisawcoding <sulinwood@gmail.com>
+Date:   Sun Nov 21 15:29:26 2021 +0800
+
+    Fix dependencies
+
+[33mcommit 2cefd8b3cb177c357827a9973761969713e0917d[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Thu Nov 4 17:23:29 2021 +0800
+
+    Camera.js ui ok
+
+[33mcommit d83ea9c972f89d4cb9b8afa3e26dae19f95c8e4f[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Thu Nov 4 17:15:00 2021 +0800
+
+    Camera setup ok
+
+[33mcommit 1a66e5d8b5367bdc704d79a0902f8d9e12d7cb85[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Thu Nov 4 15:51:46 2021 +0800
+
+    crud and jwt ok
+
+[33mcommit 5a2e3312f37f51b36a96b45485e98061856f51f6[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Tue Oct 26 07:39:51 2021 +0800
+
+    update
+
+[33mcommit 33b30e2ed72d045c6714b2668a089e56e92c9b06[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Sun Oct 24 16:51:37 2021 +0800
+
+    change node.js login route
+
+[33mcommit 6b1299873bed2e811f4980a58fa80ba59cc3724b[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Fri Oct 22 08:23:01 2021 +0800
+
+    face recognition
+
+[33mcommit 8c93a4bfb71d034946754f3fb9054a0bedc73c17[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Sun Oct 17 10:02:46 2021 +0800
+
+    singup form
+
+[33mcommit 894a9a351c6b88788265a4f1108c22be53314576[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Fri Oct 15 10:07:09 2021 +0800
+
+    add signup function
+
+[33mcommit 94ed006d8840dcb3c4eba7842466fd22d5974bba[m
+Author: lisawcoding <tolisacoding@gmail.com>
+Date:   Tue May 25 22:00:53 2021 +0800
+
+    first init

@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as faceapi from "face-api.js";
 import { withRouter } from "react-router-dom";
 import { GiConfirmed, GiCancel } from "react-icons/gi";
 import "./FaceCamera.scss";
 import CameraLoader from "../Common/CameraLoader";
-import { DataContext } from "../../contexts/DataContext";
 
-const FaceCamera = () => {
-     const {thisEmployee, setThisEmployee} = useContext(DataContext);
+const FaceCamera = ({thisEmployee, setThisEmployee}) => {
      const [isPause, setIsPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
      const [isConfirm, setIsConfirm] = useState(false)     

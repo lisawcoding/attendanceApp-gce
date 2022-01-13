@@ -4,12 +4,17 @@ import { DataContext } from "../../contexts/DataContext";
 import { BiSearchAlt } from "react-icons/bi";
 import AllEmployeesCards from "./AllEmployeesCards";
 import Loader from "../Common/Loader";
+import { useEffect } from "react/cjs/react.development";
 
 function AllEmployees () {
-     const { allEmployees, isLoading } = useContext(DataContext);
+     const { allEmployees, isLoading, setIsLoading } = useContext(DataContext);
      const [ searchTerm, setSearchTerm ] = useState("");
 
      const changeSearchInput = e => setSearchTerm(e.target.value);
+
+     useEffect(() => {
+          if(document.readyState!=="complete") setIsLoading(true)
+     }, [])
 
      return (
           <>

@@ -1,4 +1,4 @@
-#EachEmployee {
+#EmployeeProfile {
      display: flex;
      flex-direction: column;
      background: var(--pink);
@@ -28,13 +28,6 @@
           }
      }
      fieldset:disabled {
-          * {
-               background: transparent;
-               border: none !important;
-               &:hover {
-                    color: unset !important;
-               }
-          }
           input[type="submit"] {
                display: none;
           }
@@ -49,5 +42,5 @@
 }
 
 .click-icon {
-     fill: var(--pink)
+     fill: var(--pink) !important;
 }
