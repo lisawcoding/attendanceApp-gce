@@ -1,18 +1,19 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { useState } from "react/cjs/react.development";
 import { URLContext } from "../../../contexts/URLContext";
-import congratulations from "../../../images/congratulations.jpg";
+import Congratulations from "../Congratulations";
 import EmailForm from "./EmailForm";
 import VerifyPWForm from "./VerifyPWForm";
 
-function ChangePW({props, t, setIsForgotPW}) {
+function ChangePW({ t, setIsForgotPW}) {
      const { updatdPasswordURL, findUserURL, options, emailTokenURL } = useContext(URLContext);
      const [alert, setAlert] = useState([]);
      const [isSentMail, setIsSentMail] = useState(false);
      const [inputValue, setInputValue] = useState({});
      const [isSuccess, setIsSuccess] = useState(false);
      const [thisUser, setThisUser] = useState(null);
-     const [disabled, setDisabled] = useState(false)
+     const [disabled, setDisabled] = useState(false);
+     const successText = t('your password has been updated');
 
      const changeInput = (e) => {
           setAlert([]);
@@ -96,14 +97,7 @@ function ChangePW({props, t, setIsForgotPW}) {
                ) : !isSuccess ? (
                     <VerifyPWForm submitVerifyToken={submitVerifyToken} inputValue={inputValue} changeInput={changeInput} alert={alert} t={t} disabled={disabled} />
                ) : (
-                    <div className="congratulations-div" style={{ backgroundImage: `URL(${congratulations})` }}>
-                         <div>
-                              <h1>Success!</h1>
-                              <p>Great! your password has been updated. </p>
-                         </div>
-                         <div className="check-circle"></div>
-                         <button onClick={() => {window.location.reload()}}>{t("login")}</button>
-                    </div>
+                    <Congratulations t={t} clickLoginBtn={()=>{setIsForgotPW(false)}} successText={successText}/> 
                )}
                {!isSuccess && <p className="link" onClick={() => { setIsForgotPW(false)}}></p>}
           </>

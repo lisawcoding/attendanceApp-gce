@@ -6,7 +6,7 @@ import Congratulations from "../Congratulations";
 
 function SignUp({setIsLoginTab, t}) {
      const formRef = useRef();
-     const { emailTokenURL, findUserURL, createUsersURL } = useContext(URLContext);
+     const { emailTokenURL } = useContext(URLContext);
      const { findExistUser, createUser } = useContext(AuthContext);
      const [isSentMail, setIsSentMail] = useState(false);
      const [alert, setAlert] = useState([]);
@@ -18,6 +18,7 @@ function SignUp({setIsLoginTab, t}) {
           "please enter token to verify your account",
           "the token will be expired within 10mins"
      ]
+     const successText = t('your account has been created');
      const btnRef = useRef();
 
      const changeInput = (e) => {
@@ -105,7 +106,7 @@ function SignUp({setIsLoginTab, t}) {
                     <input type="submit" value={t("verify")} ref={btnRef} />
                </form>
           ) : (
-               <Congratulations t={t} clickLoginBtn={clickLoginBtn} />
+               <Congratulations t={t} clickLoginBtn={clickLoginBtn} successText={successText}/>
           )}
           </>
      );
