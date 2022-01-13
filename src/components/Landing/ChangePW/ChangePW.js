@@ -1,11 +1,10 @@
 import { useContext, useRef } from "react";
 import { useState } from "react/cjs/react.development";
-import { FunctionContext } from "../../contexts/FunctionContext";
-import { URLContext } from "../../contexts/URLContext";
-import congratulations from "../../images/congratulations.jpg";
+import { URLContext } from "../../../contexts/URLContext";
+import congratulations from "../../../images/congratulations.jpg";
 
 function ChangePW(props) {
-     const { loginURL, usersURL, tokenURL, registerURL, updatdPasswordURL, findUserURL, options } = useContext(URLContext);
+     const { loginURL, usersURL, tokenURL, registerURL, updatdPasswordURL, findUserURL, options, emailTokenURL } = useContext(URLContext);
      const btnRef = useRef();
      const [alert, setAlert] = useState([]);
      const [isSentMail, setIsSentMail] = useState(false);
@@ -46,14 +45,12 @@ function ChangePW(props) {
                     delete data.password;
                     setThisUser(data);
 
-                    fetch(`${registerURL}/mail`, options("POST", data) )
+                    fetch(emailTokenURL, options("POST", data) )
                     .then(res=>res.json())
                     .then(data => {
-                         if (data.status.toLowerCase().indexOf("success") !== -1) {
-                              setIsSentMail(true);
-                         } else {
-                              setAlert("mail sent failure");
-                         }                         
+                         console.log(data)
+                         if(data.error) return setAlert("mail sent failure");
+                         setIsSentMail(true)                
                     })
                     setAlert([]);
                })

@@ -2,7 +2,7 @@ import { useRef, useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { URLContext } from "../../../contexts/URLContext";
 import Input from "../../Common/Input";
-import Congratulations from "./Congratulations";
+import Congratulations from "../Congratulations";
 
 function SignUp({setIsLoginTab, t}) {
      const formRef = useRef();

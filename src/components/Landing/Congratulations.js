@@ -1,5 +1,5 @@
 import React from 'react';
-import congratulations from "../../../images/congratulations.jpg";
+import congratulations from "../../images/congratulations.jpg";
 
 const Congratulations = ({t, clickLoginBtn}) => {
     return (

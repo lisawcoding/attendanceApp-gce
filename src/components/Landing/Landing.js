@@ -5,7 +5,7 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 import "./Landing.scss";
 import SignUp from "./SingUp/SignUp";
 import LogIn from "./LogIn";
-import ChangePW from "./ChangePW";
+import ChangePW from "./ChangePW/ChangePW";
 import { AuthContext } from "../../contexts/AuthContext";
 import { URLContext } from "../../contexts/URLContext";
 
