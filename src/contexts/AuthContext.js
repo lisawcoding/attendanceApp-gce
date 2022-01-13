@@ -29,6 +29,8 @@ export function AuthProvider (props) {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                },
+       
+       
                body: JSON.stringify(sentData),
           })
                .then((res) => res.json())
