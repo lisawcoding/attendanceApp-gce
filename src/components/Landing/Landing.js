@@ -59,7 +59,7 @@ function Landing(props) {
                               isForgotPW ? (
                                    <ChangePW t={t} setIsForgotPW={setIsForgotPW} />
                               ) : (
-                                   <LogIn t={t} props={props} />
+                                   <LogIn t={t} props={props} setIsForgotPW={setIsForgotPW} />
                               )
                          ) : (
                               <SignUp t={t} setIsLoginTab={setIsLoginTab} />

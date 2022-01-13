@@ -101,7 +101,8 @@ function ChangePW(props) {
                {!isSentMail ? (
                     <form className="sendMailForm" onSubmit={sendEmail}>
                          <input type="email" name="email" placeholder="email" onChange={changeInput} required />
-                         <button>{props.t("next")}</button>
+                         <input type="submit" value={props.t("next")} />
+                         {/* <button>{props.t("next")}</button> */}
                          {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
                     </form>
                ) : !isSuccess ? (
@@ -120,13 +121,10 @@ function ChangePW(props) {
                               <p>Great! your password has been updated. </p>
                          </div>
                          <div className="check-circle"></div>
-                         <button
-                              onClick={() => {
-                                   window.location.reload();
-                              }}
-                         >
+                         <button onClick={() => {window.location.reload()}}>
                               {props.t("login")}
                          </button>
+                         {/* <input type="submit" value={props.t("login")} onClick={window.location.reload()} /> */}
                     </div>
                )}
                {!isSuccess && (

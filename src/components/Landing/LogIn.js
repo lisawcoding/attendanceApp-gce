@@ -5,7 +5,7 @@ import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
 import Input from "../Common/Input";
 
-function LogIn(props) {
+function LogIn({t, setIsForgotPW, props}) {
      const { alert, setAlert } = useContext(DataContext);
      const { userLogin } = useContext(AuthContext);
      const { loginURL} = useContext(URLContext)
@@ -25,7 +25,7 @@ function LogIn(props) {
 
           var formData = new FormData(formRef.current);
           formData.forEach((value, key) => (formData[key] = value));
-          userLogin(props.props, loginURL, formData)
+          userLogin(props, loginURL, formData)
      };
 
      const changeInput = (e) => {
@@ -38,12 +38,12 @@ function LogIn(props) {
                <Input name="email" type="email" placeholder="email..." handleChange={changeInput} required autoFocus />
                <Input type="password" name="password" placeholder="password" handleChange={changeInput} required />
                <div className="bottom-div">
-                    <p className="link" onClick={() => { props.setIsForgotPW(true);}}>
-                         {props.t("forgot password")}
+                    <p className="link" onClick={() => { setIsForgotPW(true)}}>
+                         {t("forgot password")}
                     </p>
                </div>
-               {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
-               <input type="submit" value={props.t("login")} ref={btnRef} />
+               {alert.length > 0 && <h1 className="alert-text">{t(`${alert}`)}!</h1>}
+               <input type="submit" value={t("login")} ref={btnRef} />
           </form>
      );
 }
