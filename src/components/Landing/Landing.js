@@ -57,9 +57,9 @@ function Landing(props) {
                     <div className="form-div">
                          {isLoginTab ? (
                               isForgotPW ? (
-                                   <ChangePW t={t} setIsForgotPW={setIsForgotPW} />
+                                   <ChangePW t={t} setIsForgotPW={setIsForgotPW} props={props} />
                               ) : (
-                                   <LogIn t={t} props={props} setIsForgotPW={setIsForgotPW} />
+                                   <LogIn t={t} setIsForgotPW={setIsForgotPW} props={props} />
                               )
                          ) : (
                               <SignUp t={t} setIsLoginTab={setIsLoginTab} />

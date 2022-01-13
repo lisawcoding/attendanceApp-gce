@@ -2,31 +2,27 @@ import { useContext, useRef } from "react";
 import { useState } from "react/cjs/react.development";
 import { URLContext } from "../../../contexts/URLContext";
 import congratulations from "../../../images/congratulations.jpg";
+import EmailForm from "./EmailForm";
+import VerifyPWForm from "./VerifyPWForm";
 
-function ChangePW(props) {
-     const { loginURL, usersURL, tokenURL, registerURL, updatdPasswordURL, findUserURL, options, emailTokenURL } = useContext(URLContext);
-     const btnRef = useRef();
+function ChangePW({props, t, setIsForgotPW}) {
+     const { updatdPasswordURL, findUserURL, options, emailTokenURL } = useContext(URLContext);
      const [alert, setAlert] = useState([]);
      const [isSentMail, setIsSentMail] = useState(false);
-     const [inputValue, setInputValue] = useState({
-          // name: "",
-          // email: "",
-          // password: "",
-          // password2: "",
-     });
+     const [inputValue, setInputValue] = useState({});
      const [isSuccess, setIsSuccess] = useState(false);
      const [thisUser, setThisUser] = useState(null);
+     const [disabled, setDisabled] = useState(false)
 
      const changeInput = (e) => {
           setAlert([]);
-          // btnRef.current.disabled = false;
-
-          // e.target.name !== "token" && setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+          setDisabled(false);
+          e.target.name !== "token" && setInputValue({ ...inputValue, [e.target.name]: e.target.value });
      };
 
      const sendEmail = (e) => {
           e.preventDefault();
-          // btnRef.current.disabled = true;
+          setDisabled(true);
 
           fetch(findUserURL, {
                method: "POST",
@@ -38,10 +34,9 @@ function ChangePW(props) {
                .then((res) => res.json())
                .then((data) => {
                     console.log(data);
-                    if (!data) return setAlert([props.t("the eamil is invalid")]);
-                    if (data.mailLimit > 20) return setAlert([props.t("request for too many tokens, the limit is 20 per email address")]);
+                    if (!data) return setAlert([t("the eamil is invalid")]);
+                    if (data.mailLimit > 20) return setAlert([t("request for too many tokens, the limit is 20 per email address")]);
 
-                    //send email with token
                     delete data.password;
                     setThisUser(data);
 
@@ -59,10 +54,11 @@ function ChangePW(props) {
 
      const submitVerifyToken = (e) => {
           e.preventDefault();
-          // btnRef.current.disabled = true;
+          setDisabled(true);
+          console.log("submitVerifyToken");
 
           // check if passwords are indentical
-          if (e.target.password.value !== e.target.password2.value) return setAlert([props.t("Those passwords didn’t match")]);
+          if (e.target.password.value !== e.target.password2.value) return setAlert([t("Those passwords didn’t match")]);
 
           fetch(updatdPasswordURL, {
                method: "PUT",
@@ -96,21 +92,9 @@ function ChangePW(props) {
      return (
           <>
                {!isSentMail ? (
-                    <form className="sendMailForm" onSubmit={sendEmail}>
-                         <input type="email" name="email" placeholder="email" onChange={changeInput} required />
-                         <input type="submit" value={props.t("next")} />
-                         {/* <button>{props.t("next")}</button> */}
-                         {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
-                    </form>
+                    <EmailForm sendEmail={sendEmail} changeInput={changeInput} t={t} disabled={disabled} />
                ) : !isSuccess ? (
-                    <form onSubmit={submitVerifyToken}>
-                         <input type="email" name="email" placeholder={inputValue.email} disabled />
-                         <input type="text" name="password" placeholder="password" onChange={changeInput} />
-                         <input type="text" name="password2" placeholder="confirm password" onChange={changeInput} />
-                         <textarea type="text" name="token" placeholder={props.t("verify token")} required rows="5" onChange={changeInput} />
-                         <input type="submit" value={props.t("reset password")} ref={btnRef} />
-                         {alert.length > 0 && <h1 className="alert-text">{props.t(`${alert}`)}!</h1>}
-                    </form>
+                    <VerifyPWForm submitVerifyToken={submitVerifyToken} inputValue={inputValue} changeInput={changeInput} alert={alert} t={t} disabled={disabled} />
                ) : (
                     <div className="congratulations-div" style={{ backgroundImage: `URL(${congratulations})` }}>
                          <div>
@@ -118,22 +102,10 @@ function ChangePW(props) {
                               <p>Great! your password has been updated. </p>
                          </div>
                          <div className="check-circle"></div>
-                         <button onClick={() => {window.location.reload()}}>
-                              {props.t("login")}
-                         </button>
-                         {/* <input type="submit" value={props.t("login")} onClick={window.location.reload()} /> */}
+                         <button onClick={() => {window.location.reload()}}>{t("login")}</button>
                     </div>
                )}
-               {!isSuccess && (
-                    <p
-                         className="link"
-                         onClick={() => {
-                              props.setIsForgotPW(false);
-                         }}
-                    >
-                         {props.t("login")}
-                    </p>
-               )}
+               {!isSuccess && <p className="link" onClick={() => { setIsForgotPW(false)}}></p>}
           </>
      );
 }
