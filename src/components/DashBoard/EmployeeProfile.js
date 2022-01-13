@@ -13,14 +13,14 @@ import FaceCamera from "../FaceCamera/FaceCamera";
 import { FormInfoDiv } from "../Common/FormInfoDiv";
 
 function EmployeeProfile(props) {
-     const { thisUser, InitEmployeeInputs, setIsLoading } = useContext(DataContext);
+     const { thisUser, InitEmployeeInputs, setIsLoading, thisEmployee, setThisEmployee } = useContext(DataContext);
      const { usersURL, options } = useContext(URLContext);
      const { reIssueToken, fetchUser } = useContext(FunctionContext);
      const [isEdit, setIsEdit] = useState(false);
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
      const [isDelPopup, setIsDelPopup] = useState(false);
      const [isCamera, setIsCamera] = useState(false);
-     const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
+     // const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
      const EachEmployeeURL = `${usersURL}/${thisUser._id}/employees/${props.match.params.id}`;
 
      useEffect(() => {

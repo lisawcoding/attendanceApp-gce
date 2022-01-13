@@ -182,7 +182,7 @@ input {
      border: 1px solid var(--dark-grey);
      background: var(--light-grey);
      &:disabled {
-          background: transparent !important;
+          // background: transparent !important;
      }     
 }
 

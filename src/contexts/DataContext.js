@@ -14,6 +14,7 @@ export function DataProvider(props) {
      };
      const [thisUser, setThisUser] = useState({});
      const [allEmployees, setAllEmployees] = useState(null);
+     const [thisEmployee, setThisEmployee] =useState(InitEmployeeInputs);
      const [isLoading, setIsLoading] = useState(true);
      const [alert, setAlert] = useState([])
 
@@ -22,6 +23,7 @@ export function DataProvider(props) {
                value={{
                     thisUser, setThisUser,
                     allEmployees, setAllEmployees,
+                    thisEmployee, setThisEmployee,
                     isLoading, setIsLoading,
                     alert, setAlert,
                     InitEmployeeInputs
