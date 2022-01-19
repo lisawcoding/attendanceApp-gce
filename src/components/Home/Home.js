@@ -9,6 +9,8 @@ import Logout from "../Common/Logout";
 
 function Home(props) {
      const { thisUser } = useContext(DataContext);
+
+     if(!thisUser.name) props.history.push("/");
      
      return (
           <main id="Home">
