@@ -10,11 +10,11 @@ import { FormInfoDiv } from "../Common/FormInfoDiv";
 
 function CreateEmployee(props) {
      const { usersURL, options } = useContext(URLContext);
-     const { thisUser,InitEmployeeInputs, setIsLoading } = useContext(DataContext);
+     const { thisUser,InitEmployeeInputs, setIsLoading} = useContext(DataContext);
      const { reIssueToken, fetchUser } = useContext(FunctionContext);
      const [isCamera, setIsCamera] = useState(false);
-     const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
+     const [ thisEmployee, setThisEmployee ] = useState(InitEmployeeInputs)
 
      const createEmployee = () => {
           fetch(`${usersURL}/${thisUser._id}/employees`, options("POST", thisEmployee))

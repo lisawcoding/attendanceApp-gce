@@ -13,14 +13,14 @@ import FaceCamera from "../FaceCamera/FaceCamera";
 import { FormInfoDiv } from "../Common/FormInfoDiv";
 
 function EmployeeProfile(props) {
-     const { thisUser, InitEmployeeInputs, setIsLoading, thisEmployee, setThisEmployee } = useContext(DataContext);
+     const { thisUser, setIsLoading, InitEmployeeInputs } = useContext(DataContext);
      const { usersURL, options } = useContext(URLContext);
      const { reIssueToken, fetchUser } = useContext(FunctionContext);
      const [isEdit, setIsEdit] = useState(false);
      const [isSuccessPopup, setIsSuccessPopup] = useState(false);
      const [isDelPopup, setIsDelPopup] = useState(false);
      const [isCamera, setIsCamera] = useState(false);
-     // const [thisEmployee, setThisEmployee] = useState(InitEmployeeInputs);
+     const [ thisEmployee, setThisEmployee ] = useState(InitEmployeeInputs)
      const EachEmployeeURL = `${usersURL}/${thisUser._id}/employees/${props.match.params.id}`;
 
      useEffect(() => {
@@ -68,7 +68,8 @@ function EmployeeProfile(props) {
           .catch((err) => console.error(err));          
      };
 
-     const clickCemeraIcon = () => setIsCamera(!isCamera)
+     const clickCemeraIcon = () => setIsCamera(true);
+
 
      return (
           <div id="EmployeeProfile" className="center">
@@ -83,8 +84,7 @@ function EmployeeProfile(props) {
                                    <img src={thisEmployee.image} name="image" alt={thisEmployee.name} />:
                                    <BiImageAlt className="BiImageAlt" style={{ display: isEdit ? "none" : "block" }} />
                               }
-                              <BiCamera style={{ display: !isEdit ? "none" : "block" }} className={ thisEmployee.image.length > 0 ? "small-icon" : null} onClick={clickCemeraIcon} />   
-                              {/* <Link to={{ pathname: `/employee/profile/camera` }} style={{ display: !isEdit ? "none" : "block" }}><BiCamera/></Link> */}
+                              <BiCamera style={{display: (!isEdit || isCamera) ? "none" : "block"}} className={ thisEmployee.image.length > 0 ? "small-icon" : null} onClick={clickCemeraIcon} />   
                          </section>
                          <FormInfoDiv changeInput={changeInput} thisEmployee={thisEmployee} disabled={!isEdit} />
                     </form>

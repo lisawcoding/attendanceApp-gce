@@ -20,9 +20,14 @@
           gap: 0.5em;
      }
      input {
-          border: var(--m-grey) 1px solid;
           width: 100%;
           padding: 0.5em;
+          &:disabled {
+               border: none !important;
+          }
+     }
+     span {
+          text-transform: capitalize;
      }
      #upload-img {
           outline: none;

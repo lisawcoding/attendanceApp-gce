@@ -6,8 +6,8 @@ import "./FaceCamera.scss";
 import CameraLoader from "../Common/CameraLoader";
 import { DataContext } from "../../contexts/DataContext";
 
-const FaceCamera = () => {
-     const {thisEmployee, setThisEmployee} = useContext(DataContext);
+const FaceCamera = ({thisEmployee, setThisEmployee}) => {
+     // const {thisEmployee, setThisEmployee} = useContext(DataContext);
      const [isPause, setIsPause] = useState(false);
      const [isPlay, setIsPlay] = useState(false);
      const [isConfirm, setIsConfirm] = useState(false)     
