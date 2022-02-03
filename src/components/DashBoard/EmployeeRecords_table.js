@@ -17,7 +17,9 @@ function EmployeeRecords_table ({props}) {
     const [ isEdit, setIsEdit ] = useState(false);
     const [ inputValues, setInputValues] = useState(null)
     let thisRecordsURL=`${usersURL}/${thisUser._id}/employees/${props.match.params.id}/records`;
+    const [perTable, setPerTable] = useState(5)
     // let thisRecordsURL=`${usersURL}/${thisUser._id}/employees/${props.location.state._id}/records`;
+    // const tableHead = [ "date", "in", "out", "" ]
 
     useEffect(()=>{
         getRecords()
@@ -110,35 +112,43 @@ function EmployeeRecords_table ({props}) {
     }
 
     return (
-        <section className="records-div">
-            <div className="table-heading" >
-                {/* <p>Date</p>
-                <p>Date</p>
-                <p>Date</p>
-                <p>Date</p> */}
-            </div>
+        <section className="table">
             <div className="scroll-y">
             { 
                 records && ( records.length<1 ? <h1>no records</h1> : (
-                   records.map( record => 
-                        <form onSubmit={updateRecord}  id="Record" className={!isEdit ? "edit-item" : ""} key={record._id}>
-                            <fieldset disabled={ isEdit } >
-                                <label>
-                                    <input type="date" name="in" defaultValue={record.date} onChange={ onChange } />
-                                </label>
-                                <label>
-                                    <input type="time" name="in" defaultValue={record.in} onChange={ onChange } step="1" />
-                                </label>
-                                <label>
-                                    <input type="time" name="out" defaultValue={record.out} onChange={ onChange } step="1" />
-                                </label>
-                                <div className="btn-div">
-                                    <AiOutlineDelete onClick={clickDelIcon}/>
-                                    <AiOutlineEdit onClick={clickEditIcon} className="edit-btn" />
-                                </div>
-                            </fieldset>
-                        </form>
-                    ))
+                    <>
+                        <div className="table-heading table-row" >
+                            {/* {
+                                tableHead.map((td, i)=><p key={`${td}-${i}`}>{td}</p>)
+                            } */}
+                            <p>date</p>
+                            <p>time in</p>
+                            <p>time out</p>
+                            <div className="btn-div">actions</div>
+                        </div>
+                        {
+                    records.map( record => 
+                            <form onSubmit={updateRecord}  id="Record" className={isEdit ? "edit-item" : ""} key={record._id}>
+                                <fieldset disabled={ !isEdit } className="table-row" >
+                                    <label>
+                                        <input type="date" name="date" defaultValue={record.date} onChange={ onChange } />
+                                    </label>
+                                    <label>
+                                        <input type="time" name="in" defaultValue={record.in} onChange={ onChange } step="1" />
+                                    </label>
+                                    <label>
+                                        <input type="time" name="out" defaultValue={record.out} onChange={ onChange } step="1" />
+                                    </label>
+                                    <div className="btn-div">
+                                        <AiOutlineDelete onClick={clickDelIcon}/>
+                                        <AiOutlineEdit onClick={clickEditIcon} className="edit-btn" />
+                                    </div>
+                                </fieldset>
+                            </form>
+                        )                        
+                        }
+                    </>
+                    )
                      )}
             </div>
 

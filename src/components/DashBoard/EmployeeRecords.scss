@@ -2,15 +2,6 @@
     padding: 5vh;
     display: flex;
     background: var(--pink);
-    .table-heading {
-        display: flex;
-        fieldset {
-            display: flex;
-        }
-    }
-    section {
-        margin: 1em;
-    }
     .top-div {
         display: flex;
         flex-direction: column;
@@ -44,15 +35,14 @@
             fill: var(--m-grey);
         }
     }
-    .records-div {
+    .table {
         display: grid;
-        grid-template-rows: auto 1fr;
+        /* grid-template-rows: auto 1fr; */
         background: #fff;
-        padding: 1em;
+        /* padding: 1em; */
         box-shadow: var(--box-shadow);
         width: 100%;
     }
-
     form {
             border: none;
             align-items: flex-start;
@@ -62,10 +52,6 @@
                 font-weight: 200;
             }
             label {
-                // display: grid;
-                // grid-template-columns: 1fr 1.5fr;
-                // gap: 1em;
-                // margin: .15em 0;
                 span {
                     display: flex;
                     align-items: center;
@@ -83,10 +69,6 @@
                     font-weight: 900;
                 }
             }
-        input {
-            background: var(--m-grey);
-            border: none;
-        }
         :disabled {
             background: none;
         }
@@ -98,4 +80,47 @@
             fill: var(--pink);
         }
     }
+    .table-heading {
+        box-shadow: var(--box-shadow);
+        * {
+            text-transform: uppercase;
+        }
+    }
+    .table-row {
+        padding: 0;
+        display: flex;
+        justify-content: space-around;
+        border: none;
+        label, input, p {
+            text-align: center;
+            height: 100%;
+            background-color: transparent !important;
+        }
+        p, label {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: .5em;
+        }
+        input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 0 !important;
+        }
+        .btn-div {
+            display: flex;
+            padding: 0 1.5em;
+            width: fit-content;
+            align-items: center;
+            *:nth-of-type(1) {
+                margin-right: .5em;
+            }
+        }
+
+    }
+    #Record:nth-of-type(even) {
+        background-color: var(--light-grey)
+    }
+
 }
