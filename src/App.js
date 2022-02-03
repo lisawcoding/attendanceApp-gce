@@ -10,7 +10,7 @@ import AllEmployees from "./components/DashBoard/AllEmployees";
 import EmployeeProfile from "./components/DashBoard/EmployeeProfile";
 import CreateEmployee from "./components/DashBoard/CreateEmployee";
 import User from "./components/DashBoard/User";
-import EmployeeRecords from "./components/DashBoard/EmployeeRecords";
+import EmployeeRecords from "./components/DashBoard/EmployeeRecords/EmployeeRecords";
 import NotFound from "./components/Common/NotFound";
 
 

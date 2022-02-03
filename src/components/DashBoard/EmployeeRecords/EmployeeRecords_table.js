@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import { DataContext } from "../../contexts/DataContext";
-import { URLContext } from "../../contexts/URLContext";
+import { DataContext } from "../../../contexts/DataContext";
+import { URLContext } from "../../../contexts/URLContext";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
-import { FunctionContext } from "../../contexts/FunctionContext";
-import DeletePopup from "../Common/DeletePopup";
+import { FunctionContext } from "../../../contexts/FunctionContext";
+import DeletePopup from "../../Common/DeletePopup";
 
 function EmployeeRecords_table ({props}) {
     const { usersURL, options } = useContext(URLContext);
@@ -17,9 +17,6 @@ function EmployeeRecords_table ({props}) {
     const [ isEdit, setIsEdit ] = useState(false);
     const [ inputValues, setInputValues] = useState(null)
     let thisRecordsURL=`${usersURL}/${thisUser._id}/employees/${props.match.params.id}/records`;
-    const [perTable, setPerTable] = useState(5)
-    // let thisRecordsURL=`${usersURL}/${thisUser._id}/employees/${props.location.state._id}/records`;
-    // const tableHead = [ "date", "in", "out", "" ]
 
     useEffect(()=>{
         getRecords()
@@ -66,10 +63,6 @@ function EmployeeRecords_table ({props}) {
         console.log(id)
 
         console.log(inputValues)
-    
-        // inputValues!==null && console.log(inputValues)
-        // var fd = new FormData(formRef.current);
-        // fd.forEach((value, key) => (fd[key] = value));
 
         fetch(`${thisRecordsURL}/${id}`, options("PUT", inputValues))
         .then(res => res.json())
@@ -118,9 +111,6 @@ function EmployeeRecords_table ({props}) {
                 records && ( records.length<1 ? <h1>no records</h1> : (
                     <>
                         <div className="table-heading table-row" >
-                            {/* {
-                                tableHead.map((td, i)=><p key={`${td}-${i}`}>{td}</p>)
-                            } */}
                             <p>date</p>
                             <p>time in</p>
                             <p>time out</p>
