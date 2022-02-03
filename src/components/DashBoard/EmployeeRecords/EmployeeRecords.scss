@@ -2,7 +2,7 @@
     padding: 5vh;
     display: flex;
     background: var(--pink);
-    .top-div {
+    .img-div {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -25,66 +25,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        svg {
-            width: 100%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 9em;
-            fill: var(--m-grey);
-        }
     }
     .table {
         display: grid;
-        /* grid-template-rows: auto 1fr; */
         background: #fff;
-        /* padding: 1em; */
         box-shadow: var(--box-shadow);
         width: 100%;
-    }
-    form {
-            border: none;
-            align-items: flex-start;
-            min-inline-size: inherit;
-            box-sizing: border-box;
-            * {
-                font-weight: 200;
-            }
-            label {
-                span {
-                    display: flex;
-                    align-items: center;
-                    text-transform: capitalize;
-                }
-            }
-            button {
-                border: none;
-                background: var(--pink);
-                margin-top: .5em;
-                text-transform: uppercase;
-                padding: .5em;
-                cursor: pointer;
-                &:hover {
-                    font-weight: 900;
-                }
-            }
-        :disabled {
-            background: none;
-        }
-    }
-    .edit-item {
-        border: .15em solid var(--pink) !important;
-        box-shadow: var(--box-shadow);
-        .edit-btn {
-            fill: var(--pink);
-        }
     }
     .table-heading {
         box-shadow: var(--box-shadow);
         * {
-            text-transform: uppercase;
+            text-transform: capitalize;
         }
+    }
+    .table-body {
+        overflow-y: scroll;
     }
     .table-row {
         padding: 0;
@@ -95,6 +50,7 @@
             text-align: center;
             height: 100%;
             background-color: transparent !important;
+            margin: 0;
         }
         p, label {
             width: 100%;
@@ -113,19 +69,28 @@
             padding: 0 1.5em;
             width: fit-content;
             align-items: center;
-            *:nth-of-type(1) {
+            svg {
+                font-size: 1.2em;
+            }
+            svg:nth-of-type(1) {
                 margin-right: .5em;
             }
+            button {
+                background: none;
+                border: none;
+            }
         }
-
+    }
+    input::-webkit-calendar-picker-indicator {
+        display: none;
+      }
+    fieldset:not([disabled]) {
+        background: var(--m-grey);
+        input::-webkit-calendar-picker-indicator {
+            display: block;
+        }
     }
     #Record:nth-of-type(even) {
         background-color: var(--light-grey)
-    }
-    input[type="time"]::-webkit-calendar-picker-indicator {
-        display: none;
-      }
-    input[type="date"]::-webkit-calendar-picker-indicator {
-        display: none;
     }
 }

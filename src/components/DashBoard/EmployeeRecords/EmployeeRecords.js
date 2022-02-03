@@ -6,7 +6,7 @@ function EmployeeRecords(props) {
 
      return (
          <main id="Records">
-                <section className="top-div">
+                <section className="img-div">
                     <div className="employee-img-wrapper">
                         {
                             props.location.state.image ? <img src={props.location.state.image} alt={props.location.name} /> : <BiImageAlt/>
