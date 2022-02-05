@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import "./AllEmployees.scss";
-import { DataContext } from "../../contexts/DataContext";
+import { DataContext } from "../../../contexts/DataContext";
 import { BiSearchAlt } from "react-icons/bi";
 import AllEmployeesCards from "./AllEmployeesCards";
-import Loader from "../Common/Loader";
+import Loader from "../../Common/Loader";
 import { useEffect } from "react/cjs/react.development";
 
 function AllEmployees () {

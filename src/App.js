@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Punch from "./components/FrontDesk/Punch";
 import Landing from "./components/Landing/Landing";
-import AllEmployees from "./components/DashBoard/AllEmployees";
+import AllEmployees from "./components/DashBoard/AllEmployees/AllEmployees";
 import EmployeeProfile from "./components/DashBoard/EmployeeProfile";
 import CreateEmployee from "./components/DashBoard/CreateEmployee";
 import User from "./components/DashBoard/User";
