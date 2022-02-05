@@ -35,6 +35,10 @@ const PunchCamera = (props) => {
                console.error(err)
                window.location.reload()
           })
+
+          return()=>{
+               window.location.reload()
+          }
      }, []);
 
      useEffect(()=>{

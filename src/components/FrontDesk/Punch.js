@@ -16,11 +16,6 @@ function Punch(props) {
 
      useEffect(() => {
           fetchUser(props);
-
-          return () => {
-               window.location.reload();
-               // logout(props)
-          }
      }, []);
 
      const clickClockInOutBtn = (e) => setPunch({ ...punch, [e.target.name]: e.target.value });

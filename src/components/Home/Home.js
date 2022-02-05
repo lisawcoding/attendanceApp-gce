@@ -1,23 +1,19 @@
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 import logo from "../../images/logo.png";
 import dashboard from "../../images/dashboard.png";
 import "./Home.scss";
-import { DataContext } from "../../contexts/DataContext";
 import Logout from "../Common/Logout";
 
 function Home(props) {
-     const { thisUser } = useContext(DataContext);
-
-     if(!thisUser.name) props.history.push("/");
+     
      
      return (
           <main id="Home">
                <section className="top">
                     <div className="right-div">
                          <img src={logo} alt="logo" />
-                         <h2>Hello {thisUser.name}</h2>
+                         <h2>Hello</h2>
                     </div>
                     <Logout props={props} />
                </section>
