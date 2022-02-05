@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-
+import { NavLink } from "react-router-dom";
 import "./Punch.scss";
 import PunchCamera from "./PunchCamera";
 import Timer from "./Timer";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
+import { BiHome } from "react-icons/bi";
 import Logout from "../Common/Logout";
 
 function Punch(props) {
@@ -31,7 +32,14 @@ function Punch(props) {
                          <label htmlFor="option-2" className="option option-2"> out </label>
                     </div>
                     {thisUser.setting && <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p>}
-                    <Logout props={props} />
+                    <div>
+                         <NavLink exact to="/home" activeClassName="nav-active" className="logout-btn">
+                                   <BiHome />
+                                   <h2>home</h2>
+                         </NavLink>
+                         <Logout props={props} />                         
+                    </div>
+
                </section>
                <section className="right-div">
                    { allEmployees && <PunchCamera punch={punch} thisUser={thisUser} />}

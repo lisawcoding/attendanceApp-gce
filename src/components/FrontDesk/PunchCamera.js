@@ -170,7 +170,7 @@ const PunchCamera = (props) => {
           <>
           {!isPlay && <CameraLoader />}
                {/* <button onClick={stopVideo}>stop</button> */}
-               <button onClick={startVideo}>start</button>
+               {/* <button onClick={startVideo}>start</button> */}
                <video onPlay={onPlay} id="video" autoPlay muted ref={videoRef} ></video>
                <canvas ref={canvasRef} width={cameraSize.width} height={cameraSize.height}></canvas>
                {alert.length > 0 && alert.map((elm, i) => <h1 key={`${elm}-${i}`} className="alert-text">{elm}</h1>)}
