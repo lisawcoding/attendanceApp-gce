@@ -96,8 +96,8 @@ const FaceCamera = ({thisEmployee, setThisEmployee}) => {
                     <>
                          {/* <img src={thisEmployee.image} style={cameraSize} /> */}
                          <div className="btn-div" style={cameraSize}>
-                              <GiConfirmed className="green" onClick={stopVideo} />
-                              <GiCancel onClick={onPlay} className="red" />
+                              <GiConfirmed className="green" onClick={stopVideo} title="save this image" />
+                              <GiCancel onClick={onPlay} className="red" title="cancel this image and take a picture again" />
                          </div>
                     </>
                )}

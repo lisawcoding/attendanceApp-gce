@@ -19,11 +19,11 @@ function Home(props) {
                </section>
                <section className="main">
                     <div className="clockIn" style={{backgroundImage: `url(${dashboard})`}}>
-                         <NavLink exact to="/punch" activeClassName="nav-active">
+                         <NavLink exact to="/punch" activeClassName="nav-active" title="employees' clock in/out Plateform">
                               go to clockIn desk
                          </NavLink>
                     </div>
-                    <div className="dashboard" style={{backgroundImage: `url(${dashboard})`}}>
+                    <div className="dashboard" style={{backgroundImage: `url(${dashboard})`}} title="employeer's dashboard" >
                          <NavLink exact to="/employees" activeClassName="nav-active">
                               go to dashboard
                          </NavLink>

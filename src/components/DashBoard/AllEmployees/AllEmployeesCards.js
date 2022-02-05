@@ -23,8 +23,8 @@ function AllEmployeesCards ({allEmployees, searchTerm}) {
                 <h1>{elm.name}</h1>
                 <p>{elm._id}</p>
                 <div className="icon-div">
-                    <Link to={{ pathname: `/employee/records/${elm._id}`, state: elm }}><AiOutlineSchedule/></Link>
-                    <Link to={{ pathname: `/employee/profile/${elm._id}`, state: elm }}><BiUserPin/></Link>
+                    <Link to={{ pathname: `/employee/records/${elm._id}`, state: elm }} title="check this employee's attendance records"><AiOutlineSchedule/></Link>
+                    <Link to={{ pathname: `/employee/profile/${elm._id}`, state: elm }} title="check this employee's profile"><BiUserPin/></Link>
                 </div>
             </div>)
             }
