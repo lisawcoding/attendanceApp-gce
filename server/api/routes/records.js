@@ -4,6 +4,7 @@ const { getRecords, postRecords, deleteRecords, putRecords } = require("../contr
 const recordRouter = express.Router({ mergeParams: true });
 
 recordRouter.get("/", getRecords);
+
 recordRouter.post("/", verifyAccessToken, postRecords);
 recordRouter.delete("/:recordId", verifyAccessToken, deleteRecords)
 recordRouter.put("/:recordId", verifyAccessToken, putRecords)

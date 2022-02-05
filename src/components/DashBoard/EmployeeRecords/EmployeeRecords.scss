@@ -28,12 +28,22 @@
     }
     .table {
         display: grid;
+        grid-template-rows: auto 1fr;
         background: #fff;
         box-shadow: var(--box-shadow);
         width: 100%;
     }
-    .table-heading {
+    .table-head {
         box-shadow: var(--box-shadow);
+        display: flex;
+        flex-direction: column;
+        label {
+            margin: .5em 0;
+            input {
+                margin-left: .5em;
+                padding: .5em;
+            }
+        }
         * {
             text-transform: capitalize;
         }
@@ -81,16 +91,19 @@
             }
         }
     }
-    input::-webkit-calendar-picker-indicator {
-        display: none;
-      }
-    fieldset:not([disabled]) {
-        background: var(--m-grey);
+
+    .table-body {
+        fieldset:not([disabled]) {
+            background: var(--m-grey);
+            input::-webkit-calendar-picker-indicator {
+                display: block;
+            }
+        }    
         input::-webkit-calendar-picker-indicator {
-            display: block;
+            display: none;
+          }      
+        form:nth-of-type(even) {
+            background: var(--light-grey)
         }
-    }
-    #Record:nth-of-type(even) {
-        background-color: var(--light-grey)
     }
 }
