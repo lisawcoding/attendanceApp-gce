@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import logo from "../../images/logo.png";
 import dashboard from "../../images/dashboard.png";
+import clork from "../../images/clork.png";
 import "./Home.scss";
 import Logout from "../Common/Logout";
 
@@ -18,7 +19,7 @@ function Home(props) {
                     <Logout props={props} />
                </section>
                <section className="main">
-                    <div className="clockIn" style={{backgroundImage: `url(${dashboard})`}}>
+                    <div className="clockIn" style={{backgroundImage: `url(${clork})`}}>
                          <NavLink exact to="/punch" activeClassName="nav-active" title="employees' clock in/out Plateform">
                               go to clockIn desk
                          </NavLink>
