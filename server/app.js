@@ -4,22 +4,15 @@ const connectDB = require("./config/db");
 const path = require("path");
 const app = express();
 // const dotenv = require("dotenv");
-// const UserToken = require("./api/models/UserToken");
-// var cors = require("cors");
 
 connectDB();
 // dotenv.config();
-// app.use(cors({
-//     origin: true,
-//     credentials: true
-// }))
 
 app.use((req, res, next) => {
-     res.setHeader("Access-Control-Allow-Origin", "*");// Website you wish to allow to connect
-     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");// Request methods you wish to allow
-     // Request headers you wish to allow
-     // res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
-     res.setHeader("Access-Control-Allow-Headers", "*");
+     res.setHeader("Access-Control-Allow-Origin", "*");
+     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+     // res.setHeader("Access-Control-Allow-Headers", "*");
+     res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization, x-token");
      // Set to true if you need the website to include cookies in the requests sent to the API (e.g. in case you use sessions)
      // res.setHeader('Access-Control-Allow-Credentials', true);
      next(); // Pass to next layer of middleware
@@ -32,7 +25,9 @@ app.use((req, res, next) => {
 // app.use(express.static(path.join(__dirname,"../public")));
 app.use(express.static(path.join(__dirname,"../build")));
 
+
 app.use(express.json({ extended: false }));
+app.use("/auth", require("./auth"));
 app.use("/users", require("./api/routes/users"));
 app.use("/users/:id/employees", require("./api/routes/employees"));
 app.use("/users/:id/employees/:employeeId/records", require("./api/routes/records"));

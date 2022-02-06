@@ -3,7 +3,8 @@ import React, { useState, createContext } from "react";
 export const URLContext = createContext();
 
 export function URLProvider(props) {
-     const authOrigin = `http://localhost:9002`;
+     // const authOrigin = `http://localhost:9002`;
+     const authOrigin = `http://localhost:9001/auth`;
      const origin = "http://localhost:9001"
 
      const registerURL = `${authOrigin}/register`;
