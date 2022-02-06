@@ -1,5 +1,4 @@
 import { useContext, useRef } from "react";
-import { useEffect } from "react/cjs/react.development";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { URLContext } from "../../contexts/URLContext";
@@ -11,12 +10,6 @@ function LogIn({t, setIsForgotPW, props}) {
      const { loginURL} = useContext(URLContext)
      const formRef = useRef();
      const btnRef = useRef();
-
-     useEffect(()=>{
-          return () => {
-               setAlert([])
-          }
-     }, [])
 
      const onSubmit = async (e) => {
           e.preventDefault();
