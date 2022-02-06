@@ -1,11 +1,12 @@
 const express = require("express");
 const { verifyAccessToken } = require("../../JWT");
-const { getRecords, postRecords, deleteRecords, putRecords } = require("../controllers/records");
+const { getRecords, postRecords, deleteRecords, putRecords, createRecords } = require("../controllers/records");
 const recordRouter = express.Router({ mergeParams: true });
 
 recordRouter.get("/", getRecords);
 
-recordRouter.post("/", verifyAccessToken, postRecords);
+recordRouter.post("/", postRecords);
+recordRouter.post("/create", verifyAccessToken, createRecords);
 recordRouter.delete("/:recordId", verifyAccessToken, deleteRecords)
 recordRouter.put("/:recordId", verifyAccessToken, putRecords)
 

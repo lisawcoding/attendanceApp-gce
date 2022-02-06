@@ -13,6 +13,36 @@ const postRecords = (req, res) => {
         .catch((err) => res.json({ error: err }));
 }
 
+const createRecords = (req, res) => {
+    console.log("record/Router.params: ", req.params);
+    console.log("record/Router.body: ", req.body);
+
+    Record.findOneAndUpdate({ employee: req.params.employeeId, date: req.body.date }, req.body, { new: true })
+         .then((data) => {
+              if(data==null){
+                   Record.create(req.body)
+                   .then(data=>res.json({create: data}))
+                   .catch(err=>res.json({error: err}))
+              } else {
+                   res.json({update: data});   
+              }
+              // if(data.length<1) {
+              //      res.json("no record")
+              //      // Record.create(req.body)
+              //      // .then(data=>res.json(data))
+              //      // .catch(err=>res.json({error: err}))
+              // } else {
+              //      res.json("find one record")
+              //      Record.updateOneAndUpdate({employee: req.params.employeeId, date: req.body.date} , req.body)
+              //      .then(data=>res.json(data))
+              //      .catch(err=>res.json({error: err}))
+              // }
+              // res.json({ msg: "duplicate data", result: data });
+         })
+         .catch((err) => res.json({ error: err }));
+}
+
+
 const deleteRecords = (req, res) => {
     console.log("del: ", req.params.recordId)
     Record.findByIdAndDelete(req.params.recordId)
@@ -29,4 +59,4 @@ const putRecords = (req, res) => {
     .catch(err=>res.json({ error: err }))
 }
 
-module.exports = { getRecords, postRecords, deleteRecords, putRecords }
+module.exports = { getRecords, postRecords, deleteRecords, putRecords, createRecords }

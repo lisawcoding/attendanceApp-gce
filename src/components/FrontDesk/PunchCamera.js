@@ -139,7 +139,7 @@ const PunchCamera = (props) => {
           const timer = new Date();
           console.log(parseResult);
 
-          let url = `${usersURL}/${parseResult.user}/employees/${parseResult._id}/records`;
+          let url = `${usersURL}/${parseResult.user}/employees/${parseResult._id}/records/create`;
           let data = {
                name: parseResult.name,
                employee: parseResult._id,
