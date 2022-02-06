@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import "./AllEmployees.scss";
 import { DataContext } from "../../../contexts/DataContext";
 import { BiSearchAlt } from "react-icons/bi";
 import AllEmployeesCards from "./AllEmployeesCards";
 import Loader from "../../Common/Loader";
-import { useEffect } from "react/cjs/react.development";
 
 function AllEmployees () {
      const { allEmployees, isLoading, setIsLoading } = useContext(DataContext);
