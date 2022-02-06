@@ -75,8 +75,8 @@ function EmployeeProfile(props) {
           <div id="EmployeeProfile" className="center">
                <div className="card">
                     <section className="top-div">
-                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit)}} className={ isEdit ? "click-icon" : null }/>
-                         <AiOutlineDelete onClick={() => {setIsDelPopup(!isDelPopup)}}/>
+                         <AiOutlineEdit onClick={() => {setIsEdit(!isEdit)}} className={ isEdit ? "click-icon" : null } title="edit profile"/>
+                         <AiOutlineDelete onClick={() => {setIsDelPopup(!isDelPopup)}} title="delete profile" />
                     </section>
                     <form onSubmit={editEmployee} className="employeeForm" >
                          <section className="img-wrapper" >
@@ -84,7 +84,12 @@ function EmployeeProfile(props) {
                                    <img src={thisEmployee.image} name="image" alt={thisEmployee.name} />:
                                    <BiImageAlt className="BiImageAlt" style={{ display: isEdit ? "none" : "block" }} />
                               }
-                              <BiCamera style={{display: (!isEdit || isCamera) ? "none" : "block"}} className={ thisEmployee.image.length > 0 ? "small-icon" : null} onClick={clickCemeraIcon} />   
+                              <BiCamera 
+                                   style={{display: (!isEdit || isCamera) ? "none" : "block"}} 
+                                   className={ thisEmployee.image.length > 0 ? "small-icon" : null} 
+                                   onClick={clickCemeraIcon} 
+                                   title="take a new picture" 
+                                   />   
                          </section>
                          <FormInfoDiv changeInput={changeInput} thisEmployee={thisEmployee} disabled={!isEdit} />
                     </form>
