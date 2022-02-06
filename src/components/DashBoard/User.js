@@ -52,7 +52,7 @@ function User(props) {
                               <h1>Basic Information: </h1>
                               <p>user name: {thisUser.name}</p>
                               <p>email: {thisUser.email}</p>
-                              <p>change password</p>
+                              {/* <p>change password</p> */}
                          </section>
                          <hr />
                          <section>
