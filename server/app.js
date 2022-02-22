@@ -18,8 +18,6 @@ app.use((req, res, next) => {
      next(); // Pass to next layer of middleware
 });
 
-
-
 //init middeware
 // app.use(express.static(__dirname + '../public'));
 // app.use(express.static(path.join(__dirname,"../public")));
