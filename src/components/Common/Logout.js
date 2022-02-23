@@ -7,7 +7,6 @@ import { FunctionContext} from "../../contexts/FunctionContext";
 export function Logout (props) {
     const { thisUser } = useContext(DataContext);
     const { logout } = useContext( FunctionContext);
-    const GOOGLE_CLIENTID = process.env.REACT_APP_GOOGLE_CLIENTID;
 
     const googleLogoutSuccess = () => {
         console.log("google logout success: ");
@@ -25,7 +24,7 @@ export function Logout (props) {
                         <RiLogoutBoxRLine/>
                     </div>:
                         <GoogleLogout
-                            clientId={GOOGLE_CLIENTID}
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                             render={(renderProps)=>(
                                 <div onClick={renderProps.onClick} >
                                     <RiLogoutBoxRLine/>
