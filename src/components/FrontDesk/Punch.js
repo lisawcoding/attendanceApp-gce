@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
 import "./Punch.scss";
 import PunchCamera from "./PunchCamera";
 import Timer from "./Timer";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
-import { BiHome } from "react-icons/bi";
 import Logout from "../Common/Logout";
+import HomeLink from "../Common/HomeLink";
 
 function Punch(props) {
      const { thisUser, allEmployees } = useContext(DataContext);
@@ -33,16 +32,14 @@ function Punch(props) {
                     </div>
                     {thisUser.setting && <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p>}
                     <div>
-                         <NavLink exact to="/home" activeClassName="nav-active" className="logout-btn">
-                                   <BiHome />
-                                   <h2>home</h2>
-                         </NavLink>
+                         <HomeLink />
                          <Logout props={props} />                         
                     </div>
 
                </section>
                <section className="right-div">
-                   { allEmployees && <PunchCamera punch={punch} thisUser={thisUser} />}
+                   { allEmployees && allEmployees.length>0 ? <PunchCamera punch={punch} thisUser={thisUser} /> : 
+                    <h1 title="there is no employee's record, please create a new employee">no employee's record<HomeLink/></h1>}
                </section>
           </div>
      );
