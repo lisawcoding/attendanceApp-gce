@@ -45,21 +45,7 @@
      img[alt*="logo"] {
           margin-right: 1em;
      }
-     a {
-          padding: 1em 1.5em;
-          border-radius: 50px;
-          border: none;
-          background: #fff;
-          font-size: 1.2em;
-          color: var(--dark-grey);
-          box-shadow: var(--box-shadow);
-          cursor: pointer;
-          text-align: center;
-          text-transform: capitalize;
-          &:hover {
-               color: #000;
-          }
-     }
+
      .main {
           display: flex;
           & > div {
@@ -78,6 +64,21 @@
           }
           .clockIn {
                background-color: var(--blue);
+          }
+          a {
+               padding: 1em 1.5em;
+               border-radius: 50px;
+               border: none;
+               background: #fff;
+               font-size: 1.2em;
+               color: var(--dark-grey);
+               box-shadow: var(--box-shadow);
+               cursor: pointer;
+               text-align: center;
+               text-transform: capitalize;
+               &:hover {
+                    color: #000;
+               }
           }
      }
 }

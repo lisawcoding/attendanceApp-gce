@@ -8,7 +8,7 @@ export function FunctionProvider(props) {
      const { usersURL, reIssueTokenURL, logoutURL, getUserURL } = useContext(URLContext);
      const { setThisUser, setAllEmployees, setIsLoading } = useContext(DataContext);
 
-     const logout = (props) => {
+     const logout = () => {
           sessionStorage.clear()
 
           fetch(logoutURL, {
@@ -17,7 +17,7 @@ export function FunctionProvider(props) {
           .then((res) => res.json())
           .then((data) => console.log(data))
           .catch((err) => console.error(err));
-          props.history.push("/");
+          document.location.href="/";
      };
 
      const reIssueToken = async (props) => {

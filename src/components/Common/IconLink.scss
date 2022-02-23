@@ -1,0 +1,22 @@
+a {
+    div {
+        display: flex;
+        align-items: center;
+        svg {
+            margin-right: .25em;
+            fill: var(--dark-grey);
+            font-size: var(--icon-size);
+        }
+    }
+    * {
+        color: var(--dark-grey);
+        text-transform: capitalize;
+    }
+}
+nav {
+    a {
+        svg {
+            margin-right: 0;
+        }
+    }
+}

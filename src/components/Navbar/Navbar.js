@@ -1,12 +1,9 @@
 import React, { useState, useContext, useLayoutEffect } from "react";
-import { NavLink, withRouter } from "react-router-dom";
-import { RiTeamLine } from "react-icons/ri";
-import { AiOutlineUserAdd, AiOutlinePushpin } from "react-icons/ai";
-import { HiUserCircle } from "react-icons/hi";
+import { withRouter } from "react-router-dom";
+import { AiOutlinePushpin } from "react-icons/ai";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import "./Navbar.scss";
-import Logout from "../Common/Logout";
-import HomeLink from "../Common/HomeLink";
+import { AllEmployeesLink, CreateEmployeeLink, HomeLink, LogoutLink, UserLink } from "../Common/IconLinks";
 
 function Navbar(props) {
      const { fetchUser } = useContext(FunctionContext);
@@ -28,28 +25,11 @@ function Navbar(props) {
                <div className="hamburger" onClick={clickDropDown}><span></span><span></span><span></span></div>
                <div className="link-div" onClick={clickDropDown}>
                     <AiOutlinePushpin onClick={clickPinBtn} className="pin-icon" />
-                         <HomeLink/>
-                    <NavLink exact to="/employees" activeClassName="nav-active">
-                         <div>
-                              <RiTeamLine />
-                              <h2>show all employees</h2>
-                         </div>
-                    </NavLink>
-                    <NavLink exact to="/employee/create" activeClassName="nav-active">
-                         <div>
-                              <AiOutlineUserAdd />
-                              <h2>create new employee</h2>
-                         </div>
-                    </NavLink>
-                    <NavLink to="/user" activeClassName="nav-active" className="icon-bottom user-icon">
-                         <div>
-                              <HiUserCircle />
-                              <h2>my account</h2>
-                         </div>
-                    </NavLink>
-                    <NavLink to="/">
-                         <Logout props={props} />
-                    </NavLink>
+                    <HomeLink/>
+                    <AllEmployeesLink/>
+                    <CreateEmployeeLink/>
+                    <UserLink/>
+                    <LogoutLink/>
                </div>
           </nav>
      );

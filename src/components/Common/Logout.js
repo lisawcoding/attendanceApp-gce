@@ -7,32 +7,28 @@ import { FunctionContext} from "../../contexts/FunctionContext";
 export function Logout (props) {
     const { thisUser } = useContext(DataContext);
     const { logout } = useContext( FunctionContext);
+    const GOOGLE_CLIENTID = process.env.REACT_APP_GOOGLE_CLIENTID;
 
     const googleLogoutSuccess = () => {
         console.log("google logout success: ");
-        logout(props.props)
+        logout()
     }
 
     const googleLoutFailure = (res) => {
         console.log("google logout failure: ", res)
     }
 
-    const buttonDiv = <div className='logout-btn'>
-                        <RiLogoutBoxRLine/>
-                        <h2>logout</h2>                    
-                      </div>     
-
         return (
             <>
                 { thisUser.password ? 
                     <div onClick={() => logout(props.props)}>
-                        {buttonDiv}
+                        <RiLogoutBoxRLine/>
                     </div>:
                         <GoogleLogout
-                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            clientId={GOOGLE_CLIENTID}
                             render={(renderProps)=>(
                                 <div onClick={renderProps.onClick} >
-                                    {buttonDiv}
+                                    <RiLogoutBoxRLine/>
                                 </div>
                             )}
                             onLogoutSuccess={googleLogoutSuccess}

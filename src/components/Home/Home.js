@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom";
-
 import logo from "../../images/logo.png";
 import dashboard from "../../images/dashboard.png";
 import clork from "../../images/clork.png";
 import "./Home.scss";
-import Logout from "../Common/Logout";
+import { LogoutLink } from "../Common/IconLinks";
 
-function Home(props) {
+function Home() {
      
      
      return (
@@ -16,7 +15,7 @@ function Home(props) {
                          <img src={logo} alt="logo" />
                          <h2>Hello</h2>
                     </div>
-                    <Logout props={props} />
+                    <LogoutLink />
                </section>
                <section className="main">
                     <div className="clockIn" style={{backgroundImage: `url(${clork})`}}>

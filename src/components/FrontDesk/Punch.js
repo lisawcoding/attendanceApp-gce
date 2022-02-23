@@ -5,7 +5,7 @@ import Timer from "./Timer";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import Logout from "../Common/Logout";
-import HomeLink from "../Common/HomeLink";
+import { HomeLink, LogoutLink } from "../Common/IconLinks";
 
 function Punch(props) {
      const { thisUser, allEmployees } = useContext(DataContext);
@@ -33,7 +33,7 @@ function Punch(props) {
                     {thisUser.setting && <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p>}
                     <div>
                          <HomeLink />
-                         <Logout props={props} />                         
+                         <LogoutLink props={props} />                     
                     </div>
 
                </section>

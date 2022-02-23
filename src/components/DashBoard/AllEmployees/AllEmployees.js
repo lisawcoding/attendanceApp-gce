@@ -4,6 +4,7 @@ import { DataContext } from "../../../contexts/DataContext";
 import { BiSearchAlt } from "react-icons/bi";
 import AllEmployeesCards from "./AllEmployeesCards";
 import Loader from "../../Common/Loader";
+import { CreateEmployeeLink } from "../../Common/IconLinks";
 
 function AllEmployees () {
      const { allEmployees, isLoading, setIsLoading } = useContext(DataContext);
@@ -26,7 +27,7 @@ function AllEmployees () {
                          </div>
                     </section>               
                     <AllEmployeesCards allEmployees={allEmployees} searchTerm={searchTerm} />
-                    {allEmployees.length<1 && <h1>no employees</h1>}
+                    {allEmployees.length<1 && <h1 className="center">no employees<CreateEmployeeLink/></h1>}
                </main>          
           }          
           </>
