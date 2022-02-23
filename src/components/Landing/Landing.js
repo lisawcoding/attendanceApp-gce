@@ -15,8 +15,7 @@ function Landing(props) {
      const { userLogin } = useContext( AuthContext );
      const [isLoginTab, setIsLoginTab] = useState(true);
      const [isForgotPW, setIsForgotPW] = useState(false);
-     const [ alert, setAlert ] = useState([])
-     const GOOGLE_CLIENTID = process.env.REACT_APP_GOOGLE_CLIENTID
+     const [ alert, setAlert ] = useState([]);
 
      const googleSuccess = async (res) => {
           const result = res.profileObj;
@@ -37,8 +36,8 @@ function Landing(props) {
           <main id="Landing">
                <section className="left-div">
                     <h1 className="hero-text">{t("attendance app")}</h1>
-                    <GoogleLogin 
-                         clientId = {GOOGLE_CLIENTID}
+                    <GoogleLogin
+                         clientId = {process.env.REACT_APP_GOOGLE_CLIENT_ID}
                          onSuccess={googleSuccess}
                          onFailure={googleFailure}
                          cookiePolicy="single_host_origin"

@@ -1,5 +1,5 @@
 const express = require("express");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const authRouter = express.Router({mergeParams: true});
@@ -10,7 +10,7 @@ const UserToken = require("./api/models/UserToken");
 const { handleLoginTokens } = require("./api/controllers/authApp");
 const { postUser } = require("./api/controllers/users");
 
-dotenv.config();
+// dotenv.config();
 
 authRouter.get("/", (req, res) => res.send("authApp"));
 
@@ -43,6 +43,7 @@ authRouter.post("/reIssueToken", (req, res) => {
      if (refreshToken == null) return res.status(401).json({ error: "refresh token does not exist" });
 
      jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, payload) => {
+          console.log("env*******************")
           if (err) return res.status(403).json({ error: err });
 
           let userToken = await UserToken.find({ id: payload.id }).sort({ createdAt: -1 }).limit(1);
