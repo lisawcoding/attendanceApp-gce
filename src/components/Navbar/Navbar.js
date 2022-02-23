@@ -1,12 +1,12 @@
 import React, { useState, useContext, useLayoutEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { BiHome } from "react-icons/bi";
 import { RiTeamLine } from "react-icons/ri";
 import { AiOutlineUserAdd, AiOutlinePushpin } from "react-icons/ai";
 import { HiUserCircle } from "react-icons/hi";
 import { FunctionContext } from "../../contexts/FunctionContext";
 import "./Navbar.scss";
 import Logout from "../Common/Logout";
+import HomeLink from "../Common/HomeLink";
 
 function Navbar(props) {
      const { fetchUser } = useContext(FunctionContext);
@@ -28,12 +28,7 @@ function Navbar(props) {
                <div className="hamburger" onClick={clickDropDown}><span></span><span></span><span></span></div>
                <div className="link-div" onClick={clickDropDown}>
                     <AiOutlinePushpin onClick={clickPinBtn} className="pin-icon" />
-                    <NavLink exact to="/home" activeClassName="nav-active">
-                         <div>
-                              <BiHome />
-                              <h2>home</h2>
-                         </div>
-                    </NavLink>
+                         <HomeLink/>
                     <NavLink exact to="/employees" activeClassName="nav-active">
                          <div>
                               <RiTeamLine />
