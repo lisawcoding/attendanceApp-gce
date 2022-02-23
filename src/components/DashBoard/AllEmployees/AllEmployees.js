@@ -25,9 +25,10 @@ function AllEmployees () {
                               <input type="text" onChange={changeSearchInput} value={searchTerm} placeholder="name..." />
                               <BiSearchAlt />
                          </div>
-                    </section>               
-                    <AllEmployeesCards allEmployees={allEmployees} searchTerm={searchTerm} />
-                    {allEmployees.length<1 && <h1 className="center">no employees<CreateEmployeeLink/></h1>}
+                    </section>    
+                    {allEmployees && (allEmployees.length<1 ? 
+                         <h1 className="center">no employees<CreateEmployeeLink/></h1> : 
+                         <AllEmployeesCards allEmployees={allEmployees} searchTerm={searchTerm} />)}  
                </main>          
           }          
           </>

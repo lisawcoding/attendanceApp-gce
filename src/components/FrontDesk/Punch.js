@@ -4,7 +4,6 @@ import PunchCamera from "./PunchCamera";
 import Timer from "./Timer";
 import { DataContext } from "../../contexts/DataContext";
 import { FunctionContext } from "../../contexts/FunctionContext";
-import Logout from "../Common/Logout";
 import { HomeLink, LogoutLink } from "../Common/IconLinks";
 
 function Punch(props) {
@@ -33,13 +32,13 @@ function Punch(props) {
                     {thisUser.setting && <p> Office hours are {thisUser.setting.timeIn} to {thisUser.setting.timeOut} </p>}
                     <div>
                          <HomeLink />
-                         <LogoutLink props={props} />                     
+                         <LogoutLink />                     
                     </div>
-
                </section>
                <section className="right-div">
-                   { allEmployees && allEmployees.length>0 ? <PunchCamera punch={punch} thisUser={thisUser} /> : 
-                    <h1 title="there is no employee's record, please create a new employee">no employee's record<HomeLink/></h1>}
+                    {console.log(allEmployees)}
+                   { allEmployees && (allEmployees.length>0 ? <PunchCamera punch={punch} thisUser={thisUser} /> : 
+                    <h1 title="there is no employee's record, please create a new employee">no employee's record<HomeLink/></h1>)}
                </section>
           </div>
      );
