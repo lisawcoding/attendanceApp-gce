@@ -3,13 +3,8 @@ import React, { useState, createContext } from "react";
 export const URLContext = createContext();
 
 export function URLProvider(props) {
-     // const authOrigin = `http://localhost:9002`;
-     // const authOrigin = `http://localhost:8080/auth`;
-     // const origin = "http://localhost:8080"
      const authOrigin = process.env.REACT_APP_AUTHORIGIN;
      const origin = process.env.REACT_APP_ORIGIN;
-     // const authOrigin = `https://attendanceapp.tolisacoding.work/auth`;
-     // const origin = "https://attendanceapp.tolisacoding.work:8080"
 
      const registerURL = `${authOrigin}/register`;
      const emailTokenURL = `${authOrigin}/register/mail`
