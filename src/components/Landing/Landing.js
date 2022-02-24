@@ -41,6 +41,7 @@ function Landing(props) {
                          onSuccess={googleSuccess}
                          onFailure={googleFailure}
                          cookiePolicy="single_host_origin"
+                         buttonText="Login 1"
                     />
                     {alert.length > 0 && <h1 className="alert-text">{t(`${alert}`)}!</h1>}
                </section>
