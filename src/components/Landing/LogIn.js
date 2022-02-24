@@ -19,6 +19,7 @@ function LogIn({t, setIsForgotPW, props}) {
           var formData = new FormData(formRef.current);
           formData.forEach((value, key) => (formData[key] = value));
           userLogin(props, loginURL, formData)
+          console.log(loginURL)
      };
 
      const changeInput = (e) => {

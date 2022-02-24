@@ -3,6 +3,8 @@ import React, { useState, createContext } from "react";
 export const URLContext = createContext();
 
 export function URLProvider(props) {
+     // const authOrigin = `http://localhost:8080/auth`;
+     // const origin = "http://localhost:8080"
      const authOrigin = process.env.REACT_APP_AUTHORIGIN;
      const origin = process.env.REACT_APP_ORIGIN;
 
