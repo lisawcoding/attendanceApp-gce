@@ -3,12 +3,12 @@ import "./SuccessPopup.scss";
 
 const SuccessPopup = ({action, pathname, closePopup}) => {
      return (
-          <div className="Popup overlay" onClick={closePopup}>
+          <div className="Popup overlay">
                <div className="box">
                     <div className="circle check"></div>
                     <h1>Awesome</h1>
                     <p>this employee has been successfully {action}!</p>
-                    <h1>
+                    <h1 onClick={closePopup}>
                          <Link className="btn ok" to={pathname}>
                               ok
                          </Link>
